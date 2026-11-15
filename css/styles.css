@@ -736,3 +736,7 @@ html,body{max-width:100%;overflow-x:clip}
 .guest-btn{width:100%;height:54px;margin-top:18px;border-radius:12px;border:2px dashed var(--aqua);color:var(--aqua);font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:.85rem;transition:.2s var(--ease)}
 .guest-btn:hover{background:rgba(153,220,225,.1);transform:translateY(-3px)}
 .guest-note{margin:10px 0 0;text-align:center;color:var(--muted);font-size:.85rem}
+
+/* hero: pure black */
+.hero{background:#05070a!important}
+.space .glow{display:none!important}
