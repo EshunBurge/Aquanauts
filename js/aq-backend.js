@@ -22,11 +22,12 @@
     firebase.initializeApp(cfg);
     auth = firebase.auth(); db = firebase.firestore();
     const u = await new Promise(res => { const off = auth.onAuthStateChanged(x => { off(); res(x); }); });
-    if (u) { uid = u.uid; email = (u.email || '').toLowerCase(); await pull(u); } else { ls.del('aq_user'); }
+    if (u) { uid = u.uid; email = (u.email || '').toLowerCase(); await pull(u); } else if (!((ls.get('aq_user') || {}).guest)) { ls.del('aq_user'); }
     return u;
   })();
   ready.catch(e => console.error('[Aquanauts] Firebase failed to start:', e));
 
+  const within = (p, ms) => Promise.race([p, new Promise((_, no) => setTimeout(() => no(Object.assign(new Error('Database timed out'), { code: 'unavailable' })), ms))]);
   const docRef = () => db.collection('students').doc(uid);
 
   function cacheProfile(p) {
@@ -38,15 +39,17 @@
 
   // load profile + progress from Firestore into the local cache
   async function pull(u) {
-    const snap = await db.collection('students').doc(u.uid).get();
-    const d = snap.exists ? snap.data() : null;
     const parts = (u.displayName || '').split(' ');
+    let d = null, dbOk = true;
+    try { const snap = await within(db.collection('students').doc(u.uid).get(), 4000); d = snap.exists ? snap.data() : null; }
+    catch (e) { dbOk = false; AQ.dbProblem = e; console.warn('[Aquanauts] Firestore is not ready, using this device only for now:', e && e.code, e && e.message); }
     const p = { first: (d && d.first) || parts[0] || 'Astronaut', last: (d && d.last) || parts.slice(1).join(' '), email: (u.email || '').toLowerCase(), role: (d && d.role) || '' };
     cacheProfile(p);
     const key = 'aq_state_' + p.email;
+    if (!ls.get(key) && ls.get('aq_state_guest')) { ls.set(key, ls.get('aq_state_guest')); ls.del('aq_state_guest'); }
     if (d && d.state) ls.set(key, d.state);                 // cloud copy wins
-    else if (ls.get(key)) AQ.push(ls.get(key), true);       // first login: upload what is on this device
-    if (!d) await db.collection('students').doc(u.uid).set({ ...p, createdAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+    else if (dbOk && ls.get(key)) AQ.push(ls.get(key), true); // first login: upload what is on this device
+    if (dbOk && !d) { try { await within(db.collection('students').doc(u.uid).set({ ...p, createdAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }), 4000); } catch (e) { console.warn('[Aquanauts] could not create profile', e); } }
     return p;
   }
 
@@ -58,7 +61,7 @@
   addEventListener('pagehide', flush);
 
   AQ.whenReady = fn => ready.then(u => {
-    if (!u && /dashboard\.html$/.test(location.pathname)) { location.replace('login.html'); return; }
+    if (!u && !((ls.get('aq_user') || {}).guest) && /dashboard\.html$/.test(location.pathname)) { location.replace('login.html'); return; }
     fn();
   }, () => fn());
 
@@ -68,7 +71,7 @@
     await cred.user.updateProfile({ displayName: (first + ' ' + last).trim() });
     uid = cred.user.uid; email = em.toLowerCase();
     const p = { first, last, email, role };
-    await docRef().set({ ...p, createdAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+    try { await within(docRef().set({ ...p, createdAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }), 4000); } catch (e) { AQ.dbProblem = e; console.warn('[Aquanauts] Firestore is not ready, account created without a cloud profile:', e && e.code); }
     cacheProfile(p); return p;
   };
   AQ.logIn = async (em, pw) => { await ready; const cred = await auth.signInWithEmailAndPassword(em, pw); uid = cred.user.uid; return pull(cred.user); };

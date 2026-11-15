@@ -248,7 +248,7 @@
       history.replaceState(null, '', which === 'signup' ? '#signup' : '#login');
     };
     $$('button[data-tab],button[data-switch]', document).forEach(b => b.addEventListener('click', () => show(b.dataset.tab || b.dataset.switch)));
-    if (user) location.replace('dashboard.html'); // already logged in
+    if (user && !user.guest) location.replace('dashboard.html'); // already logged in
     show(location.hash === '#signup' ? 'signup' : 'login');
 
     // show/hide password
@@ -287,6 +287,8 @@
     const busy = (btn, on) => { btn.classList.toggle('loading', on); btn.disabled = on; };
     const users = () => JSON.parse(localStorage.getItem('aq_users') || '[]');
     const finish = (u, isNew) => {
+      // a guest who signs up or logs in keeps what they earned
+      try { const g = localStorage.getItem('aq_state_guest'); if (g && !localStorage.getItem('aq_state_' + u.email)) localStorage.setItem('aq_state_' + u.email, g); localStorage.removeItem('aq_state_guest'); } catch (e) {}
       localStorage.setItem('aq_user', JSON.stringify({ first: u.first, email: u.email }));
       forms.login.classList.remove('active'); forms.signup.classList.remove('active');
       $('#authHead').style.display = 'none'; tabs.style.display = 'none';
@@ -346,6 +348,12 @@
       busy(btn, false);
       msg(out, 'success', 'If that email has an account, a reset link is on its way.');
     });
+
+    // continue as guest (no account; progress stays on this device)
+    $$('[data-guest]').forEach(b => b.addEventListener('click', () => {
+      localStorage.setItem('aq_user', JSON.stringify({ first: 'Guest', email: 'guest', guest: true }));
+      location.href = 'dashboard.html';
+    }));
 
     // social placeholders
     $$('[data-social]').forEach(b => b.addEventListener('click', async () => {

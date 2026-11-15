@@ -329,6 +329,7 @@ function AQ_DASH() {
     const log = COURSES.map(c => { const p = S.pct[c.id] || 0, st = status(c); return `<div class="mlog ${st === 'lock' ? 'locked' : ''}"><img src="img/${c.img}.png" alt=""><div><div class="ml-top"><b>${c.short}</b><span>${st === 'done' ? 'Done' : st === 'lock' ? 'Locked' : p + '%'}</span></div><div class="bar-track"><div class="bar-fill" data-w="${p}"></div></div></div></div>`; }).join('');
     const sci = SOURCES.map(([n, k, d, who, ic]) => `<article class="src"><div class="src-ic">${srcIcon[ic]}</div><span class="eyebrow">${k}</span><h3>${n}</h3><p>${d}</p><div class="src-who"><small>Used by</small><div>${who.map(w => `<span class="chip off w">${w}</span>`).join('')}</div></div></article>`).join('');
     return `
+    ${user.guest ? '<div class="card" style="margin-bottom:24px"><span class="eyebrow">Guest mode</span><h3>You are playing as a guest</h3><p class="muted-p">Your progress is saved on this device only. Create an account to keep it safe and play anywhere.</p><a class="btn sm" href="login.html#signup">Create an account</a></div>' : ''}
     <section class="prof-top">
       <div class="card idcard"><div class="id-head"><span class="ini">${esc((S.name || user.first || '?').trim().charAt(0).toUpperCase())}</span><div><span class="eyebrow">Astronaut ID</span><h2>${esc(S.name || user.first)}</h2><p>${r.cur[1]} · Astronaut since ${since}</p></div></div>
         <p class="id-note">${r.cur[2]}</p>
