@@ -522,3 +522,4 @@ html,body{max-width:100%}
 }
 @media (max-width:700px){.lv-pic{display:flex;align-items:center;justify-content:center;overflow:hidden}.lv-pic img{width:auto;height:100%;max-width:100%;object-fit:contain}.lv-pic svg{height:100%;width:auto}}
 @media (max-width:900px){.m-pet canvas{max-height:min(38dvh,340px);width:100%}.m-pet{gap:16px}}
+.feed{justify-content:flex-start}.feed li{flex:0 0 auto;padding:14px 0}
