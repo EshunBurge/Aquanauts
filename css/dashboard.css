@@ -523,3 +523,13 @@ html,body{max-width:100%}
 @media (max-width:700px){.lv-pic{display:flex;align-items:center;justify-content:center;overflow:hidden}.lv-pic img{width:auto;height:100%;max-width:100%;object-fit:contain}.lv-pic svg{height:100%;width:auto}}
 @media (max-width:900px){.m-pet canvas{max-height:min(38dvh,340px);width:100%}.m-pet{gap:16px}}
 .feed{justify-content:flex-start}.feed li{flex:0 0 auto;padding:14px 0}
+
+/* embedded in a very tall frame (page-height iframe): menu becomes a top bar so it is always reachable */
+html.tall .shell{grid-template-columns:1fr;min-height:0}
+html.tall .side{position:static;height:auto;overflow:visible;flex-direction:row;align-items:center;gap:20px;padding:14px 28px;border-right:0;border-bottom:2px solid var(--line)}
+html.tall .side .brand{display:block}
+html.tall .snav{display:flex;gap:8px;flex:1;flex-wrap:wrap}
+html.tall .snav a{height:46px;padding:0 16px}
+html.tall .snav a:hover{transform:none}
+html.tall .logout{display:flex;margin:0 0 0 auto}
+html.tall .main{min-width:0}
