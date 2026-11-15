@@ -123,7 +123,7 @@
     }
     body.innerHTML = `<div style="display:grid;gap:14px">${cart.map(i => `
       <div class="cart-item">
-        <div class="thumb-mini"><img src="img/octopus.png" alt=""></div>
+        <div class="thumb-mini"><img src="${i.img || 'img/octopus.png'}" alt="" style="${i.img ? 'width:100%;border-radius:12px' : ''}"></div>
         <div><h4>${i.name}</h4><small>${i.variant}</small>
           <div class="mini-qty"><button data-act="dec" data-id="${i.id}" aria-label="Decrease">−</button><span>${i.qty}</span><button data-act="inc" data-id="${i.id}" aria-label="Increase">+</button></div></div>
         <div><div class="line-total">${money(i.price * i.qty)}</div><button class="rm" data-act="rm" data-id="${i.id}">Remove</button></div>
@@ -145,9 +145,11 @@
     if (b.dataset.act === 'rm') cart = cart.filter(i => i !== it);
     saveCart(cart);
   });
-  window.addToCart = qty => {
-    const cart = getCart(); const it = cart.find(i => i.id === PRODUCT.id);
-    if (it) it.qty += qty; else cart.push({ ...PRODUCT, qty });
+  const PLUSH = { bloop: ['Bloop', 'pufferfish'], pebble: ['Pebble', 'tardigrade'], moss: ['Moss', 'axolotl'], pip: ['Pip', 'crab'], tink: ['Tink', 'octopus'], skim: ['Skim', 'manta ray'], nori: ['Nori', 'nautilus'], luma: ['Luma', 'anglerfish'] };
+  window.addToCart = (qty, id) => {
+    const prod = id && PLUSH[id] ? { id: 'plush-' + id, name: PLUSH[id][0] + ' Plush', variant: 'Plush ' + PLUSH[id][1], price: 15, img: 'img/plush/' + id + '.jpg' } : PRODUCT;
+    const cart = getCart(); const it = cart.find(i => i.id === prod.id);
+    if (it) it.qty += qty; else cart.push({ ...prod, qty });
     saveCart(cart); openCart();
   };
   renderCart();
@@ -182,13 +184,20 @@
     prev.addEventListener('click', () => track.scrollBy({ left: -step() * (innerWidth > 1080 ? 2 : 1) }));
     next.addEventListener('click', () => track.scrollBy({ left: step() * (innerWidth > 1080 ? 2 : 1) }));
     track.addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); addEventListener('scroll', upd, { passive: true }); upd();
-    // drag to scroll
+    // drag to scroll (mouse only; always lets go, so the page never gets stuck)
     let down = false, sx = 0, sl = 0, moved = false;
-    track.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') return; down = true; moved = false; sx = e.clientX; sl = track.scrollLeft; track.classList.add('dragging'); });
-    addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 3) moved = true; track.scrollLeft = sl - dx; });
-    addEventListener('pointerup', () => { if (!down) return; down = false; track.classList.remove('dragging'); const s = step(); track.scrollTo({ left: Math.round(track.scrollLeft / s) * s }); });
+    const endDrag = () => { if (!down) return; down = false; track.classList.remove('dragging'); if (moved) { const s = step(); track.scrollTo({ left: Math.round(track.scrollLeft / s) * s }); } };
+    track.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse' || e.button !== 0) return; down = true; moved = false; sx = e.clientX; sl = track.scrollLeft; });
+    addEventListener('pointermove', e => {
+      if (!down) return;
+      if (e.buttons === 0) { endDrag(); return; }
+      const dx = e.clientX - sx;
+      if (!moved && Math.abs(dx) > 6) { moved = true; track.classList.add('dragging'); }
+      if (moved) track.scrollLeft = sl - dx;
+    });
+    ['pointerup', 'pointercancel', 'blur', 'dragend'].forEach(ev => addEventListener(ev, endDrag));
+    document.addEventListener('mouseleave', endDrag);
     // horizontal wheel intent
-    track.addEventListener('wheel', e => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { /* native */ } }, { passive: true });
   }
 
   /* ---------- menu: character changes with the link you point at ---------- */
@@ -215,6 +224,7 @@
     $('#qtyDec').addEventListener('click', () => { q = Math.max(1, q - 1); qtyOut.textContent = q; });
     $('#qtyInc').addEventListener('click', () => { q = Math.min(10, q + 1); qtyOut.textContent = q; });
     $('#addBtn').addEventListener('click', () => { addToCart(q); toast('Added to cart'); });
+    $$('[data-plush]').forEach(b => b.addEventListener('click', () => { addToCart(1, b.dataset.plush); toast('Added to cart'); }));
   }
   $$('.acc-item').forEach(it => {
     const btn = $('button', it), body = $('.acc-body', it);
