@@ -725,3 +725,10 @@ html,body{max-width:100%;overflow-x:clip}
 .sp-moonc .mn{fill:#454a54}.sp-moonc .cr{fill:#363a42}
 .sp-earth .oc{fill:#2e333b}.sp-earth .land{fill:#454a54}.sp-earth .cloud,.sp-earth .cap{fill:#5a606b}.sp-earth .rim{stroke:#555b66}
 .sp-small .pb2{fill:#3d424b}.sp-rocks .rk{fill:#3d424b}.sp-rocks .rk.r2{fill:#4a4f59}
+
+/* login: line up with the nav logo and menu button */
+.auth{--gut:max(clamp(20px,4vw,56px),calc((100vw - 1200px)/2))}
+.auth-art{padding-left:var(--gut)}
+.auth-panel{justify-content:flex-end;padding-right:var(--gut)}
+@media (max-width:900px){.auth-panel{justify-content:center;padding-right:clamp(20px,4vw,56px)}}
+.burger{margin-right:-10px}

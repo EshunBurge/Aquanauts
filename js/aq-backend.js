@@ -76,16 +76,28 @@
   AQ.reset = async em => { await ready; return auth.sendPasswordResetEmail(em); };
   AQ.logOut = async () => { try { await flush(); await ready; await auth.signOut(); } catch (e) {} ls.del('aq_user'); };
 
-  AQ.errorText = err => ({
-    'auth/email-already-in-use': 'An account with that email already exists. Try logging in.',
-    'auth/invalid-credential': 'Email or password is incorrect.',
-    'auth/wrong-password': 'Email or password is incorrect.',
-    'auth/user-not-found': 'Email or password is incorrect.',
-    'auth/invalid-email': 'Enter a valid email address.',
-    'auth/weak-password': 'Use at least 8 characters.',
-    'auth/too-many-requests': 'Too many tries. Wait a minute and try again.',
-    'auth/network-request-failed': 'No connection. Check the internet and try again.',
-    'auth/popup-closed-by-user': 'Sign-in was closed before it finished.',
-    'auth/operation-not-allowed': 'This sign-in method is not turned on yet in Firebase.'
-  }[err && err.code] || 'Something went wrong. Please try again.');
+  AQ.errorText = err => {
+    const code = (err && err.code) || '';
+    console.error('[Aquanauts] sign-in problem:', code, err && err.message);
+    const known = {
+      'auth/email-already-in-use': 'An account with that email already exists. Try logging in.',
+      'auth/invalid-credential': 'Email or password is incorrect.',
+      'auth/wrong-password': 'Email or password is incorrect.',
+      'auth/user-not-found': 'Email or password is incorrect.',
+      'auth/invalid-email': 'Enter a valid email address.',
+      'auth/weak-password': 'Use at least 8 characters.',
+      'auth/too-many-requests': 'Too many tries. Wait a minute and try again.',
+      'auth/network-request-failed': 'No connection. Check the internet and try again.',
+      'auth/popup-closed-by-user': 'Sign-in was closed before it finished.',
+      'auth/operation-not-allowed': 'Email sign-in is not turned on in Firebase yet (Authentication > Sign-in method).',
+      'auth/configuration-not-found': 'Firebase Authentication is not set up yet. In the Firebase console open Authentication and click Get started.',
+      'auth/unauthorized-domain': 'This website address is not approved yet. Add it under Authentication > Settings > Authorized domains.',
+      'auth/api-key-not-valid': 'The Firebase key in js/firebase-config.js is not valid.',
+      'auth/invalid-api-key': 'The Firebase key in js/firebase-config.js is not valid.',
+      'permission-denied': 'Signed in, but the database is not ready. Create Firestore and publish the rules from firestore.rules.',
+      'failed-precondition': 'Signed in, but the database is not ready. Create Firestore in the Firebase console.',
+      'unavailable': 'Could not reach the database. Check the internet and try again.'
+    };
+    return known[code] || ('Something went wrong' + (code ? ' (' + code + ')' : '') + '. Please try again.');
+  };
 })();
