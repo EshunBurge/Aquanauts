@@ -460,3 +460,81 @@ button.chip:hover{background:var(--aqua);color:#031012}
 .ml-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px}
 .ml-top b{margin:0}
 .lv-body .eyebrow{margin-top:2px}
+
+/* ===== adaptive: nothing gets cut off ===== */
+.shell{min-height:100dvh}
+.side{height:100dvh;overflow-y:auto;overscroll-behavior:contain}
+html,body{max-width:100%}
+.modal{height:100dvh;padding:clamp(10px,3vw,20px)}
+.m-card{padding:0;overflow:hidden;display:flex;flex-direction:column;max-height:calc(100dvh - 2 * clamp(10px,3vw,20px))}
+.m-scroll{overflow-y:auto;overscroll-behavior:contain;padding:clamp(20px,3vw,34px);min-height:0;flex:1}
+.m-x{z-index:5;background:var(--card)}
+.m-pet canvas{max-height:min(60dvh,420px);justify-self:center}
+.m-level .btn.off,.m-level .btn{white-space:normal;height:auto;min-height:46px;padding-top:10px;padding-bottom:10px;text-align:center}
+.demo .btns .btn{white-space:normal;height:auto;min-height:46px;padding:10px 18px;text-align:center}
+.tabs{display:flex;width:max-content;max-width:100%}
+.tabs button{white-space:nowrap}
+.card,.pet,.crow,.prize,.src{overflow-wrap:anywhere}
+.top h1{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:560px){
+  .tabs{width:100%}.tabs button{flex:1;padding:0 8px;font-size:.7rem;letter-spacing:.03em}
+  .shophead{flex-direction:column;align-items:flex-start}
+  .petgrid{grid-template-columns:1fr}
+  .m-level .acts,.m-level .study,.m-quiz .acts,.m-study .acts{flex-direction:column;align-items:stretch}
+  .m-level .acts .btn,.m-quiz .acts .btn,.m-study .acts .btn{width:100%}
+  .top{padding:12px 16px}.pill{height:40px}.me{width:42px;height:42px}
+  .m-pet h3{font-size:2.4rem}
+}
+
+/* map: phones get a simple list instead of a squeezed drawing */
+.map-list{display:none}
+@media (max-width:640px){
+  .map-wrap{padding:14px}
+  .map-scroll{display:none}
+  .map-list{display:grid;gap:12px;position:relative}
+  .map-list::before{content:"";position:absolute;left:41px;top:20px;bottom:20px;width:6px;background:#1b3641;border-radius:3px}
+  .mnode{position:relative;display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:14px;align-items:center;text-align:left;padding:10px 14px 10px 10px;border-radius:18px;background:#0f232b;border:3px solid #2c5560;color:var(--text);transition:transform .25s var(--ease),border-color .2s}
+  .mnode:active{transform:translate(2px,2px)}
+  .mn-pic{width:64px;height:64px;border-radius:16px;background:var(--bg);display:grid;place-items:center}
+  .mn-pic img{width:86%;height:86%;object-fit:contain}.mn-pic svg{width:70%}
+  .mn-t{display:grid;gap:2px;min-width:0}
+  .mn-t small{font-size:.7rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--orange)}
+  .mn-t b{font-family:var(--font-display);font-weight:400;font-size:1.6rem;line-height:1;letter-spacing:.02em;text-transform:uppercase}
+  .mn-t em{font-style:normal;color:var(--muted);font-size:.84rem}
+  .mn-s{font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:99px;border:2px solid #2c5560;color:var(--muted)}
+  .mnode.done{border-color:var(--aqua)}.mnode.done .mn-s{background:var(--aqua);border-color:var(--aqua);color:#031012}
+  .mnode.cur{border-color:var(--orange)}.mnode.cur .mn-s{background:var(--orange);border-color:var(--orange);color:#1a0d05}
+  .mnode.open{background:var(--aqua);border-color:var(--aqua);color:#031012}.mnode.open .mn-pic{background:var(--aqua)}.mnode.open .mn-t em{color:#0b3a40}.mnode.open .mn-s{border-color:#031012;color:#031012}
+  .mnode.lock .mn-pic img{filter:grayscale(1) brightness(.6)}
+  .mnode.sel{box-shadow:5px 5px 0 var(--orange)}
+}
+.top-l{min-width:0;flex:1 1 auto}.top-r{flex:0 0 auto}
+@media (max-width:420px){.top{gap:8px;padding:12px 12px}.top-r{gap:6px}.pill{padding:0 10px 0 6px;gap:5px;height:38px}.pill svg{width:20px;height:20px}.me{width:40px;height:40px}.top h1{font-size:1.25rem}}
+@media (max-width:900px){.side{height:auto;overflow:visible}}
+@media (max-width:700px){
+  .m-level{grid-template-columns:1fr;gap:20px}
+  .lv-pic{aspect-ratio:auto;height:170px;padding:10px}
+  .lv-body{padding-right:0}
+  .lv-body h3{font-size:2rem}
+  .lv-cols{grid-template-columns:1fr}
+  .m-scroll{padding-top:64px}
+  .m-level .lv-body .eyebrow{margin-right:0}
+}
+@media (max-width:700px){.lv-pic{display:flex;align-items:center;justify-content:center;overflow:hidden}.lv-pic img{width:auto;height:100%;max-width:100%;object-fit:contain}.lv-pic svg{height:100%;width:auto}}
+@media (max-width:900px){.m-pet canvas{max-height:min(38dvh,340px);width:100%}.m-pet{gap:16px}}
+.feed{justify-content:flex-start}.feed li{flex:0 0 auto;padding:14px 0}
+
+/* embedded in a very tall frame (page-height iframe): menu becomes a top bar so it is always reachable */
+html.tall .shell{grid-template-columns:1fr;min-height:0}
+html.tall .side{position:static;height:auto;overflow:visible;flex-direction:row;align-items:center;gap:20px;padding:14px 28px;border-right:0;border-bottom:2px solid var(--line)}
+html.tall .side .brand{display:block}
+html.tall .snav{display:flex;gap:8px;flex:1;flex-wrap:wrap}
+html.tall .snav a{height:46px;padding:0 16px}
+html.tall .snav a:hover{transform:none}
+html.tall .logout{display:flex;margin:0 0 0 auto}
+html.tall .main{min-width:0}
+
+/* sticky sidebar fix: body must not be a scroll container (html already clips x-overflow) */
+html body{overflow:visible!important}
+html{overflow-x:clip}
+@media(min-width:901px){.side{align-self:start}}

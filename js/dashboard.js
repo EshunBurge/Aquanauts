@@ -3,7 +3,7 @@
    State lives in localStorage for now. Every spot marked BACKEND
    is where the real account/game data should be loaded and saved.
    ========================================================== */
-(function () {
+function AQ_DASH() {
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const user = JSON.parse(localStorage.getItem('aq_user') || 'null');
   if (!user) { location.replace('login.html'); return; }
@@ -43,7 +43,7 @@
   let S; // BACKEND: load this student's data from the server instead of localStorage
   try { S = Object.assign(blank(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = blank(); }
   const applySize = () => { document.documentElement.style.fontSize = S.large ? '112.5%' : ''; };
-  const save = () => localStorage.setItem(KEY, JSON.stringify(S)); // BACKEND: save to the server
+  const save = () => { localStorage.setItem(KEY, JSON.stringify(S)); if (window.AQ && AQ.push) AQ.push(S); }; // saved to Firebase when it is connected
 
   const status = c => { const p = S.pct[c.id] || 0; if (p >= 100) return 'done'; const cur = COURSES.find(x => (S.pct[x.id] || 0) < 100); return cur && cur.id === c.id ? 'cur' : 'lock'; };
   const current = () => COURSES.find(c => (S.pct[c.id] || 0) < 100) || null;
@@ -174,7 +174,11 @@
     return `<div class="card panel"><div class="pimg"><img src="img/${c.img}.png" alt="${c.who}"></div><span class="eyebrow">Room 0${c.id}</span><h3>${c.who}</h3><p class="role">${c.room}</p>
       <span class="tag ${st}">${st === 'done' ? 'Finished' : st === 'cur' ? (p ? p + '% done' : 'Next mission') : 'Locked'}</span><p class="line">${c.title}. ${c.line}</p><div class="btns">${btns}</div></div>`;
   }
-  function vMap() { return `<section class="map-grid"><div class="map-wrap"><div class="map-scroll" id="mapScroll">${mapSvg()}</div></div></section>`; }
+  function mapList() {
+    const row = (id, num, name, role, st, img) => `<button class="mnode ${st}${mapSel === id ? ' sel' : ''}" data-id="${id}" type="button"><span class="mn-pic">${img ? `<img src="img/${img}.png" alt="">` : '<svg viewBox="0 0 108 100"><ellipse cx="54" cy="86" rx="42" ry="9" fill="#031012"/><path d="M50 84V16" stroke="#031012" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M50 18H92L80 34L92 50H50Z" fill="#F58A53" stroke="#031012" stroke-width="3" stroke-linejoin="round"/></svg>'}</span><span class="mn-t"><small>${num}</small><b>${name}</b><em>${role}</em></span><span class="mn-s">${st === 'done' ? 'Finished' : st === 'cur' ? 'Next' : st === 'lock' ? 'Locked' : 'Start'}</span></button>`;
+    return `<div class="map-list">${row('hub', 'Start', 'Central Hub', 'Briefing and map', 'open', null)}${COURSES.map(c => row('c' + c.id, 'Level 0' + c.id, c.who, c.short, status(c), c.img)).join('')}</div>`;
+  }
+  function vMap() { return `<section class="map-grid"><div class="map-wrap"><div class="map-scroll" id="mapScroll">${mapSvg()}</div>${mapList()}</div></section>`; }
 
   /* ----- study: words + quizzes (BACKEND: load real lessons and quizzes per course) ----- */
   const STUDY = {
@@ -325,6 +329,7 @@
     const log = COURSES.map(c => { const p = S.pct[c.id] || 0, st = status(c); return `<div class="mlog ${st === 'lock' ? 'locked' : ''}"><img src="img/${c.img}.png" alt=""><div><div class="ml-top"><b>${c.short}</b><span>${st === 'done' ? 'Done' : st === 'lock' ? 'Locked' : p + '%'}</span></div><div class="bar-track"><div class="bar-fill" data-w="${p}"></div></div></div></div>`; }).join('');
     const sci = SOURCES.map(([n, k, d, who, ic]) => `<article class="src"><div class="src-ic">${srcIcon[ic]}</div><span class="eyebrow">${k}</span><h3>${n}</h3><p>${d}</p><div class="src-who"><small>Used by</small><div>${who.map(w => `<span class="chip off w">${w}</span>`).join('')}</div></div></article>`).join('');
     return `
+    ${user.guest ? '<div class="card" style="margin-bottom:24px"><span class="eyebrow">Guest mode</span><h3>You are playing as a guest</h3><p class="muted-p">Your progress is saved on this device only. Create an account to keep it safe and play anywhere.</p><a class="btn sm" href="login.html#signup">Create an account</a></div>' : ''}
     <section class="prof-top">
       <div class="card idcard"><div class="id-head"><span class="ini">${esc((S.name || user.first || '?').trim().charAt(0).toUpperCase())}</span><div><span class="eyebrow">Astronaut ID</span><h2>${esc(S.name || user.first)}</h2><p>${r.cur[1]} · Astronaut since ${since}</p></div></div>
         <p class="id-note">${r.cur[2]}</p>
@@ -354,7 +359,7 @@
   const VIEWS = { home: vHome, map: vMap, courses: vCourses, shop: vShop, profile: vProfile };
 
   /* ---------- modal ---------- */
-  function openModal(html, after) { $('#mCard').innerHTML = `<button class="m-x" id="mx" aria-label="Close" type="button"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></button>` + html; $('#modal').classList.add('show'); $('#modal').setAttribute('aria-hidden', 'false'); $('#mx').onclick = closeModal; after && after(); }
+  function openModal(html, after) { $('#mCard').innerHTML = `<button class="m-x" id="mx" aria-label="Close" type="button"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></button><div class="m-scroll">${html}</div>`; $('#modal').classList.add('show'); $('#modal').setAttribute('aria-hidden', 'false'); $('#mx').onclick = closeModal; after && after(); }
   function closeModal() { $('#modal').classList.remove('show'); $('#modal').setAttribute('aria-hidden', 'true'); if (modalViewer) { modalViewer.dispose(); modalViewer = null; } }
   $('#modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
   addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
@@ -386,7 +391,8 @@
     $$('[data-tab]', v).forEach(b => b.addEventListener('click', () => { petTab = b.dataset.tab; draw(); }));
     $$('[data-view]', v).forEach(b => b.addEventListener('click', () => petModal(b.dataset.view)));
     if (view === 'map') {
-      const sel = n => { mapSel = n.dataset.id; if (!S.visited.includes(mapSel)) { S.visited.push(mapSel); evaluate(); header(); } $$('.map-svg .node').forEach(x => x.classList.toggle('sel', x === n)); levelModal(mapSel); };
+      const sel = n => { mapSel = n.dataset.id; if (!S.visited.includes(mapSel)) { S.visited.push(mapSel); evaluate(); header(); } $$('.map-svg .node').forEach(x => x.classList.toggle('sel', x.dataset.id === n.dataset.id)); levelModal(mapSel); };
+      $$('.mnode', v).forEach(n => n.addEventListener('click', () => { $$('.mnode').forEach(x => x.classList.toggle('sel', x === n)); sel(n); }));
       $$('.map-svg .node', v).forEach(n => { n.addEventListener('click', () => sel(n)); n.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sel(n); } }); });
     }
     if (view === 'profile') {
@@ -412,8 +418,9 @@
   function route() { let h = (location.hash || '#home').slice(1); if (h === 'prizes') { h = 'shop'; petTab = 'prizes'; } else if (h === 'pets') { h = 'shop'; petTab = 'pets'; } view = VIEWS[h] ? h : 'home'; scrollTo(0, 0); draw(); }
   $('#snav').innerHTML = NAV.map(([k, t, i]) => `<a href="#${k}" data-v="${k}">${i}<span>${t}</span></a>`).join('');
   $('#meBtn').addEventListener('click', () => { location.hash = '#profile'; });
-  $('#logout').addEventListener('click', () => { localStorage.removeItem('aq_user'); location.href = 'login.html'; });
+  $('#logout').addEventListener('click', async () => { if (window.AQ && AQ.live) await AQ.logOut(); localStorage.removeItem('aq_user'); location.href = 'login.html'; });
   addEventListener('hashchange', route);
   // streak counts today's visit as a play day only when the game is played; the dashboard itself does not log plays
   applySize(); evaluate(); route();
-})();
+}
+window.AQ ? AQ.whenReady(AQ_DASH) : AQ_DASH();
