@@ -758,3 +758,20 @@ html,body{max-width:100%;overflow-x:clip}
 .foot-grid{grid-template-columns:1.8fr 1fr 1fr}
 @media(max-width:1000px){.foot-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.foot-grid{grid-template-columns:1fr}}
+
+/* game board: photo + clips */
+.shop-left{display:flex;flex-direction:column;gap:18px}
+.shop-clips{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.shop-clips video{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 30%;border-radius:20px;background:var(--card);display:block}
+.boardsec{padding:clamp(90px,10vw,150px) 0}
+.board-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(18px,3vw,36px);align-items:stretch;margin-top:48px}
+.board-photo,.board-clip{margin:0;border-radius:28px;overflow:hidden;background:var(--card);min-height:0}
+.board-photo img,.board-clip video{width:100%;height:100%;display:block;object-fit:cover}
+.board-photo{aspect-ratio:4/3}
+.board-clip video{object-position:50% 30%}
+.board-cta{display:flex;align-items:center;justify-content:space-between;gap:32px;margin-top:36px;flex-wrap:wrap}
+.board-cta p{margin:0;color:var(--muted);max-width:60ch}
+@media(max-width:800px){.board-grid{grid-template-columns:1fr}.board-clip{aspect-ratio:4/3}}
+.board-grid{grid-template-rows:clamp(300px,40vw,520px)}
+.board-photo{aspect-ratio:auto}
+@media(max-width:800px){.board-grid{grid-template-columns:1fr 1fr;grid-template-rows:clamp(220px,60vw,320px)}.board-clip{aspect-ratio:auto}}
