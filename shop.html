@@ -4,63 +4,41 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Shop — Aquanauts</title>
-<meta name="description" content="The Aquanauts game board and plush crew.">
+<meta name="description" content="Shop the Aquanauts game board and plush crew.">
 <meta name="theme-color" content="#05070a">
 <script>if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=20261115g">
+<link rel="stylesheet" href="css/styles.css?v=20261115h">
 </head>
 <body data-page="shop">
 <main>
-  <section class="shop-top">
-    <div class="wrap shop-grid">
-      <div class="shop-left rise">
-        <div class="gallery" id="gallery">
-          <div class="g-main"><img id="gImg" src="media/board-topdown.webp" alt="Top-down: hands turning the dials" width="480" height="600"><video id="gVid" muted loop playsinline preload="metadata" hidden></video>
-            <button type="button" class="g-nav prev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="g-nav next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>
-          <div class="g-thumbs"><button type="button" class="g-th on" data-type="img" data-src="media/board-topdown.webp" data-poster="media/board-topdown.jpg" data-alt="Top-down: hands turning the dials" aria-label="Top-down: hands turning the dials"><img src="media/board-topdown.jpg" alt="" loading="lazy"></button><button type="button" class="g-th" data-type="img" data-src="img/board.jpg" data-poster="img/board.jpg" data-alt="Board with hands on the dials" aria-label="Board with hands on the dials"><img src="img/board.jpg" alt="" loading="lazy"></button><button type="button" class="g-th" data-type="img" data-src="img/board-2.jpg" data-poster="img/board-2.jpg" data-alt="Board with the octopus lit up" aria-label="Board with the octopus lit up"><img src="img/board-2.jpg" alt="" loading="lazy"></button><button type="button" class="g-th" data-type="vid" data-src="media/board-turn.mp4" data-poster="media/board-turn.jpg" data-alt="Video: the board on a stand" aria-label="Video: the board on a stand"><img src="media/board-turn.jpg" alt="" loading="lazy"><i class=pl></i></button></div>
-        </div>
-      </div>
-      <div class="shop-buy">
-        <span class="eyebrow rise" style="animation-delay:.1s">Shop</span>
-        <h1 class="rise" style="animation-delay:.18s">Aquanauts<br><span>Game Board</span></h1>
-        <p class="price rise" style="animation-delay:.26s"><small>$</small>49.99</p>
-        <p class="desc rise" style="animation-delay:.34s">The Aquanauts game board. Play the game at the table with friends and family.</p>
-        <div class="buy rise" style="animation-delay:.42s">
-          <div class="qty"><button id="qtyDec" aria-label="Decrease quantity">&minus;</button><output id="qtyVal">1</output><button id="qtyInc" aria-label="Increase quantity">+</button></div>
-          <button class="btn" id="addBtn">Add to cart</button>
-        </div>
-        <p class="fine rise" style="animation-delay:.5s">Free shipping on orders over $75. <button class="linkish" type="button" data-open-cart>View cart (<span id="cartCount">0</span>)</button></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="plush-sec" id="plush">
+  <section class="store-hero">
     <div class="wrap">
-      <div class="section-head reveal"><span class="eyebrow">Plush crew</span><h2 class="h2">Take the crew <em>home</em></h2><p class="lead">Every Aquanaut as a soft plush. $15 each.</p></div>
-      <div class="plush-grid"><article class="plush-card reveal"><div class="plush-img"><img src="img/plush/bloop.jpg" alt="Bloop the pufferfish plush" loading="lazy" width="640" height="640"></div><div class="plush-body"><h3>Bloop</h3><p class="plush-role">Pufferfish plush · Life support</p><div class="plush-row"><span class="plush-price"><small>$</small>15</span><button class="btn plush-add" type="button" data-plush="bloop">Add to cart</button></div></div></article><article class="plush-card reveal"><div class="plush-img"><img src="img/plush/pebble.jpg" alt="Pebble the tardigrade plush" loading="lazy" width="640" height="640"></div><div class="plush-body"><h3>Pebble</h3><p class="plush-role">Tardigrade plush · Mission planning</p><div class="plush-row"><span class="plush-price"><small>$</small>15</span><button class="btn plush-add" type="button" data-plush="pebble">Add to cart</button></div></div></article><article class="plush-card reveal"><div class="plush-img"><img src="img/plush/moss.jpg" alt="Moss the axolotl plush" loading="lazy" width="640" height="640"></div><div class="plush-body"><h3>Moss</h3><p class="plush-role">Axolotl plush · Energy systems</p><div class="plush-row"><span class="plush-price"><small>$</small>15</span><button class="btn plush-add" type="button" data-plush="moss">Add to cart</button></div></div></article><article class="plush-card reveal"><div class="plush-img"><img src="img/plush/pip.jpg" alt="Pip the crab plush" loading="lazy" width="640" height="640"></div><div class="plush-body"><h3>Pip</h3><p class="plush-role">Crab plush · Engineering</p><div class="plush-row"><span class="plush-price"><small>$</small>15</span><button class="btn plush-add" type="button" data-plush="pip">Add to cart</button></div></div></article><article class="plush-card reveal"><div class="plush-img"><img src="img/plush/tink.jpg" alt="Tink the octopus plush" loading="lazy" width="640" height="640"></div><div class="plush-body"><h3>Tink</h3><p class="plush-role">Octopus plush · Control room</p><div class="plush-row"><span class="plush-price"><small>$</small>15</span><button class="btn plush-add" type="button" data-plush="tink">Add to cart</button></div></div></article><article class="plush-card reveal"><div class="plush-img"><img src="img/plush/skim.jpg" alt="Skim the manta ray plush" loading="lazy" width="640" height="640"></div><div class="plush-body"><h3>Skim</h3><p class="plush-role">Manta ray plush · Sustainability</p><div class="plush-row"><span class="plush-price"><small>$</small>15</span><button class="btn plush-add" type="button" data-plush="skim">Add to cart</button></div></div></article><article class="plush-card reveal"><div class="plush-img"><img src="img/plush/nori.jpg" alt="Nori the nautilus plush" loading="lazy" width="640" height="640"></div><div class="plush-body"><h3>Nori</h3><p class="plush-role">Nautilus plush · Food and farming</p><div class="plush-row"><span class="plush-price"><small>$</small>15</span><button class="btn plush-add" type="button" data-plush="nori">Add to cart</button></div></div></article><article class="plush-card reveal"><div class="plush-img"><img src="img/plush/luma.jpg" alt="Luma the anglerfish plush" loading="lazy" width="640" height="640"></div><div class="plush-body"><h3>Luma</h3><p class="plush-role">Anglerfish plush · Space hazards</p><div class="plush-row"><span class="plush-price"><small>$</small>15</span><button class="btn plush-add" type="button" data-plush="luma">Add to cart</button></div></div></article></div>
+      <span class="eyebrow rise">Shop</span>
+      <h1 class="rise" style="animation-delay:.1s">The Aquanauts <span>shop</span></h1>
+      <p class="lead rise" style="animation-delay:.2s">A game board for the family table and a soft plush for every crew member.</p>
+      <ul class="store-perks rise" style="animation-delay:.3s"><li>Free shipping over $75</li><li>Ships in 3 to 5 business days</li><li>30-day returns</li></ul>
     </div>
   </section>
-
-  <section class="shop-info" id="details">
-    <div class="perch perch-shop"><button class="pal" type="button" style="--i:0" data-say="Hold on tight!" aria-label="Skim says: Hold on tight!"><img src="img/ray.png" alt="Skim"></button><button class="pal" type="button" style="--i:1" data-say="Look what I found!" aria-label="Moss says: Look what I found!"><img src="img/axolotl.png" alt="Moss"></button><button class="pal" type="button" style="--i:2" data-say="Next stop, the Moon." aria-label="Nori says: Next stop, the Moon."><img src="img/nautilus.png" alt="Nori"></button></div>
-    <div class="wrap info-grid">
-      <div class="info reveal">
-        <h3>On the board</h3>
-        <ul><li>Life support, greenhouse and radiation dials</li><li>Sun and storm lights, and an octopus with glowing eyes</li></ul>
+  <section class="store">
+    <div class="wrap">
+      <div class="store-bar">
+        <div class="s-tabs" role="group" aria-label="Filter products">
+          <button class="s-tab on" type="button" data-f="all" aria-pressed="true">All <b></b></button>
+          <button class="s-tab" type="button" data-f="board" aria-pressed="false">Game board <b></b></button>
+          <button class="s-tab" type="button" data-f="plush" aria-pressed="false">Plush crew <b></b></button>
+        </div>
+        <div class="s-tools"><span id="sCount" class="s-count"></span>
+          <label class="s-sort">Sort <select id="sSort"><option value="featured">Featured</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="az">Name: A to Z</option></select></label>
+          <button class="linkish" type="button" data-open-cart>Cart (<span id="cartCount">0</span>)</button></div>
       </div>
-      <div class="info reveal" style="--d:.1s">
-        <h3>Details</h3>
-        <dl><div><dt>Ages</dt><dd>7 to 12</dd></div><div><dt>Made for</dt><dd>The Aquanauts game</dd></div></dl>
-      </div>
-      <div class="info reveal" id="shipping" style="--d:.2s">
-        <h3>Shipping and returns</h3>
-        <p>Orders ship in 3 to 5 business days. Shipping is free over $75 and $6.99 under that. You can return the board within 30 days for a refund.</p>
-      </div>
+      <div class="p-grid" id="pGrid"></div>
     </div>
   </section>
 </main>
-<script src="js/main.js?v=20261115g"></script>
+<script src="js/shop-data.js?v=20261115h"></script>
+<script src="js/shop.js?v=20261115h"></script>
+<script src="js/main.js?v=20261115h"></script>
 </body>
 </html>

@@ -54,7 +54,7 @@
     <div class="wrap">
       <div class="foot-grid">
         <div><a href="index.html" class="brand">Aquanauts<i></i></a><p>An astronaut simulation game that teaches kids real-world problem solving.</p></div>
-        <div><h5>Explore</h5><ul><li><a href="index.html">Home</a></li><li><a href="index.html#crew">The crew</a></li><li><a href="index.html#how">How it works</a></li><li><a href="shop.html">Game board</a></li></ul></div>
+        <div><h5>Explore</h5><ul><li><a href="index.html">Home</a></li><li><a href="index.html#crew">The crew</a></li><li><a href="index.html#how">How it works</a></li><li><a href="shop.html">Shop</a></li></ul></div>
         <div><h5>Account</h5><ul><li><a href="${user ? 'dashboard.html' : 'login.html'}">${user ? 'My dashboard' : 'Log in'}</a></li>${user ? '' : '<li><a href="login.html#signup">Sign up</a></li>'}<li><a href="#">Privacy</a></li></ul></div>
       </div>
       <div class="foot-bottom"><span>© <span id="yr"></span> Aquanauts. All rights reserved.</span><span>For ages 7 to 12</span></div>
@@ -118,7 +118,7 @@
     if (badge) badge.textContent = count;
     const body = $('#drawerBody'), foot = $('#drawerFoot');
     if (!cart.length) {
-      body.innerHTML = `<div class="cart-empty"><img src="img/octopus.png" alt=""><h4 style="font-size:1.6rem;color:var(--aqua)">Cart's empty</h4><p>Dive in and grab the game board.</p><a class="btn btn-primary" href="shop.html">Visit the shop</a></div>`;
+      body.innerHTML = `<div class="cart-empty"><img src="img/octopus.png" alt=""><h4 style="font-size:1.6rem;color:var(--aqua)">Cart's empty</h4><p>Dive in and grab the game board or a plush crew mate.</p><a class="btn btn-primary" href="shop.html">Visit the shop</a></div>`;
       foot.innerHTML = ''; return;
     }
     body.innerHTML = `<div style="display:grid;gap:14px">${cart.map(i => `
@@ -145,9 +145,9 @@
     if (b.dataset.act === 'rm') cart = cart.filter(i => i !== it);
     saveCart(cart);
   });
-  const PLUSH = { bloop: ['Bloop', 'pufferfish'], pebble: ['Pebble', 'tardigrade'], moss: ['Moss', 'axolotl'], pip: ['Pip', 'crab'], tink: ['Tink', 'octopus'], skim: ['Skim', 'manta ray'], nori: ['Nori', 'nautilus'], luma: ['Luma', 'anglerfish'] };
   window.addToCart = (qty, id) => {
-    const prod = id && PLUSH[id] ? { id: 'plush-' + id, name: PLUSH[id][0] + ' Plush', variant: 'Plush ' + PLUSH[id][1], price: 15, img: 'img/plush/' + id + '.jpg' } : PRODUCT;
+    const d = (window.AQ_PRODUCTS || []).find(x => x.id === id);
+    const prod = d && d.kind === 'plush' ? { id: 'plush-' + d.id, name: d.crew + ' Plush', variant: 'Plush ' + d.animal, price: d.price, img: d.img } : { ...PRODUCT, img: 'media/board-topdown.jpg' };
     const cart = getCart(); const it = cart.find(i => i.id === prod.id);
     if (it) it.qty += qty; else cart.push({ ...prod, qty });
     saveCart(cart); openCart();
@@ -223,8 +223,7 @@
     let q = 1;
     $('#qtyDec').addEventListener('click', () => { q = Math.max(1, q - 1); qtyOut.textContent = q; });
     $('#qtyInc').addEventListener('click', () => { q = Math.min(10, q + 1); qtyOut.textContent = q; });
-    $('#addBtn').addEventListener('click', () => { addToCart(q); toast('Added to cart'); });
-    $$('[data-plush]').forEach(b => b.addEventListener('click', () => { addToCart(1, b.dataset.plush); toast('Added to cart'); }));
+    $('#addBtn').addEventListener('click', () => { addToCart(q, $('#addBtn').dataset.pid); toast('Added to cart'); });
   }
   $$('.acc-item').forEach(it => {
     const btn = $('button', it), body = $('.acc-body', it);
