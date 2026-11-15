@@ -740,3 +740,21 @@ html,body{max-width:100%;overflow-x:clip}
 /* hero: pure black */
 .hero{background:#05070a!important}
 .space .glow{display:none!important}
+
+/* no rule of three: four steps, two-up info, sources as one wide + two */
+.steps{grid-template-columns:repeat(4,1fr)}
+.info-grid{grid-template-columns:1fr 1fr;align-items:start}
+.info-grid .info:last-child{grid-column:1/-1}
+.srcgrid{grid-template-columns:1fr 1fr;align-items:stretch}
+.srcgrid>.src:last-child{grid-column:1/-1}
+@media(max-width:1000px){.steps{grid-template-columns:1fr 1fr}.info-grid,.srcgrid{grid-template-columns:1fr}}
+@media(max-width:600px){.steps{grid-template-columns:1fr}}
+
+/* parents grid: two-up (six cards), chips pinned to the bottom of source cards */
+.pgrid:not(.four){grid-template-columns:repeat(2,1fr)}
+@media(max-width:700px){.pgrid:not(.four){grid-template-columns:1fr}}
+.src .src-who{margin-top:auto}
+.pcard{height:100%}
+.foot-grid{grid-template-columns:1.8fr 1fr 1fr}
+@media(max-width:1000px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.foot-grid{grid-template-columns:1fr}}

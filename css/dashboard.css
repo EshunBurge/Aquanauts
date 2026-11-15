@@ -538,3 +538,18 @@ html.tall .main{min-width:0}
 html body{overflow:visible!important}
 html{overflow-x:clip}
 @media(min-width:901px){.side{align-self:start}}
+
+/* pop-ups: even spacing, aligned rows, no orphan grid cells */
+.srcgrid{grid-template-columns:1fr 1fr}.srcgrid>*:last-child{grid-column:1/-1}
+@media(max-width:1100px){.srcgrid{grid-template-columns:1fr}}
+.m-card{padding:clamp(24px,3.2vw,40px)}
+.m-pet{align-items:center;gap:32px}
+.m-pet>div{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.m-pet h3{margin:0}.m-pet p{margin:0}
+.m-pet .acts{margin-top:8px;align-items:center;flex-wrap:nowrap;gap:16px}
+.m-pet .price,.m-sm .price{display:inline-flex;align-items:center;gap:8px;margin:0;height:auto;font-size:1.8rem}
+.words>*:last-child:nth-child(odd){grid-column:1/-1}
+.m-sm .acts{align-items:center}
+.words{grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:560px){.words{grid-template-columns:1fr}}
+.m-study .acts,.m-study .btns{margin-top:24px}
