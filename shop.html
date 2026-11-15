@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shop — Aquanauts Game Board</title>
+<meta name="description" content="The Aquanauts game board.">
+<meta name="theme-color" content="#05070a">
+<script>if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="shop">
+<main>
+  <section class="shop-top">
+    <div class="wrap shop-grid">
+      <div class="shop-media rise">
+        <!-- Put your product photo at img/board.jpg and it replaces this placeholder -->
+        <img class="board" id="boardImg" src="img/board.jpg" alt="Aquanauts game board" onerror="this.remove()">
+        <div class="board-placeholder">
+          <p class="ph-title">Photo of the game board</p>
+          <p class="ph-note">Add your image as <code>img/board.jpg</code></p>
+        </div>
+      </div>
+      <div class="shop-buy">
+        <span class="eyebrow rise" style="animation-delay:.1s">Shop</span>
+        <h1 class="rise" style="animation-delay:.18s">Aquanauts<br><span>Game Board</span></h1>
+        <p class="price rise" style="animation-delay:.26s"><small>$</small>49.99</p>
+        <p class="desc rise" style="animation-delay:.34s">The Aquanauts game board. Play the game at the table with friends and family.</p>
+        <div class="buy rise" style="animation-delay:.42s">
+          <div class="qty"><button id="qtyDec" aria-label="Decrease quantity">&minus;</button><output id="qtyVal">1</output><button id="qtyInc" aria-label="Increase quantity">+</button></div>
+          <button class="btn" id="addBtn">Add to cart</button>
+        </div>
+        <p class="fine rise" style="animation-delay:.5s">Free shipping on orders over $75. <button class="linkish" type="button" data-open-cart>View cart (<span id="cartCount">0</span>)</button></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="shop-info" id="details">
+    <div class="perch perch-shop"><button class="pal" type="button" style="--i:0" data-say="Hold on tight!" aria-label="Skim says: Hold on tight!"><img src="img/ray.png" alt="Skim"></button><button class="pal" type="button" style="--i:1" data-say="Look what I found!" aria-label="Moss says: Look what I found!"><img src="img/axolotl.png" alt="Moss"></button><button class="pal" type="button" style="--i:2" data-say="Next stop, the Moon." aria-label="Nori says: Next stop, the Moon."><img src="img/nautilus.png" alt="Nori"></button></div>
+    <div class="wrap info-grid">
+      <div class="info reveal">
+        <h3>In the box</h3>
+        <ul><li>Game board</li><li>Character pieces</li><li>Rule book</li></ul>
+      </div>
+      <div class="info reveal" style="--d:.1s">
+        <h3>Details</h3>
+        <dl><div><dt>Ages</dt><dd>7 to 12</dd></div><div><dt>Players</dt><dd>2 to 8</dd></div><div><dt>Play time</dt><dd>15 to 45 minutes</dd></div></dl>
+      </div>
+      <div class="info reveal" id="shipping" style="--d:.2s">
+        <h3>Shipping and returns</h3>
+        <p>Orders ship in 3 to 5 business days. Shipping is free over $75 and $6.99 under that. You can return the board within 30 days for a refund.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="js/main.js"></script>
+</body>
+</html>
