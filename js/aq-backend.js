@@ -1,0 +1,91 @@
+/* ==========================================================
+   AQUANAUTS — account + progress backend (Firebase)
+   Auth: email + password and Google. Data: Firestore doc students/{uid}.
+   The page scripts read from a localStorage cache; this file keeps that
+   cache and Firestore in step. With no Firebase config it does nothing
+   and the site runs in demo mode.
+   ========================================================== */
+(function () {
+  const cfg = window.AQ_FIREBASE || {};
+  const live = !!(cfg.apiKey && !/^YOUR_/.test(cfg.apiKey) && cfg.projectId && !/^YOUR_/.test(cfg.projectId));
+  const AQ = window.AQ = { live, mode: live ? 'firebase' : 'demo' };
+  if (!live) { AQ.whenReady = fn => fn(); return; }
+
+  const V = '10.12.2', BASE = 'https://www.gstatic.com/firebasejs/' + V + '/';
+  const load = src => new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = () => no(new Error('Could not load ' + src)); document.head.appendChild(s); });
+  const ls = { get: k => { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }, set: (k, v) => localStorage.setItem(k, JSON.stringify(v)), del: k => localStorage.removeItem(k) };
+
+  let auth, db, uid = null, email = null;
+  const ready = (async () => {
+    await load(BASE + 'firebase-app-compat.js');
+    await Promise.all([load(BASE + 'firebase-auth-compat.js'), load(BASE + 'firebase-firestore-compat.js')]);
+    firebase.initializeApp(cfg);
+    auth = firebase.auth(); db = firebase.firestore();
+    const u = await new Promise(res => { const off = auth.onAuthStateChanged(x => { off(); res(x); }); });
+    if (u) { uid = u.uid; email = (u.email || '').toLowerCase(); await pull(u); } else { ls.del('aq_user'); }
+    return u;
+  })();
+  ready.catch(e => console.error('[Aquanauts] Firebase failed to start:', e));
+
+  const docRef = () => db.collection('students').doc(uid);
+
+  function cacheProfile(p) {
+    ls.set('aq_user', { first: p.first, email: p.email });
+    const all = (ls.get('aq_users') || []).filter(x => x.email !== p.email);
+    all.push({ first: p.first, last: p.last || '', email: p.email, role: p.role || '' });
+    ls.set('aq_users', all);
+  }
+
+  // load profile + progress from Firestore into the local cache
+  async function pull(u) {
+    const snap = await db.collection('students').doc(u.uid).get();
+    const d = snap.exists ? snap.data() : null;
+    const parts = (u.displayName || '').split(' ');
+    const p = { first: (d && d.first) || parts[0] || 'Astronaut', last: (d && d.last) || parts.slice(1).join(' '), email: (u.email || '').toLowerCase(), role: (d && d.role) || '' };
+    cacheProfile(p);
+    const key = 'aq_state_' + p.email;
+    if (d && d.state) ls.set(key, d.state);                 // cloud copy wins
+    else if (ls.get(key)) AQ.push(ls.get(key), true);       // first login: upload what is on this device
+    if (!d) await db.collection('students').doc(u.uid).set({ ...p, createdAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+    return p;
+  }
+
+  // save progress (debounced)
+  let timer = null, pending = null;
+  const flush = () => { if (!pending || !uid) return Promise.resolve(); const s = pending; pending = null; clearTimeout(timer); return docRef().set({ state: s, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(e => { console.error('[Aquanauts] save failed', e); pending = pending || s; }); };
+  AQ.push = (state, now) => { pending = JSON.parse(JSON.stringify(state)); clearTimeout(timer); if (now) return flush(); timer = setTimeout(flush, 800); };
+  addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flush(); });
+  addEventListener('pagehide', flush);
+
+  AQ.whenReady = fn => ready.then(u => {
+    if (!u && /dashboard\.html$/.test(location.pathname)) { location.replace('login.html'); return; }
+    fn();
+  }, () => fn());
+
+  AQ.signUp = async ({ first, last, email: em, pw, role }) => {
+    await ready;
+    const cred = await auth.createUserWithEmailAndPassword(em, pw);
+    await cred.user.updateProfile({ displayName: (first + ' ' + last).trim() });
+    uid = cred.user.uid; email = em.toLowerCase();
+    const p = { first, last, email, role };
+    await docRef().set({ ...p, createdAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+    cacheProfile(p); return p;
+  };
+  AQ.logIn = async (em, pw) => { await ready; const cred = await auth.signInWithEmailAndPassword(em, pw); uid = cred.user.uid; return pull(cred.user); };
+  AQ.google = async () => { await ready; const cred = await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); uid = cred.user.uid; return pull(cred.user); };
+  AQ.reset = async em => { await ready; return auth.sendPasswordResetEmail(em); };
+  AQ.logOut = async () => { try { await flush(); await ready; await auth.signOut(); } catch (e) {} ls.del('aq_user'); };
+
+  AQ.errorText = err => ({
+    'auth/email-already-in-use': 'An account with that email already exists. Try logging in.',
+    'auth/invalid-credential': 'Email or password is incorrect.',
+    'auth/wrong-password': 'Email or password is incorrect.',
+    'auth/user-not-found': 'Email or password is incorrect.',
+    'auth/invalid-email': 'Enter a valid email address.',
+    'auth/weak-password': 'Use at least 8 characters.',
+    'auth/too-many-requests': 'Too many tries. Wait a minute and try again.',
+    'auth/network-request-failed': 'No connection. Check the internet and try again.',
+    'auth/popup-closed-by-user': 'Sign-in was closed before it finished.',
+    'auth/operation-not-allowed': 'This sign-in method is not turned on yet in Firebase.'
+  }[err && err.code] || 'Something went wrong. Please try again.');
+})();

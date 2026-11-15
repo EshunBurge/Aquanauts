@@ -36,7 +36,7 @@
       <nav>
         <a href="index.html"><small>01</small>Home</a>
         <a href="shop.html"><small>02</small>Shop</a>
-        <a href="login.html"><small>03</small>${user ? 'Account' : 'Log in'}</a>
+        <a href="${user ? 'dashboard.html' : 'login.html'}"><small>03</small>${user ? 'My dashboard' : 'Log in'}</a>
       </nav>
     </div>
   </div>
@@ -56,7 +56,7 @@
         <div><a href="index.html" class="brand">Aquanauts<i></i></a><p>An astronaut simulation game that teaches kids real-world problem solving.</p></div>
         <div><h5>Explore</h5><ul><li><a href="index.html">Home</a></li><li><a href="index.html#crew">The crew</a></li><li><a href="index.html#how">How it works</a></li></ul></div>
         <div><h5>Shop</h5><ul><li><a href="shop.html">Game board</a></li></ul></div>
-        <div><h5>Account</h5><ul><li><a href="login.html">Log in</a></li><li><a href="login.html#signup">Sign up</a></li><li><a href="#">Privacy</a></li></ul></div>
+        <div><h5>Account</h5><ul><li><a href="${user ? 'dashboard.html' : 'login.html'}">${user ? 'My dashboard' : 'Log in'}</a></li>${user ? '' : '<li><a href="login.html#signup">Sign up</a></li>'}<li><a href="#">Privacy</a></li></ul></div>
       </div>
       <div class="foot-bottom"><span>© <span id="yr"></span> Aquanauts. All rights reserved.</span><span>For ages 7 to 12</span></div>
     </div>
@@ -248,6 +248,7 @@
       history.replaceState(null, '', which === 'signup' ? '#signup' : '#login');
     };
     $$('button[data-tab],button[data-switch]', document).forEach(b => b.addEventListener('click', () => show(b.dataset.tab || b.dataset.switch)));
+    if (user) location.replace('dashboard.html'); // already logged in
     show(location.hash === '#signup' ? 'signup' : 'login');
 
     // show/hide password
@@ -291,6 +292,7 @@
       $('#authHead').style.display = 'none'; tabs.style.display = 'none';
       $('#welcomeName').textContent = u.first; $('#welcomeCopy').textContent = isNew ? 'Your account is ready.' : "You're logged in.";
       $('#welcome').classList.add('show');
+      setTimeout(() => { location.href = 'dashboard.html'; }, 1100); // students land on their dashboard
     };
 
     forms.login.addEventListener('submit', async e => {
@@ -299,8 +301,13 @@
       const bad = [setErr(em, rules.email(em.value)), setErr(pw, rules.req(pw.value))];
       if (rules.email(em.value) || rules.req(pw.value)) return msg(out, 'error', 'Please fix the highlighted fields.');
       busy(btn, true); out.className = 'form-msg';
-      await new Promise(r => setTimeout(r, 900)); // BACKEND: await fetch('/api/login', …)
-      const u = users().find(x => x.email === em.value.toLowerCase() && x.pw === btoa(pw.value));
+      let u;
+      if (window.AQ && AQ.live) {
+        try { u = await AQ.logIn(em.value.trim(), pw.value); } catch (err) { busy(btn, false); return msg(out, 'error', AQ.errorText(err)); }
+      } else {
+        await new Promise(r => setTimeout(r, 900));
+        u = users().find(x => x.email === em.value.toLowerCase() && x.pw === btoa(pw.value));
+      }
       busy(btn, false);
       if (!u) return msg(out, 'error', 'Email or password is incorrect.');
       finish(u, false);
@@ -313,11 +320,17 @@
       const anyBad = [rules.req(f.value), rules.req(l.value), rules.email(em.value), rules.pw(pw.value), role.value ? '' : 'x'].some(Boolean);
       if (anyBad) return msg(out, 'error', 'Please fix the highlighted fields.');
       if (!terms.checked) return msg(out, 'error', 'Please accept the terms to continue.');
-      if (users().some(x => x.email === em.value.toLowerCase())) return msg(out, 'error', 'An account with that email already exists. Try logging in.');
+      const live = window.AQ && AQ.live;
+      if (!live && users().some(x => x.email === em.value.toLowerCase())) return msg(out, 'error', 'An account with that email already exists. Try logging in.');
       busy(btn, true); out.className = 'form-msg';
-      await new Promise(r => setTimeout(r, 1100)); // BACKEND: await fetch('/api/signup', …)
-      const u = { first: f.value.trim(), last: l.value.trim(), email: em.value.toLowerCase(), pw: btoa(pw.value), role: role.value };
-      localStorage.setItem('aq_users', JSON.stringify([...users(), u]));
+      let u;
+      if (live) {
+        try { u = await AQ.signUp({ first: f.value.trim(), last: l.value.trim(), email: em.value.trim(), pw: pw.value, role: role.value }); } catch (err) { busy(btn, false); return msg(out, 'error', AQ.errorText(err)); }
+      } else {
+        await new Promise(r => setTimeout(r, 1100));
+        u = { first: f.value.trim(), last: l.value.trim(), email: em.value.toLowerCase(), pw: btoa(pw.value), role: role.value };
+        localStorage.setItem('aq_users', JSON.stringify([...users(), u]));
+      }
       busy(btn, false); finish(u, true);
     });
 
@@ -327,12 +340,19 @@
     $('#forgotForm').addEventListener('submit', async e => {
       e.preventDefault(); const em = $('#fgEmail'), out = $('#forgotMsg'), btn = $('#forgotBtn');
       const er = rules.email(em.value); setErr(em, er); if (er) return;
-      busy(btn, true); await new Promise(r => setTimeout(r, 900)); busy(btn, false);
+      busy(btn, true);
+      if (window.AQ && AQ.live) { try { await AQ.reset(em.value.trim()); } catch (err) { if (err.code !== 'auth/user-not-found') { busy(btn, false); return msg(out, 'error', AQ.errorText(err)); } } }
+      else await new Promise(r => setTimeout(r, 900));
+      busy(btn, false);
       msg(out, 'success', 'If that email has an account, a reset link is on its way.');
     });
 
     // social placeholders
-    $$('[data-social]').forEach(b => b.addEventListener('click', () => toast(b.dataset.social + ' sign-in needs to be connected')));
-    $('#logout').addEventListener('click', () => { localStorage.removeItem('aq_user'); location.href = 'login.html'; });
+    $$('[data-social]').forEach(b => b.addEventListener('click', async () => {
+      if (window.AQ && AQ.live && b.dataset.social === 'Google') {
+        try { finish(await AQ.google(), false); } catch (err) { toast(AQ.errorText(err)); }
+      } else toast(b.dataset.social + ' sign-in needs to be connected');
+    }));
+    $('#logout').addEventListener('click', async () => { if (window.AQ && AQ.live) await AQ.logOut(); localStorage.removeItem('aq_user'); location.href = 'login.html'; });
   }
 })();
