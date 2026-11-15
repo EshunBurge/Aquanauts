@@ -58,7 +58,7 @@
         <div><h5>Shop</h5><ul><li><a href="shop.html">Game board</a></li></ul></div>
         <div><h5>Account</h5><ul><li><a href="login.html">Log in</a></li><li><a href="login.html#signup">Sign up</a></li><li><a href="#">Privacy</a></li></ul></div>
       </div>
-      <div class="foot-bottom"><span>© <span id="yr"></span> Aquanauts. All rights reserved.</span><span>For ages 7 to 12</span></div>
+      <div class="foot-bottom"><span>© <span id="yr"></span> Aquanauts. All rights reserved.</span><span>Swim Through the Cosmos.</span></div>
     </div>
   </footer>`);
   $('#yr').textContent = new Date().getFullYear();
