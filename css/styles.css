@@ -795,3 +795,6 @@ html,body{max-width:100%;overflow-x:clip}
 .g-th:hover{opacity:1}.g-th.on{opacity:1;border-color:var(--orange)}
 .g-th .pl{position:absolute;inset:0;display:grid;place-items:center;background:rgba(5,7,10,.35)}
 .g-th .pl::after{content:"";border-left:14px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+
+[hidden]{display:none!important}
+.g-main video{background:#05070a}

@@ -229,7 +229,7 @@
   if (gal) {
     const gi = $('#gImg'), gv = $('#gVid'), ths = [...gal.querySelectorAll('.g-th')]; let cur = 0;
     const show = n => { cur = (n + ths.length) % ths.length; const t = ths[cur]; ths.forEach(x => x.classList.toggle('on', x === t));
-      if (t.dataset.type === 'vid') { gi.hidden = true; gv.hidden = false; gv.poster = t.dataset.poster; gv.src = t.dataset.src; gv.setAttribute('aria-label', t.dataset.alt); gv.play().catch(() => {}); }
+      if (t.dataset.type === 'vid') { gi.hidden = true; gv.hidden = false; gv.poster = t.dataset.poster; gv.src = t.dataset.src; gv.setAttribute('aria-label', t.dataset.alt); gv.controls = false; const pr = gv.play(); if (pr && pr.catch) pr.catch(() => { gv.controls = true; }); }
       else { gv.pause(); gv.hidden = true; gi.hidden = false; gi.src = t.dataset.src; gi.alt = t.dataset.alt; } };
     ths.forEach((t, i) => t.addEventListener('click', () => show(i)));
     gal.querySelector('.prev').addEventListener('click', () => show(cur - 1));
