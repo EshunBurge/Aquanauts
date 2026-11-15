@@ -224,8 +224,18 @@
       btn.setAttribute('aria-expanded', open);
     });
   });
-  const boardImg = $('#boardImg');
-  if (boardImg) boardImg.addEventListener('error', () => boardImg.remove());
+  /* gallery: click through photos and videos */
+  const gal = $('#gallery');
+  if (gal) {
+    const gi = $('#gImg'), gv = $('#gVid'), ths = [...gal.querySelectorAll('.g-th')]; let cur = 0;
+    const show = n => { cur = (n + ths.length) % ths.length; const t = ths[cur]; ths.forEach(x => x.classList.toggle('on', x === t));
+      if (t.dataset.type === 'vid') { gi.hidden = true; gv.hidden = false; gv.poster = t.dataset.poster; gv.src = t.dataset.src; gv.setAttribute('aria-label', t.dataset.alt); gv.play().catch(() => {}); }
+      else { gv.pause(); gv.hidden = true; gi.hidden = false; gi.src = t.dataset.src; gi.alt = t.dataset.alt; } };
+    ths.forEach((t, i) => t.addEventListener('click', () => show(i)));
+    gal.querySelector('.prev').addEventListener('click', () => show(cur - 1));
+    gal.querySelector('.next').addEventListener('click', () => show(cur + 1));
+    gal.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+  }
 
   /* ==========================================================
      AUTH  (BACKEND: replace the fake delay + localStorage with your API)
