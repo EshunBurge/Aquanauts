@@ -36,7 +36,7 @@
       <nav>
         <a href="index.html"><small>01</small>Home</a>
         <a href="shop.html"><small>02</small>Shop</a>
-        <a href="login.html"><small>03</small>${user ? 'Account' : 'Log in'}</a>
+        <a href="${user ? 'dashboard.html' : 'login.html'}"><small>03</small>${user ? 'My dashboard' : 'Log in'}</a>
       </nav>
     </div>
   </div>
@@ -56,7 +56,7 @@
         <div><a href="index.html" class="brand">Aquanauts<i></i></a><p>An astronaut simulation game that teaches kids real-world problem solving.</p></div>
         <div><h5>Explore</h5><ul><li><a href="index.html">Home</a></li><li><a href="index.html#crew">The crew</a></li><li><a href="index.html#how">How it works</a></li></ul></div>
         <div><h5>Shop</h5><ul><li><a href="shop.html">Game board</a></li></ul></div>
-        <div><h5>Account</h5><ul><li><a href="login.html">Log in</a></li><li><a href="login.html#signup">Sign up</a></li><li><a href="#">Privacy</a></li></ul></div>
+        <div><h5>Account</h5><ul><li><a href="${user ? 'dashboard.html' : 'login.html'}">${user ? 'My dashboard' : 'Log in'}</a></li>${user ? '' : '<li><a href="login.html#signup">Sign up</a></li>'}<li><a href="#">Privacy</a></li></ul></div>
       </div>
       <div class="foot-bottom"><span>© <span id="yr"></span> Aquanauts. All rights reserved.</span><span>For ages 7 to 12</span></div>
     </div>
@@ -248,6 +248,7 @@
       history.replaceState(null, '', which === 'signup' ? '#signup' : '#login');
     };
     $$('button[data-tab],button[data-switch]', document).forEach(b => b.addEventListener('click', () => show(b.dataset.tab || b.dataset.switch)));
+    if (user) location.replace('dashboard.html'); // already logged in
     show(location.hash === '#signup' ? 'signup' : 'login');
 
     // show/hide password
@@ -291,6 +292,7 @@
       $('#authHead').style.display = 'none'; tabs.style.display = 'none';
       $('#welcomeName').textContent = u.first; $('#welcomeCopy').textContent = isNew ? 'Your account is ready.' : "You're logged in.";
       $('#welcome').classList.add('show');
+      setTimeout(() => { location.href = 'dashboard.html'; }, 1100); // students land on their dashboard
     };
 
     forms.login.addEventListener('submit', async e => {
