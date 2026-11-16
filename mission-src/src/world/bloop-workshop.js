@@ -1,0 +1,33 @@
+import * as THREE from 'three';
+import {createHandsOn} from './hands-on.js';
+import {physicalObjective} from '../systems/physical-study.js';
+export function buildBloopWorkshop({scene,camera,interactions,obstacles,mat,sign,onAction,isFree}){const hands=createHandsOn({scene,camera,interactions,onAction,isFree}),machines={},filters={},oldFilters={},lights={},flows={},stops={};
+ const mesh=(geo,color,x,y,z,parent=scene)=>{const m=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color,roughness:.45,metalness:.18,emissive:color,emissiveIntensity:.05}));m.position.set(x,y,z);m.castShadow=m.receiveShadow=true;parent.add(m);return m;};
+ const box=(c,x,y,z,w,h,d,p)=>mesh(new THREE.BoxGeometry(w,h,d),c,x,y,z,p);
+ function cartridge(color){const g=new THREE.Group();mesh(new THREE.CylinderGeometry(.21,.21,.72,20),color,0,0,0,g);for(let i=0;i<7;i++)mesh(new THREE.TorusGeometry(.215,.018,6,20),'#eef2d4',0,-.26+i*.085,0,g).rotation.x=Math.PI/2;const handle=mesh(new THREE.TorusGeometry(.13,.035,8,16),'#213b4d',0,.43,0,g);return g;}
+ // Clean cartridges sit in a clearly marked open supply rack, away from the route.
+ box('#69866a',-34,.5,-38,2.8,1,.8);box('#e7edb2',-34,1.04,-38,3,.13,1);sign('CLEAN FILTERS / PICK ONE UP',-34,2.5,-38.15,3.5,'#e3ef9b');obstacles.push({x:-34,z:-38,w:3,d:1});stops.supplies=[-34,-35.7];
+ for(const [kind,x,color]of [['air',-39,'#80e4c7'],['water',-29,'#83cfff']]){const g=new THREE.Group();g.position.set(x,0,-38);scene.add(g);machines[kind]=g;box('#466454',0,.55,0,2.6,1.1,1.05,g);box(color,0,1.2,0,2.7,.22,1.15,g);box('#d6e6bc',0,1.75,0,2.65,1.0,.8,g);box('#193d4d',0,1.7,.43,1,.74,.08,g);
+ const old=cartridge('#a47e65');old.rotation.x=Math.PI/2;old.position.set(0,1.7,.6);g.add(old);oldFilters[kind]=old;
+ const socket=box(color,0,1.7,.5,.65,.7,.08,g);socket.material.transparent=true;socket.material.opacity=.2;
+ const handle=box('#ffad72',-.9,1.72,.57,.16,.55,.18,g);const button=mesh(new THREE.CylinderGeometry(.19,.19,.12,20),color,.9,1.26,.61,g);button.rotation.x=Math.PI/2;lights[kind]=mesh(new THREE.SphereGeometry(.09,12,8),'#ffad72',.9,2.1,.46,g);
+ const filter=cartridge(color);filter.position.set(kind==='air'?-34.65:-33.35,1.48,-38);filters[kind]=filter;hands.item('take-'+kind,filter,kind);
+ hands.add({id:'release-'+kind,label:'Pull release handle · remove clogged filter',object:handle,point:[x-.9,1.72,-37.43],action:{type:'remove',kind},enabled:()=>machines[kind].userData.installed==='dirty'});
+ hands.add({id:'socket-'+kind,label:'Fit '+kind+' filter into socket',object:socket,point:[x,1.7,-37.45],action:{type:'insert',kind},enabled:()=>machines[kind].userData.installed==='empty'});
+ hands.add({id:'start-'+kind,label:()=>`Press ${kind==='water'?'pump':'fan'} button`,object:button,point:[x+.9,1.26,-37.35],action:{type:'power',kind}});
+ sign(kind==='water'?'WATER / FILTER → VALVE → START':'AIR / FILTER → FAN',x,2.7,-38,3,kind==='water'?'#83cfff':'#d9ef9a');
+ // Recovery tray receives the extracted clogged filter; it remains visible.
+ box('#8bba9c',-1,1.14,.95,.7,.12,.65,g);stops[kind]=[x,-35.65];
+ const pipe=mesh(new THREE.CylinderGeometry(.07,.07,1.1,12),color,.55,.7,.61,g);const flow=new THREE.Group();g.add(flow);for(let i=0;i<6;i++)mesh(new THREE.SphereGeometry(.045,8,6),color,.55,.3+i*.14,.71,flow);flows[kind]=flow;
+ }
+ const valve=new THREE.Group();valve.position.set(-27.7,1.65,-37.4);scene.add(valve);mesh(new THREE.TorusGeometry(.3,.05,8,28),'#71c7fa',0,0,0,valve);box('#c3eaff',0,0,0,.5,.06,.08,valve);box('#c3eaff',0,0,0,.06,.5,.08,valve);hands.add({id:'water-valve',label:'Turn blue valve · open / close water flow',object:valve,point:valve.position.toArray(),action:{type:'valve',kind:'water'}});
+ // Three physical selector paddles make shared power visible without a menu.
+ const controls={};for(const [i,[kind,color]]of [['fan','#8fe1cb'],['recycle','#8bcfff'],['heater','#ffb786']].entries()){const x=-28.15,z=-30.4+i*.7;const paddle=box(color,x,1.35,z,.25,.18,.38);controls[kind]=paddle;hands.add({id:'mode-'+kind,label:()=>`Turn ${kind==='fan'?'air':kind==='recycle'?'water':'heat'} selector · Off / Standard / Boost`,object:paddle,point:[x-.1,1.4,z],action:{type:'mode',kind}});}
+ const test=box('#e0ec8c',-28.1,1.8,-29.4,.32,.28,.45);hands.add({id:'habitat-test',label:'Press habitat test button · 24 seconds',object:test,point:test.position.toArray(),action:{type:'trial'}});sign('TURN SELECTORS / PRESS TEST',-28.4,2.75,-29.4,3,'#ffe0a0',-Math.PI/2);
+ let readout=null,lastText='';function statusText(text){if(text===lastText)return;lastText=text;const cv=document.createElement('canvas');cv.width=1024;cv.height=384;const c=cv.getContext('2d');c.fillStyle='#123f45';c.fillRect(0,0,1024,384);c.fillStyle='#e4edb1';c.font='bold 35px Trebuchet MS';text.split('\n').forEach((l,i)=>c.fillText(l,35,65+i*68,960));const tex=new THREE.CanvasTexture(cv);tex.colorSpace=THREE.SRGBColorSpace;if(!readout){readout=new THREE.Mesh(new THREE.PlaneGeometry(3.5,1.31),new THREE.MeshBasicMaterial({map:tex}));readout.position.set(-34,3.65,-41.75);scene.add(readout);}else{readout.material.map.dispose();readout.material.map=tex;}}
+ return {hands,stops,socketPositions:{air:new THREE.Vector3(-39,1.7,-37.38),water:new THREE.Vector3(-29,1.7,-37.38)},resetCarry(){if(hands.held)hands.drop();},sync(s,plant,time=0,reduced=false){for(const kind of ['air','water']){const k=s[kind],g=machines[kind];g.userData.installed=k.installed;const old=oldFilters[kind];old.position.lerp(k.installed==='dirty'?new THREE.Vector3(0,1.7,.6):new THREE.Vector3(-1,1.5,.95),reduced?1:.15);old.rotation.x=k.installed==='dirty'?Math.PI/2:0;const filter=filters[kind];filter.userData.pickable=['shelf','floor'].includes(s.items[kind]);if(s.items[kind]==='socket'&&filter.parent!==scene)hands.place(kind,new THREE.Vector3(g.position.x,1.7,-37.38));if(s.items[kind]==='socket'){filter.position.set(g.position.x,1.7,-37.38);filter.rotation.x=Math.PI/2;}
+ lights[kind].material.color.set(k.running?'#b8f16b':'#ffad72');lights[kind].material.emissive.copy(lights[kind].material.color);lights[kind].material.emissiveIntensity=k.running?1:.1;flows[kind].visible=k.running&&(kind!=='water'||s.water.valve);flows[kind].children.forEach((m,i)=>m.position.y=.25+((time*(reduced?0:.5)+i*.16)%.95));}
+ valve.rotation.z=THREE.MathUtils.lerp(valve.rotation.z,s.water.valve?Math.PI/2:0,.15);for(const key of Object.keys(controls))controls[key].rotation.x=-.4+plant[key]*.4;
+ statusText(`BLOOP’S LITTLE OCEAN / LIVE MODEL\nWATER ${plant.water.toFixed(0)}%   AIR ${plant.air.toFixed(0)}%   ${plant.temperature.toFixed(1)}°C\nPOWER ${1+[0,2,4][plant.fan]+[0,1,3][plant.recycle]+[0,2,4][plant.heater]} / 9 kW   ·   WATER PUMP ${s.water.running?'ON':'OFF'}\n${s.completed.water?'':physicalObjective(s,'water')}`);
+ }};
+}

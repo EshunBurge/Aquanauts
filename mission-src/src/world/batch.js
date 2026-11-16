@@ -1,0 +1,6 @@
+import * as THREE from 'three';
+// Repeated structural pieces share geometry/material and become one draw per group.
+export function createBatch(scene){const groups=new Map();const cube=new THREE.BoxGeometry(1,1,1),cylinder=new THREE.CylinderGeometry(1,1,1,16);const matrix=new THREE.Matrix4(),position=new THREE.Vector3(),quaternion=new THREE.Quaternion(),scale=new THREE.Vector3();
+ function add(geometry,material,x,y,z,sx,sy,sz,rotation=0){const key=`${geometry.uuid}/${material.uuid}`;if(!groups.has(key))groups.set(key,{geometry,material,instances:[]});groups.get(key).instances.push({x,y,z,sx,sy,sz,rotation});}
+ return{box(material,x,y,z,w,h,d,rotation=0){add(cube,material,x,y,z,w,h,d,rotation);},cylinder(material,x,y,z,r,h){add(cylinder,material,x,y,z,r,h,r);},flush(){const meshes=[];for(const g of groups.values()){const mesh=new THREE.InstancedMesh(g.geometry,g.material,g.instances.length);mesh.castShadow=true;mesh.receiveShadow=true;g.instances.forEach((v,i)=>{position.set(v.x,v.y,v.z);quaternion.setFromAxisAngle(new THREE.Vector3(0,1,0),v.rotation);scale.set(v.sx,v.sy,v.sz);matrix.compose(position,quaternion,scale);mesh.setMatrixAt(i,matrix);});mesh.computeBoundingSphere();scene.add(mesh);meshes.push(mesh);}groups.clear();return meshes;}};
+}

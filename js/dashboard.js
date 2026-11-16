@@ -7,7 +7,7 @@ function AQ_DASH() {
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const user = JSON.parse(localStorage.getItem('aq_user') || 'null');
   if (!user) { location.replace('login.html'); return; }
-  const GAME_URL = '#'; // BACKEND: link to the real game (the progressive web app)
+  const GAME_URL = 'mission/'; // Same-origin adventure; existing player profile remains authoritative.
   const KEY = 'aq_state_' + user.email;
   const full = (JSON.parse(localStorage.getItem('aq_users') || '[]').find(u => u.email === user.email) || {});
 
@@ -246,7 +246,7 @@ function AQ_DASH() {
       <p class="lv-big">${BIG[c.id]}</p><p class="lv-desc">${DESC[c.id]}</p>${p ? `<div class="bar-track"><div class="bar-fill" style="width:${p}%"></div></div>` : ''}<div class="acts">${acts}</div></div>
       <div class="lv-more"><div class="lv-cols"><div><small>What you will do</small><ul class="lv-list">${DO[c.id].map(d => `<li>${d}</li>`).join('')}</ul></div>
       <div class="lv-sci"><small>Real science behind it</small><b>${SCI[c.id][0]}</b><p>${SCI[c.id][1]}</p></div></div>
-      ${study}</div></div>`, () => { $$('#mCard [data-play]').forEach(a => a.addEventListener('click', e => { if (GAME_URL === '#') { e.preventDefault(); toast('The game opens here once it is connected.'); } })); });
+      ${study}</div></div>`);
   }
 
   function quizModal(id) {
@@ -396,7 +396,6 @@ function AQ_DASH() {
     if (view === 'home' && S.active && $('#buddyCv')) buddy = AQPets.viewer($('#buddyCv'), { id: S.active, auto: true });
   }
   function bind(v) {
-    $$('[data-play]', v).forEach(a => a.addEventListener('click', e => { if (GAME_URL === '#') { e.preventDefault(); toast('The game opens here once it is connected.'); } }));
     $$('[data-jump]', v).forEach(b => b.addEventListener('click', () => { const t = document.getElementById(b.dataset.jump); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
     $$('[data-view]', v).forEach(b => b.addEventListener('click', () => petModal(b.dataset.view)));
     if (view === 'map') {
@@ -423,6 +422,36 @@ function AQ_DASH() {
   }
   document.addEventListener('click', e => { const w = e.target.closest('[data-words]'); if (w) return wordsModal(w.dataset.words); const qz = e.target.closest('[data-quiz]'); if (qz) return quizModal(qz.dataset.quiz); const b = e.target.closest('#mCard [data-buy]'); if (b) confirmBuy(b.dataset.buy); const a = e.target.closest('#mCard [data-adopt]'); if (a) { S.active = a.dataset.adopt; save(); closeModal(); toast('Home pet changed'); draw(); } });
 
+  /* ---------- game data -> dashboard ----------
+     The game saves in this browser (key aquanauts.settlement.v1). We read it here and turn it into course
+     progress, so finishing a room in the game fills the bar, unlocks the next adventure and pays out prizes. */
+  const GAME_KEY = 'aquanauts.settlement.v1', GAME_STEPS = { nori: 7, luma: 7, pip: 5, skim: 7, pebble: 7, tank: 10 };
+  function gamePct(id, g) {
+    if ((g.completed || []).includes(id)) return 100;
+    if (id === 'bloop') { const b = g.bloop || {}; return Math.min(95, (b.introduced ? 10 : 0) + ['air', 'water', 'climate'].filter(k => b[k]).length * 28); }
+    if (id === 'moss') { const m = g.moss || {}; return m.backup ? 90 : m.introduced ? 10 : 0; }
+    const s = (g.studies || {})[id]; if (!s) return 0;
+    return s.complete ? 95 : Math.min(90, Math.round((s.stage || 0) / (GAME_STEPS[id] || 7) * 90));
+  }
+  function syncGame() {
+    let g = null; try { g = JSON.parse(localStorage.getItem(GAME_KEY)); } catch { }
+    if (!g || g.version !== 1) return false;
+    let changed = false;
+    COURSES.forEach(c => {
+      const p = gamePct(c.who.toLowerCase(), g), before = S.pct[c.id] || 0;
+      if (p > before) {
+        S.pct[c.id] = p; changed = true;
+        S.log.unshift({ t: Date.now(), text: p >= 100 ? `Finished ${c.title} in the game` : before ? `Made progress in ${c.title}` : `Started ${c.title} in the game` });
+      }
+    });
+    if (changed) { const today = iso(new Date()); if (!S.plays.includes(today)) S.plays.push(today); evaluate(); }
+    return changed;
+  }
+  const refreshFromGame = () => { if (syncGame()) { header(); draw(); } };
+  addEventListener('storage', e => { if (e.key === GAME_KEY) refreshFromGame(); });
+  addEventListener('pageshow', () => refreshFromGame());
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshFromGame(); });
+
   /* ---------- routing + init ---------- */
   function route() { let h = (location.hash || '#home').slice(1); if (h === 'prizes') { h = 'shop'; jumpTo = 'cantina-prizes'; } else if (h === 'pets') { h = 'shop'; jumpTo = 'cantina-adopt'; } view = VIEWS[h] ? h : 'home'; scrollTo(0, 0); draw(); }
   $('#snav').innerHTML = NAV.map(([k, t, i]) => `<a href="#${k}" data-v="${k}">${i}<span>${t}</span></a>`).join('');
@@ -430,6 +459,6 @@ function AQ_DASH() {
   $('#logout').addEventListener('click', async () => { if (window.AQ && AQ.live) await AQ.logOut(); localStorage.removeItem('aq_user'); location.href = 'login.html'; });
   addEventListener('hashchange', route);
   // streak counts today's visit as a play day only when the game is played; the dashboard itself does not log plays
-  applySize(); evaluate(); route();
+  applySize(); syncGame(); evaluate(); route();
 }
 window.AQ ? AQ.whenReady(AQ_DASH) : AQ_DASH();
