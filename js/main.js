@@ -142,18 +142,27 @@
     const cart = getCart(), n = cart.reduce((a, i) => a + i.qty, 0), sub = cart.reduce((a, i) => a + i.price * i.qty, 0);
     let el = document.getElementById('demoCo'); if (el) el.remove();
     el = document.createElement('div'); el.id = 'demoCo'; el.className = 'democo'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-labelledby', 'dcT');
-    el.innerHTML = `<div class="dc-card"><img src="img/octopus.png" alt=""><span class="dc-tag">Demo app</span><h2 id="dcT">This is a demo, so the store is not real</h2>
-      <p>Aquanauts is a demo app built for the NASA Space Apps Challenge. The shop, the cart and this checkout are only here to show how it would work.</p>
-      <ul><li>No payment is taken, and please do not enter any card details.</li><li>Nothing will be ordered or shipped.</li><li>The prices and products are examples.</li></ul>
-      <div class="dc-sum"><span>${n} ${n === 1 ? 'item' : 'items'} in your demo cart</span><b>${money(sub)}</b></div>
-      <div class="dc-btns"><button class="btn btn-primary" id="dcBack" type="button">Got it, keep browsing</button><button class="btn btn-ghost" id="dcClear" type="button">Empty my demo cart</button></div></div>`;
+    const items = cart.map(i => `<li><span class="dc-th"><img src="${i.img || 'img/octopus.png'}" alt=""></span><span class="dc-nm"><b>${i.name}</b><small>${i.variant || ''} · Qty ${i.qty}</small></span><span class="dc-pr">${money(i.price * i.qty)}</span></li>`).join('');
+    el.innerHTML = `<div class="dc-card"><div class="dc-band"><span>Demo mode</span><span>Demo mode</span><span>Demo mode</span><span>Demo mode</span></div>
+      <div class="dc-step" id="dcStep1"><div class="dc-head"><img src="img/octopus.png" alt=""><div><span class="dc-tag">Practice checkout</span><h2 id="dcT">Ready for launch?</h2></div></div>
+        <p class="dc-lead">This is a practice run. The shop is not real, so no money moves and nothing ships. Press the big button to see how an order would feel.</p>
+        <p class="dc-lab">Your cargo</p><ul class="dc-items">${items}</ul>
+        <div class="dc-sum"><span>${n} ${n === 1 ? 'item' : 'items'}</span><b>${money(sub)}</b></div>
+        <div class="dc-btns"><button class="btn btn-primary" id="dcGo" type="button">Launch my practice order</button><button class="btn btn-ghost" id="dcBack" type="button">Back to the shop</button></div>
+        <p class="dc-fine">Please do not type any card details. There is nothing to pay.</p></div>
+      <div class="dc-step" id="dcStep2" hidden><div class="dc-sky"><i></i><i></i><i></i><i></i><i></i><svg class="dc-rocket" viewBox="0 0 64 96"><path d="M32 4c14 12 18 32 14 54H18C14 36 18 16 32 4Z" fill="#EAF4F5"/><circle cx="32" cy="36" r="8" fill="#99DCE1" stroke="#0a1419" stroke-width="3"/><path d="M18 46L4 66l14-4ZM46 46l14 20-14-4Z" fill="#F58A53"/><path d="M26 62h12l-6 28Z" fill="#F58A53"/></svg></div>
+        <h2>Practice order launched!</h2><p class="dc-lead">Nothing was ordered, charged or shipped. Aquanauts is a demo app, and this is just what the finished shop could feel like.</p>
+        <p class="dc-lab" style="text-align:center">Want real coins? Finish a course in the game to earn some.</p>
+        <div class="dc-btns"><a class="btn btn-primary" href="dashboard.html">Go to my dashboard</a><button class="btn btn-ghost" id="dcDone" type="button">Close</button></div></div></div>`;
     document.body.appendChild(el);
     const close = () => { el.remove(); document.removeEventListener('keydown', esc); };
     const esc = e => { if (e.key === 'Escape') close(); };
     document.addEventListener('keydown', esc);
     el.addEventListener('click', e => { if (e.target === el) close(); });
-    $('#dcBack').onclick = () => { close(); closeCart(); }; $('#dcClear').onclick = () => { saveCart([]); close(); toast('Demo cart emptied'); };
-    $('#dcBack').focus();
+    $('#dcBack').onclick = () => { close(); closeCart(); };
+    $('#dcGo').onclick = () => { $('#dcStep1').hidden = true; $('#dcStep2').hidden = false; saveCart([]); };
+    $('#dcDone').onclick = () => { close(); closeCart(); };
+    $('#dcGo').focus();
   }
   $('#drawerBody').addEventListener('click', e => {
     const b = e.target.closest('[data-act]'); if (!b) return;

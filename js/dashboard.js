@@ -37,7 +37,7 @@ function AQ_DASH() {
     shop: '<svg viewBox="0 0 24 24"><path d="M4 8h16l-1.200 12H5.200L4 8zM8 8V6a4 4 0 0 1 8 0v2"/></svg>',
     user: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.400 3.600-7 8-7s8 2.600 8 7"/></svg>'
   };
-  const NAV = [['home', 'Control center', ico.home], ['map', 'Moon Base', ico.map], ['courses', 'Adventures', ico.book], ['learn', 'Quizzes', ico.quiz], ['shop', 'Cantina', ico.shop], ['profile', 'Profile', ico.user]];
+  const NAV = [['home', 'Control Center', ico.home], ['map', 'Moon Base', ico.map], ['courses', 'Adventures', ico.book], ['learn', 'Quizzes', ico.quiz], ['shop', 'Cantina', ico.shop], ['profile', 'Profile', ico.user]];
 
   /* ---------- state ---------- */
   const blank = () => ({ joined: Date.now(), goal: 10, large: false, quiz: {}, coins: 0, pct: {}, plays: [iso(new Date())], earned: {}, pets: [], active: null, avatar: 'pufferfish', name: user.first || '', certName: [user.first, full.last].filter(Boolean).join(' '), visited: [], log: [{ t: Date.now(), text: 'Joined Aquanauts' }] });
@@ -99,7 +99,7 @@ function AQ_DASH() {
 
   /* ---------- views ---------- */
   let view = 'home', buddy = null, modalViewer = null, jumpTo = null, mapSel = null;
-  const TITLES = { home: 'Control center', map: 'Moon Base', courses: 'Adventures', learn: 'Quizzes', shop: 'Cantina', profile: 'Profile' };
+  const TITLES = { home: 'Control Center', map: 'Moon Base', courses: 'Adventures', learn: 'Quizzes', shop: 'Cantina', profile: 'Profile' };
 
   function stopViewers() { if (buddy) { buddy.dispose(); buddy = null; } }
 
@@ -194,15 +194,15 @@ function AQ_DASH() {
   const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
   function vLearn() {
-    const nQ = Object.values(STUDY).reduce((a, s) => a + s.quiz.length, 0), passed = Object.values(S.quiz).filter(q => q && q.passed).length;
-    return `<div class="card learn-hero"><div><span class="eyebrow">Practice</span><h2>Quizzes</h2><p class="sub">Every adventure has a short quiz. Pass one to win 10 coins.</p>
-      <div class="lh-stats"><div><b>${nQ}</b><span>quiz questions</span></div><div><b>${passed}</b><span>of 8 quizzes passed</span></div></div></div>
-      <div class="lh-act"><button class="btn" data-quiz="mix" type="button">Mixed quiz</button><p>6 questions from every adventure you have opened.</p></div></div>
+    const nQ = Object.values(STUDY).reduce((a, s) => a + s.quiz.length, 0), nW = Object.values(STUDY).reduce((a, s) => a + s.words.length, 0), passed = Object.entries(S.quiz).filter(([k, q]) => /^\d+$/.test(k) && q && q.passed).length;
+    return `<div class="card learn-hero"><div><span class="eyebrow">Practice</span><h2>Quizzes</h2><p class="sub">Every adventure has a quiz and a word quiz. Pass one to win 10 coins.</p>
+      <div class="lh-stats"><div><b>${nQ}</b><span>quiz questions</span></div><div><b>${nW}</b><span>vocab words</span></div><div><b>${passed}</b><span>of 8 quizzes passed</span></div></div></div>
+      <div class="lh-act"><button class="btn" data-quiz="mix" type="button">Mixed quiz</button><button class="btn ghost" data-quiz="wmix" type="button">Word match</button><p>6 questions from every adventure you have opened.</p></div></div>
     <div class="lgrid">${COURSES.map(c => {
       const st = status(c), q = S.quiz[c.id], on = st !== 'lock', n = STUDY[c.id];
       return `<article class="lcard ${on ? '' : 'locked'}"><div class="lc-top"><div class="pic"><img src="img/${c.img}.png" alt="${c.who}"></div><div><small>Level 0${c.id} · ${c.who}</small><h3>${c.short}</h3></div></div>
-        <ul class="lc-facts"><li><b>${n.quiz.length}</b> questions to practice</li></ul>
-        ${on ? `<div class="lc-btns one"><button class="btn sm" data-quiz="${c.id}" type="button">${q && q.passed ? 'Quiz passed. Play again' : 'Take the quiz'}</button></div>${q ? `<p class="lc-best">Best score: ${q.best} of ${QN}</p>` : '<p class="lc-best">Pass the quiz to win 10 coins.</p>'}`
+        <ul class="lc-facts"><li><b>${n.quiz.length}</b> questions to practice</li><li><b>${n.words.length}</b> vocab words to learn</li></ul>
+        ${on ? `<div class="lc-btns"><button class="btn sm" data-quiz="${c.id}" type="button">${q && q.passed ? 'Quiz passed. Again' : 'Take the quiz'}</button><button class="btn sm ghost" data-quiz="w${c.id}" type="button">Word quiz</button></div>${q ? `<p class="lc-best">Best score: ${q.best} of ${QN}</p>` : '<p class="lc-best">Pass the quiz to win 10 coins.</p>'}`
         : `<p class="lc-lock">Finish ${COURSES[c.id - 2].who}'s level to open this one.</p>`}</article>`;
     }).join('')}</div>`;
   }
@@ -240,7 +240,7 @@ function AQ_DASH() {
     const acts = st === 'cur' ? `<a class="btn sm" href="${GAME_URL}" data-play>${p ? 'Continue level' : 'Start level'}</a>`
       : st === 'done' ? `<a class="btn sm" href="certificate.html?name=${encodeURIComponent(S.certName)}&course=${c.id}">View certificate</a><a class="btn sm ghost" href="${GAME_URL}" data-play>Replay</a>`
         : `<span class="btn sm ghost off">Finish ${prev.who}'s level first</span>`;
-    const study = st !== 'lock' ? `<div class="prac"><small>Test yourself</small><div class="prac-row one"><button class="prac-btn ${q && q.passed ? 'ok' : ''}" data-quiz="${c.id}" type="button"><b>${q && q.passed ? 'Quiz passed' : 'Take the quiz'}</b><span>${q ? 'Best ' + q.best + ' of ' + QN : QN + ' questions, win 10 coins'}</span></button></div></div>` : '';
+    const study = st !== 'lock' ? `<div class="prac"><small>Test yourself</small><div class="prac-row"><button class="prac-btn ${q && q.passed ? 'ok' : ''}" data-quiz="${c.id}" type="button"><b>${q && q.passed ? 'Quiz passed' : 'Take the quiz'}</b><span>${q ? 'Best ' + q.best + ' of ' + QN : QN + ' questions, win 10 coins'}</span></button><button class="prac-btn" data-quiz="w${c.id}" type="button"><b>Word quiz</b><span>What do the words mean?</span></button></div></div>` : '';
     openModal(`<div class="m-level ${st === 'lock' ? 'locked' : ''}"><div class="lv-pic"><img src="img/${c.img}.png" alt="${c.who}"></div>
       <div class="lv-body"><span class="eyebrow">Level 0${c.id} · ${c.room}</span><h3>${c.title}</h3><span class="tag ${st}">${tag}</span>
       <p class="lv-big">${BIG[c.id]}</p><p class="lv-desc">${DESC[c.id]}</p>${p ? `<div class="bar-track"><div class="bar-fill" style="width:${p}%"></div></div>` : ''}<div class="acts">${acts}</div></div>
@@ -250,9 +250,13 @@ function AQ_DASH() {
   }
 
   function quizModal(id) {
-    const c = id === 'mix' ? { who: 'Mixed quiz', short: 'mixed' } : COURSES.find(x => x.id === +id);
-    const mix = id === 'mix', unlocked = COURSES.filter(x => status(x) !== 'lock');
-    const pool = mix ? unlocked.flatMap(x => STUDY[x.id].quiz) : STUDY[id].quiz, need = mix ? 6 : QN;
+    const vocab = /^w/.test(String(id)), cid = vocab ? String(id).slice(1) : id;
+    const base = cid === 'mix' ? { who: vocab ? 'Word match' : 'Mixed quiz', short: vocab ? 'word match' : 'mixed' } : COURSES.find(x => x.id === +cid);
+    const c = vocab && cid !== 'mix' ? { who: base.who + ' · Words', short: base.short + ' words' } : base;
+    const mix = cid === 'mix', unlocked = COURSES.filter(x => status(x) !== 'lock');
+    const allDefs = Object.values(STUDY).flatMap(x => x.words.map(w => w[1]));
+    const wordQs = list => list.map(([w, d]) => ['What does "' + w + '" mean?', d, shuffle(allDefs.filter(x => x !== d)).slice(0, 2)]);
+    const pool = vocab ? wordQs(mix ? unlocked.flatMap(x => STUDY[x.id].words) : STUDY[cid].words) : mix ? unlocked.flatMap(x => STUDY[x.id].quiz) : STUDY[id].quiz, need = mix ? 6 : QN;
     const qs = shuffle(pool).slice(0, need).map(([q, ok, bad]) => ({ q, ok, opts: shuffle([ok, ...bad]) }));
     let i = 0, score = 0;
     const ask = () => {
