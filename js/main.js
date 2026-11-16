@@ -57,7 +57,7 @@
         <div><h5>Explore</h5><ul><li><a href="index.html">Home</a></li><li><a href="index.html#crew">The crew</a></li><li><a href="index.html#how">How it works</a></li><li><a href="shop.html">Shop</a></li></ul></div>
         <div><h5>Account</h5><ul><li><a href="${user ? 'dashboard.html' : 'login.html'}">${user ? 'My dashboard' : 'Log in'}</a></li>${user ? '' : '<li><a href="login.html#signup">Sign up</a></li>'}<li><a href="#">Privacy</a></li></ul></div>
       </div>
-      <div class="foot-bottom"><span>© <span id="yr"></span> Aquanauts. All rights reserved.</span><span>For ages 7 to 12</span></div>
+      <div class="foot-bottom"><span>© <span id="yr"></span> Aquanauts. All rights reserved.</span><span>Demo app. The shop is not real.</span></div>
     </div>
   </footer>`);
   $('#yr').textContent = new Date().getFullYear();
@@ -134,8 +134,27 @@
       <div class="sum"><span>Shipping</span><span>${ship ? money(ship) : 'Free'}</span></div>
       <div class="sum total"><span>Total</span><span>${money(sub + ship)}</span></div>
       <button class="btn btn-primary btn-block" id="checkout">Checkout ${ICON.arrow}</button>
-      <p style="text-align:center;font-size:.76rem;color:var(--muted)">Secure checkout is a placeholder — connect your payment provider.</p>`;
-    $('#checkout').addEventListener('click', () => toast('Connect a payment provider to enable checkout'));
+      <p style="text-align:center;font-size:.76rem;color:var(--muted)">Demo store: no real payment is taken.</p>`;
+    $('#checkout').addEventListener('click', openDemoCheckout);
+  }
+
+  /* ---------- demo checkout screen ---------- */
+  function openDemoCheckout() {
+    const cart = getCart(), n = cart.reduce((a, i) => a + i.qty, 0), sub = cart.reduce((a, i) => a + i.price * i.qty, 0);
+    let el = document.getElementById('demoCo'); if (el) el.remove();
+    el = document.createElement('div'); el.id = 'demoCo'; el.className = 'democo'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-labelledby', 'dcT');
+    el.innerHTML = `<div class="dc-card"><img src="img/octopus.png" alt=""><span class="dc-tag">Demo app</span><h2 id="dcT">This is a demo, so the store is not real</h2>
+      <p>Aquanauts is a demo app built for the NASA Space Apps Challenge. The shop, the cart and this checkout are only here to show how it would work.</p>
+      <ul><li>No payment is taken, and please do not enter any card details.</li><li>Nothing will be ordered or shipped.</li><li>The prices and products are examples.</li></ul>
+      <div class="dc-sum"><span>${n} ${n === 1 ? 'item' : 'items'} in your demo cart</span><b>${money(sub)}</b></div>
+      <div class="dc-btns"><button class="btn btn-primary" id="dcBack" type="button">Got it, keep browsing</button><button class="btn btn-ghost" id="dcClear" type="button">Empty my demo cart</button></div></div>`;
+    document.body.appendChild(el);
+    const close = () => { el.remove(); document.removeEventListener('keydown', esc); };
+    const esc = e => { if (e.key === 'Escape') close(); };
+    document.addEventListener('keydown', esc);
+    el.addEventListener('click', e => { if (e.target === el) close(); });
+    $('#dcBack').onclick = () => { close(); closeCart(); }; $('#dcClear').onclick = () => { saveCart([]); close(); toast('Demo cart emptied'); };
+    $('#dcBack').focus();
   }
   $('#drawerBody').addEventListener('click', e => {
     const b = e.target.closest('[data-act]'); if (!b) return;
@@ -382,3 +401,5 @@
     $('#logout').addEventListener('click', async () => { if (window.AQ && AQ.live) await AQ.logOut(); localStorage.removeItem('aq_user'); location.href = 'login.html'; });
   }
 })();
+/* board hotspots: tap to show the tip on touch screens */
+document.addEventListener('click', e => { const h = e.target.closest('.hot'); document.querySelectorAll('.hot.open').forEach(x => { if (x !== h) x.classList.remove('open'); }); if (h) h.classList.toggle('open'); });

@@ -70,9 +70,12 @@
       ? [['On the board', '<ul><li>Life support, greenhouse and radiation dials</li><li>Sun and storm lights, and an octopus with glowing eyes</li></ul>'], ['Details', '<dl><div><dt>Ages</dt><dd>7 to 12</dd></div><div><dt>Made for</dt><dd>The Aquanauts game</dd></div></dl>']]
       : [['The crew member', `<ul><li>${p.blurb}</li><li>Job: ${p.role}</li></ul>`], ['Details', `<dl><div><dt>Room</dt><dd>${p.room}</dd></div><div><dt>Collect</dt><dd>All 8 crew members</dd></div></dl>`]];
     info.push(['Shipping and returns', `<p>Orders ship in 3 to 5 business days. Shipping is free over $75 and $6.99 under that. You can return ${p.kind === 'board' ? 'the board' : 'your plush'} within 30 days for a refund.</p>`]);
-    $('#pInfo').innerHTML = info.map(([h, b], i) => `<div class="info reveal" ${i ? `style="--d:${i * .1}s"` : ''}><h3>${h}</h3>${b}</div>`).join('');
+    $('#pInfo').innerHTML = info.map(([h, b], i) => `<div class="info"><h3>${h}</h3>${b}</div>`).join('');
     const rel = P.filter(x => x.id !== p.id).sort((a, b) => (a.kind === p.kind ? -1 : 0) - (b.kind === p.kind ? -1 : 0)).slice(0, 4);
     $('#related').innerHTML = rel.map(x => card(x)).join('');
     bindAdd($('#related'));
   }
 })();
+
+(function(){var f=document.getElementById('collectFaces');if(!f||!window.AQ_PRODUCTS)return;
+f.innerHTML=window.AQ_PRODUCTS.filter(function(p){return p.kind==='plush'}).map(function(p){return '<a href="product.html?p='+p.id+'" tabindex="-1"><img src="'+p.img+'" alt="" loading="lazy" width="120" height="120"></a>'}).join('')})();

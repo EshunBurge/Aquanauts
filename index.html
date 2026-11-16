@@ -5,11 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Aquanauts</title>
 <meta name="description" content="Aquanauts is an astronaut simulation game that teaches kids real-world problem solving.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#05070a">
 <script>if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=20261115h">
+<link rel="stylesheet" href="css/styles.css?v=20261115l">
+<meta property="og:title" content="Aquanauts: an astronaut game for kids 7 to 12">
+<meta property="og:description" content="Learn real space science with a crew of sea creature astronauts. Play on the Moon Base, learn new words and earn certificates.">
+<meta property="og:type" content="website">
 </head>
 <body data-page="home">
 <main>
@@ -114,9 +118,9 @@
       </div>
       <div class="steps">
         <div class="step reveal" style="--d:0.0s"><span class="n">1</span><h4>Meet the crew</h4><p>The crew lives and works on the Moon Base. Every character has a different job and a room of their own.</p><button class="pal step-pal" type="button" style="--i:0" data-say="Need something fixed?" aria-label="Pip says: Need something fixed?"><img loading="lazy" decoding="async" src="img/crab.png" alt="Pip"></button></div>
-        <div class="step reveal" style="--d:0.12s"><span class="n">2</span><h4>Play a lesson</h4><p>Read the problem in a room, learn the key words, think it through and decide what to do.</p><button class="pal step-pal" type="button" style="--i:1" data-say="All systems are go." aria-label="Tink says: All systems are go."><img loading="lazy" decoding="async" src="img/octopus.png" alt="Tink"></button></div>
-        <div class="step reveal" style="--d:0.24s"><span class="n">3</span><h4>Move on</h4><p>Finish a lesson to earn coins, then unlock the next room on the map.</p><button class="pal step-pal" type="button" style="--i:2" data-say="Hold on tight!" aria-label="Skim says: Hold on tight!"><img loading="lazy" decoding="async" src="img/ray.png" alt="Skim"></button></div>
-        <div class="step reveal" style="--d:0.36s"><span class="n">4</span><h4>Earn a certificate</h4><p>Print a certificate with your own name on it, and spend your coins on a crew pet in the cantina.</p><button class="pal step-pal" type="button" style="--i:3" data-say="Nice work, astronaut!" aria-label="Bloop says: Nice work, astronaut!"><img loading="lazy" decoding="async" src="img/pufferfish.png" alt="Bloop"></button></div>
+        <div class="step reveal" style="--d:0.12s"><span class="n">2</span><h4>Play a lesson</h4><p>Read the problem in a room, learn the key words, think it through and decide what the crew should do.</p><button class="pal step-pal" type="button" style="--i:1" data-say="All systems are go." aria-label="Tink says: All systems are go."><img loading="lazy" decoding="async" src="img/octopus.png" alt="Tink"></button></div>
+        <div class="step reveal" style="--d:0.24s"><span class="n">3</span><h4>Move on</h4><p>Finish a lesson to earn coins and prizes, then unlock the next room on the Moon Base map and keep going.</p><button class="pal step-pal" type="button" style="--i:2" data-say="Hold on tight!" aria-label="Skim says: Hold on tight!"><img loading="lazy" decoding="async" src="img/ray.png" alt="Skim"></button></div>
+        <div class="step reveal" style="--d:0.36s"><span class="n">4</span><h4>Earn a certificate</h4><p>Print a certificate with your own name on it, then spend your coins on a crew pet in the cantina.</p><button class="pal step-pal" type="button" style="--i:3" data-say="Nice work, astronaut!" aria-label="Bloop says: Nice work, astronaut!"><img loading="lazy" decoding="async" src="img/pufferfish.png" alt="Bloop"></button></div>
       </div>
     </div>
   </section>
@@ -125,12 +129,25 @@
 
 
 
+  <section class="learn" id="learn">
+    <div class="wrap">
+      <div class="section-head reveal"><span class="eyebrow">Words and quizzes</span><h2 class="h2">Learn the words. <em>Test yourself.</em></h2><p class="lead">Every adventure comes with a list of vocab words and a quiz. Kids learn what the words mean, then win coins for passing. Try one right here.</p></div>
+      <div class="learn-stats reveal"><div><b>64</b><span>vocab words</span></div><div><b>48</b><span>quiz questions</span></div><div><b>8</b><span>quizzes to pass</span></div><div><b>+10</b><span>coins for each pass</span></div></div>
+      <div class="learn-pick reveal" id="lpick" role="tablist" aria-label="Choose a crew member"></div>
+      <div class="learn-grid">
+        <div class="learn-card reveal"><div class="lc-h"><span class="lc-n">1</span><h3>Vocab words</h3></div><p class="lc-s" id="lwSub">Read each word and what it means.</p><div class="lwords" id="lwords"></div></div>
+        <div class="learn-card reveal" style="--d:.1s"><div class="lc-h"><span class="lc-n">2</span><h3>Quick quiz</h3></div><div id="lquiz"></div></div>
+      </div>
+      <p class="learn-foot reveal">Inside the game, find them in <b>Words &amp; quizzes</b> on your control center, or tap any room on the Moon Base map.</p>
+    </div>
+  </section>
+
   <section class="inside" id="inside">
     <div class="wrap">
       <div class="section-head reveal"><span class="eyebrow">Inside the game</span><h2 class="h2">Everything on your <em>control center</em></h2><p class="lead">When kids log in they land on their own control center. Here is what they can find there.</p></div>
       <div class="pgrid four">
-        <div class="pcard reveal"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5zM19 19v2H6"/></svg><h3>Adventures</h3><p>Each adventure is a short story with a problem to solve. Read it, learn a few new words, then take a quick quiz.</p></div>
-        <div class="pcard reveal" style="--d:.08s"><svg viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg><h3>Moon Base map</h3><p>Every room is a spot on the map with a crew member inside. Finish one room to open the next, then tap any room to read about it.</p></div>
+        <div class="pcard reveal"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5zM19 19v2H6"/></svg><h3>Adventures</h3><p>Each adventure is a short story with a problem to solve. Read it, learn new words, then take a quiz for coins.</p></div>
+        <div class="pcard reveal" style="--d:.08s"><svg viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg><h3>Moon Base map</h3><p>Every room on the map has a crew member inside. Finish one room to open the next, then tap any room to read about it.</p></div>
         <div class="pcard reveal" style="--d:.16s"><svg viewBox="0 0 24 24"><path d="M4 8h16l-1.2 12H5.2L4 8zM8 8V6a4 4 0 0 1 8 0v2"/></svg><h3>Cantina</h3><p>Win coins, badges and streak prizes as you play. Spend coins on crew pets that keep you company on your control center.</p></div>
         <div class="pcard reveal" style="--d:.24s"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg><h3>Certificates</h3><p>Finish an adventure and print a certificate with your own name on it. Put it on the fridge or the classroom wall.</p></div>
       </div>
@@ -152,21 +169,40 @@
     <div class="wrap">
       <div class="section-head reveal"><span class="eyebrow">More about the game</span><h2 class="h2">What you <em>get</em></h2></div>
       <div class="feat-list">
-        <div class="feat reveal" style="--d:0.0s"><span class="no">01</span><h3>A base on the Moon</h3><p>Kids visit a base near the Moon's south pole, where NASA's Artemis missions plan to land.</p><button class="pal" type="button" style="--i:0" data-say="Need something fixed?" aria-label="Pip says: Need something fixed?"><img loading="lazy" decoding="async" src="img/crab.png" alt="Pip"></button></div>
-        <div class="feat reveal" style="--d:0.06s"><span class="no">02</span><h3>Real NASA data</h3><p>Lessons use real information from NASA, like space weather, astronaut health research and measurements from the Moon and Mars.</p><button class="pal" type="button" style="--i:1" data-say="Look what I found!" aria-label="Moss says: Look what I found!"><img loading="lazy" decoding="async" src="img/axolotl.png" alt="Moss"></button></div>
-        <div class="feat reveal" style="--d:0.12s"><span class="no">03</span><h3>Certificates</h3><p>Kids earn a certificate as they finish each lesson, then move on to the next one.</p><button class="pal" type="button" style="--i:2" data-say="All systems are go." aria-label="Tink says: All systems are go."><img loading="lazy" decoding="async" src="img/octopus.png" alt="Tink"></button></div>
-        <div class="feat reveal" style="--d:0.18s"><span class="no">04</span><h3>Read along</h3><p>Stories are shown as captions, so kids can read along at their own speed.</p><button class="pal" type="button" style="--i:3" data-say="I'll light the way." aria-label="Luma says: I'll light the way."><img loading="lazy" decoding="async" src="img/angler.png" alt="Luma"></button></div>
-        <div class="feat reveal" style="--d:0.24s"><span class="no">05</span><h3>Play anywhere</h3><p>Play on a phone, tablet or computer. Add Aquanauts to your home screen like any other app.</p><button class="pal" type="button" style="--i:4" data-say="Next stop, the Moon." aria-label="Nori says: Next stop, the Moon."><img loading="lazy" decoding="async" src="img/nautilus.png" alt="Nori"></button></div>
-        <div class="feat reveal" style="--d:0.3s"><span class="no">06</span><h3>A game board</h3><p>Prefer the table? The Aquanauts game board is available in the shop for extra fun.</p><button class="pal" type="button" style="--i:5" data-say="Is everyone okay?" aria-label="Bloop says: Is everyone okay?"><img loading="lazy" decoding="async" src="img/pufferfish.png" alt="Bloop"></button></div>
+        <div class="feat reveal" style="--d:0.0s"><span class="no">01</span><h3>A base on the Moon</h3><p>Kids visit a base near the Moon's south pole, where NASA's Artemis missions plan to land and explore.</p><button class="pal" type="button" style="--i:0" data-say="Need something fixed?" aria-label="Pip says: Need something fixed?"><img loading="lazy" decoding="async" src="img/crab.png" alt="Pip"></button></div>
+        <div class="feat reveal" style="--d:0.06s"><span class="no">02</span><h3>Real NASA data</h3><p>Lessons use real NASA information, like space weather, astronaut health research and Moon and Mars data.</p><button class="pal" type="button" style="--i:1" data-say="Look what I found!" aria-label="Moss says: Look what I found!"><img loading="lazy" decoding="async" src="img/axolotl.png" alt="Moss"></button></div>
+        <div class="feat reveal" style="--d:0.12s"><span class="no">03</span><h3>Certificates</h3><p>Kids earn a certificate as they finish each lesson, with their own name on it, then move on to the next.</p><button class="pal" type="button" style="--i:2" data-say="All systems are go." aria-label="Tink says: All systems are go."><img loading="lazy" decoding="async" src="img/octopus.png" alt="Tink"></button></div>
+        <div class="feat reveal" style="--d:0.18s"><span class="no">04</span><h3>Read along</h3><p>Stories are shown as captions, so kids can read along at their own speed and go back over any line.</p><button class="pal" type="button" style="--i:3" data-say="I'll light the way." aria-label="Luma says: I'll light the way."><img loading="lazy" decoding="async" src="img/angler.png" alt="Luma"></button></div>
+        <div class="feat reveal" style="--d:0.24s"><span class="no">05</span><h3>Play anywhere</h3><p>Play on a phone, tablet or computer. Add Aquanauts to your home screen like any other app you use.</p><button class="pal" type="button" style="--i:4" data-say="Next stop, the Moon." aria-label="Nori says: Next stop, the Moon."><img loading="lazy" decoding="async" src="img/nautilus.png" alt="Nori"></button></div>
+        <div class="feat reveal" style="--d:0.3s"><span class="no">06</span><h3>A game board</h3><p>Prefer the table? The Aquanauts game board is in the shop, with dials and lights for extra fun.</p><button class="pal" type="button" style="--i:5" data-say="Is everyone okay?" aria-label="Bloop says: Is everyone okay?"><img loading="lazy" decoding="async" src="img/pufferfish.png" alt="Bloop"></button></div>
       </div>
     </div>
   </section>
 
 
   <section class="boardsec" id="board">
-    <div class="wrap board-wrap">
-      <figure class="board-photo reveal"><img loading="lazy" decoding="async" src="media/board-topdown.webp" alt="The Aquanauts game board, seen from above, with hands turning the dials" width="480" height="600"></figure>
-      <div class="board-copy reveal" style="--d:.1s"><span class="eyebrow">Away from the screen</span><h2 class="h2">The <em>game board</em></h2><p class="lead">A hands-on console for the Moon base. Turn the dials to keep the outpost running.</p><p class="board-note">Life support, greenhouse and radiation dials, sun and storm lights, and an octopus with glowing eyes.</p><a class="btn" href="shop.html">See photos and videos</a></div>
+    <div class="wrap">
+      <div class="section-head reveal"><span class="eyebrow">Away from the screen</span><h2 class="h2">The <em>game board</em></h2><p class="lead">A real, hands-on console for the Moon base. Turn the dials, watch the lights and keep the outpost running together at the table.</p></div>
+      <div class="board-wrap">
+        <figure class="board-photo reveal" id="boardFig">
+          <img loading="lazy" decoding="async" src="media/board-topdown.webp" alt="The Aquanauts game board, seen from above, with hands turning the dials" width="480" height="600">
+          <button class="hot" type="button" style="left:26%;top:66%" data-tip="Life support dial: keep the air clean" aria-label="Life support dial"><i>1</i></button>
+          <button class="hot" type="button" style="left:47%;top:66%" data-tip="Greenhouse dial: help the plants grow" aria-label="Greenhouse dial"><i>2</i></button>
+          <button class="hot" type="button" style="left:67%;top:66%" data-tip="Radiation dial: shield the crew" aria-label="Radiation dial"><i>3</i></button>
+          <button class="hot" type="button" style="left:50%;top:27%" data-tip="The octopus head glows when you get it right" aria-label="Octopus head"><i>4</i></button>
+          <figcaption>Tap the numbers to see what each part does.</figcaption>
+        </figure>
+        <div class="board-copy reveal" style="--d:.1s">
+          <ol class="bsteps">
+            <li><b>Turn the dials</b><span>Three dials control life support, the greenhouse and radiation shields. The crew needs all three working at once.</span></li>
+            <li><b>Watch the lights</b><span>Sun and storm lights change as the mission goes on, so you have to react fast and talk it through together.</span></li>
+            <li><b>Wake the octopus</b><span>Get it right and the octopus head lights up with glowing eyes. Get it wrong and the crew tries again.</span></li>
+          </ol>
+          <div class="board-facts"><span>Ages 7 to 12</span><span>1 or more players</span><span>Plays with the app</span></div>
+          <div class="board-price"><b>$49.99</b><span>Demo price. The shop is for show.</span></div>
+          <div class="hero-actions" style="margin:0"><a class="btn" href="product.html?p=board">Get the game board</a><a class="btn btn-ghost" href="shop.html">See photos and videos</a></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -174,12 +210,12 @@
     <div class="wrap">
       <div class="section-head reveal"><span class="eyebrow">For parents and teachers</span><h2 class="h2">Easy to <em>follow along</em></h2></div>
       <div class="pgrid">
-        <div class="pcard reveal"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><h3>One account</h3><p>Game progress and certificates are saved in one account, so kids pick up where they left off.</p></div>
-        <div class="pcard reveal" style="--d:.1s"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M7 21h10M7 10h6M7 13h9"/></svg><h3>Easy to read</h3><p>Stories show as captions, so kids can read along at their own speed and go back over a line.</p></div>
-        <div class="pcard reveal" style="--d:.2s"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg><h3>Nothing to install</h3><p>Open it in a browser on a phone, tablet or computer. No app store needed to start playing.</p></div>
+        <div class="pcard reveal"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><h3>One account</h3><p>Game progress and certificates are saved in one account, so kids pick up right where they left off.</p></div>
+        <div class="pcard reveal" style="--d:.1s"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M7 21h10M7 10h6M7 13h9"/></svg><h3>Easy to read</h3><p>Stories show as captions, so kids read along at their own speed and can go back over any line.</p></div>
+        <div class="pcard reveal" style="--d:.2s"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg><h3>Nothing to install</h3><p>Open it in a browser on a phone, tablet or computer. No app store needed to start playing today.</p></div>
       
-        <div class="pcard reveal"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><h3>Progress you can see</h3><p>The control center shows adventures finished, quiz scores, streaks and certificates, all in one place.</p></div>
-        <div class="pcard reveal" style="--d:.1s"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5zM8 9h8M8 12h5"/></svg><h3>Words that stick</h3><p>Every adventure comes with a short list of new words and a quick quiz, so kids can check what they learned.</p></div>
+        <div class="pcard reveal"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><h3>Progress you can see</h3><p>The control center shows adventures finished, quiz scores, streaks and certificates in one place.</p></div>
+        <div class="pcard reveal" style="--d:.1s"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5zM8 9h8M8 12h5"/></svg><h3>Words that stick</h3><p>Every adventure comes with a list of new words and a quick quiz, so kids can check what they learned.</p></div>
         <div class="pcard reveal" style="--d:.2s"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 3h6"/></svg><h3>Short sessions</h3><p>Kids pick a daily goal of 5, 10, 15 or 20 minutes in their profile, so a quick visit still counts.</p></div>
       </div>
     </div>
@@ -188,7 +224,7 @@
   <section class="faq" id="faq">
     <div class="wrap">
       <div class="reveal"><span class="eyebrow">Questions</span><h2 class="h2" style="margin-top:16px">Good to <em>know</em></h2></div>
-      <div class="acc reveal" style="--d:.1s"><div class="acc-item"><button type="button" aria-expanded="false">What ages is it for?<span class="plus"></span></button><div class="acc-body"><p>Aquanauts is made for kids ages 7 to 12.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">Do I need to download anything?<span class="plus"></span></button><div class="acc-body"><p>No. Aquanauts is a progressive web app, so it runs in your browser. You can also add it to your home screen to open it like any other app.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">Do I need the game board to play?<span class="plus"></span></button><div class="acc-body"><p>No. The game board is a separate way to play at the table with friends and family.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">Where does the NASA information come from?<span class="plus"></span></button><div class="acc-body"><p>Lessons use real information from NASA: space weather from DONKI, astronaut health research from OSDR, and measurements from Artemis and Mars missions.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">How does my child move on to the next lesson?<span class="plus"></span></button><div class="acc-body"><p>They finish a lesson, earn a certificate, and the next lesson unlocks.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">What will my child learn?<span class="plus"></span></button><div class="acc-body"><p>How astronauts stay alive and get work done: clean air and water, power, food, space hazards, building and fixing, making supplies last, planning, and running a whole base.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">What are coins and prizes for?<span class="plus"></span></button><div class="acc-body"><p>Kids win coins, badges and streak prizes as they play. Coins can be spent in the cantina on crew pets.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">How long does a play session take?<span class="plus"></span></button><div class="acc-body"><p>As long as you like. Kids can set a daily goal of 5, 10, 15 or 20 minutes in their profile.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">How do I know my child is learning?<span class="plus"></span></button><div class="acc-body"><p>The control center shows adventures finished, quiz scores, streaks and certificates.</p></div></div></div>
+      <div class="acc reveal" style="--d:.1s"><div class="acc-item"><button type="button" aria-expanded="false">What ages is it for?<span class="plus"></span></button><div class="acc-body"><p>Aquanauts is made for kids ages 7 to 12. The stories are written in short, simple sentences with captions, and every new word is explained. Younger kids can play along with a grown-up, and older kids can try the quizzes for a challenge.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">Do I need to download anything?<span class="plus"></span></button><div class="acc-body"><p>No. Aquanauts is a progressive web app, so it runs right in your browser on a phone, tablet or computer. If you like, you can add it to your home screen so it opens like any other app, with its own icon and no browser bars.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">Do I need the game board to play?<span class="plus"></span></button><div class="acc-body"><p>No. The whole game works without it. The game board is a separate, hands-on way to play at the table with friends and family, with real dials, lights and a spinning octopus head. It is a fun extra, not a requirement.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">Where does the NASA information come from?<span class="plus"></span></button><div class="acc-body"><p>Lessons use real information from NASA. Space weather comes from the DONKI database, astronaut health research comes from the Open Science Data Repository (OSDR), and ground measurements come from Artemis and Mars surface missions. The crew turn that information into missions kids can play.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">How does my child move on to the next lesson?<span class="plus"></span></button><div class="acc-body"><p>They finish the lesson they are on, earn a certificate and some coins, and the next room on the Moon Base map unlocks. Each room has a different crew member and a different problem, so there is always something new to open.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">What will my child learn?<span class="plus"></span></button><div class="acc-body"><p>How astronauts stay alive and get work done: clean air and water, power, growing food, space hazards, building and fixing things, making supplies last, planning a trip, and running a whole base. Along the way they pick up science words and practice making good decisions.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">What are coins and prizes for?<span class="plus"></span></button><div class="acc-body"><p>Kids win coins, badges and streak prizes as they play and pass quizzes. Coins are spent in the cantina on crew pets, which then appear on the child's control center. Prizes are a way to celebrate effort, so there is nothing to lose and no timers.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">How long does a play session take?<span class="plus"></span></button><div class="acc-body"><p>As long as you like. Each lesson is short, and kids can set a daily goal of 5, 10, 15 or 20 minutes in their profile. A quick visit still counts toward their streak, so it is easy to fit in before dinner or between classes.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">How do I know my child is learning?<span class="plus"></span></button><div class="acc-body"><p>The control center shows adventures finished, quiz scores, daily streaks, prizes and certificates in one place. Every adventure also has a vocab list and a quiz, so you can ask your child to teach you a new word and see how they scored.</p></div></div><div class="acc-item"><button type="button" aria-expanded="false">Is the shop real?<span class="plus"></span></button><div class="acc-body"><p>Not yet. This version of Aquanauts is a demo, so the shop and checkout are for show. You can add things to the cart and look around, but no payment is taken and nothing will be shipped.</p></div></div></div>
     </div>
   </section>
 
@@ -206,6 +242,8 @@
     </div>
   </section>
 </main>
-<script src="js/main.js?v=20261115h"></script>
+<script src="js/study-data.js?v=20261115l"></script>
+<script src="js/main.js?v=20261115l"></script>
+<script src="js/learn.js?v=20261115l"></script>
 </body>
 </html>
