@@ -25,98 +25,119 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden;-webkit-text-size
 @media(max-width:520px){#ui a span{display:none}}
 
 #deck{container-type:inline-size;font-family:Inter,system-ui,sans-serif;color:#EAF4F5}
-.slide{background:#05070a;padding:4.6cqw 5.2cqw;box-sizing:border-box;overflow:hidden}
+.slide{background:#05070a;overflow:hidden;--m:6cqw;--top:19.5cqw;--bot:7.6cqw}
 .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(153,220,225,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(153,220,225,.05) 1px,transparent 1px);background-size:3.2cqw 3.2cqw;pointer-events:none}
-.slide>*{position:relative}
-.slide h2{font:400 6.4cqw/1 Anton,Impact,sans-serif;color:#99DCE1;margin:0;letter-spacing:.01em}
-.kick{font:800 1.25cqw Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#F58A53;margin:1.2cqw 0 2.4cqw}
-.slide h3{font:800 1.2cqw Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#F58A53;margin:0 0 1cqw}
-.slide p{font-size:1.5cqw;line-height:1.55;color:#cfe0e3;margin:0 0 1.2cqw}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:5cqw}
-.three{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4cqw;margin-top:1cqw}
-.card{background:#0f1a20;border:.2cqw solid #1c3a43;border-radius:1.6cqw;padding:2.4cqw}
-.card h3{font:400 2.6cqw Anton,Impact,sans-serif;letter-spacing:.02em;text-transform:none;color:#99DCE1;margin-bottom:1.2cqw}
-.split{display:grid;grid-template-columns:1fr 1.15fr;gap:4cqw;align-items:center}
-.shot{border-radius:1.4cqw;overflow:hidden;border:.2cqw solid #1c3a43;background:#0a1419;aspect-ratio:16/10}
-.shot img{width:100%;height:100%;object-fit:cover;display:block}.shot img.top{object-position:top}
-.shots .shot{aspect-ratio:16/9.5}
-.steps{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;gap:1.1cqw}
-.steps li{counter-increment:s;font-size:1.5cqw;line-height:1.45;color:#cfe0e3;padding-left:3.4cqw;position:relative}
-.steps li:before{content:counter(s);position:absolute;left:0;top:-.1cqw;width:2.4cqw;height:2.4cqw;border-radius:50%;background:#F58A53;color:#1a0d05;font-weight:800;font-size:1.3cqw;display:grid;place-items:center}
-.steps b{color:#fff}
-.bul{margin:0 0 1.4cqw;padding:0;list-style:none;display:grid;gap:.9cqw}
-.bul li{font-size:1.5cqw;color:#cfe0e3;padding-left:2cqw;position:relative}
+/* header: same place on every slide */
+.slide header{position:absolute;left:var(--m);right:var(--m);top:4.4cqw;height:13cqw}
+.slide h2{font:400 6.2cqw/1 Anton,Impact,sans-serif;color:#99DCE1;margin:0;letter-spacing:.01em}
+.kick{font:800 1.3cqw/1 Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#F58A53;margin:1.4cqw 0 0}
+.tag{position:absolute;right:var(--m);top:7.4cqw;font:800 1.3cqw/1 Inter,sans-serif;letter-spacing:.14em;color:#F58A53}
+/* body: one box, same top and bottom on every slide */
+.cols{position:absolute;left:var(--m);right:var(--m);top:var(--top);bottom:var(--bot);display:grid;grid-template-columns:1fr 1fr;column-gap:4.5cqw;align-items:stretch}
+.col{display:flex;flex-direction:column;min-height:0;min-width:0}
+.slide p{font-size:1.7cqw;line-height:1.5;color:#cfe0e3;margin:0 0 1.6cqw}
+.slide h3{font:800 1.3cqw/1 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#F58A53;margin:0 0 1.4cqw}
+.shot{border-radius:1.4cqw;overflow:hidden;border:.2cqw solid #1c3a43;background:#0a1419}
+.shot.fill{flex:1;min-height:0}.shot img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.bul{margin:0 0 1.6cqw;padding:0;list-style:none;display:grid;gap:1.1cqw}
+.bul li{font-size:1.7cqw;line-height:1.3;color:#cfe0e3;padding-left:2.2cqw;position:relative}
 .bul li:before{content:"";position:absolute;left:0;top:.55cqw;width:.8cqw;height:.8cqw;border-radius:50%;background:#99DCE1}
-.crewlist{list-style:none;margin:0;padding:0;display:grid;gap:.7cqw}
-.crewlist li{display:grid;grid-template-columns:2.6cqw 6.4cqw 1fr;column-gap:1cqw;align-items:baseline;font-size:1.35cqw;border-bottom:.1cqw solid #16303a;padding-bottom:.6cqw}
+.bul.grid12{grid-template-columns:1fr 1fr;grid-auto-rows:1fr;column-gap:2cqw;row-gap:0;flex:1;margin:0}
+.bul.grid12 li{display:flex;align-items:center;border-top:.1cqw solid #16303a}
+.bul.grid12 li:before{top:50%;margin-top:-.4cqw}
+.crewlist{list-style:none;margin:0;padding:0;display:grid;grid-template-rows:repeat(8,1fr);flex:1}
+.crewlist li{display:grid;grid-template-columns:2.6cqw 6.6cqw 1fr;column-gap:.8cqw;align-items:center;font-size:1.4cqw;border-top:.1cqw solid #16303a}
+.crewlist li:last-child{border-bottom:.1cqw solid #16303a}
 .crewlist i{font:700 1.1cqw Inter;font-style:normal;color:#F58A53}
-.crewlist b{font:400 1.9cqw Anton,Impact,sans-serif;color:#fff;letter-spacing:.02em}
-.crewlist span{font-weight:700;color:#99DCE1}
-.crewlist em{grid-column:3;font-style:normal;color:#9fb4bb;font-size:1.15cqw;margin-top:-.2cqw}
-.vidwrap{justify-self:center;height:32cqw;aspect-ratio:540/622;border-radius:1.4cqw;overflow:hidden;border:.2cqw solid #1c3a43;background:#000}
+.crewlist b{font:400 2cqw Anton,Impact,sans-serif;color:#fff;letter-spacing:.02em}
+.crewlist span{font-weight:700;color:#99DCE1;line-height:1.25}
+.vcol{align-items:flex-start}
+.vidwrap{height:100%;aspect-ratio:540/622;max-width:100%;border-radius:1.4cqw;overflow:hidden;border:.2cqw solid #1c3a43;background:#000}
 #vid{width:100%;height:100%;object-fit:cover;cursor:pointer;display:block}
-.chips{display:flex;flex-wrap:wrap;gap:1.2cqw;margin-top:1cqw}
-.chips span{font-weight:700;font-size:1.7cqw;padding:1.1cqw 1.9cqw;border:.2cqw solid #1c3a43;background:#0f1a20;border-radius:99px;color:#EAF4F5}
-.chips span:nth-child(3n+1){border-color:#99DCE1}.chips span:nth-child(3n+2){border-color:#F58A53}
-.fine{margin-top:2.4cqw!important;color:#9fb4bb!important}
-.crew{position:absolute!important;right:4cqw;bottom:2.4cqw;display:flex;gap:.6cqw;align-items:flex-end}
-.crew img{height:9.5cqw;width:auto}
-.title .eyebrow{font:800 2.1cqw Inter,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#F58A53;margin:14cqw 0 0}
-.mega{font:400 20.5cqw/1 Anton,Impact,sans-serif;color:#99DCE1;margin:0;letter-spacing:-.005em;white-space:nowrap}
-.by{position:absolute!important;left:5.2cqw;bottom:3.4cqw;font-size:1.7cqw!important;color:#fff!important}
+.foot{position:absolute;left:var(--m);right:var(--m);bottom:3.6cqw;font-size:1.25cqw!important;color:#9fb4bb!important;margin:0!important}
+.cols+.foot{bottom:3.6cqw}
+.crew{position:absolute;right:var(--m);bottom:var(--bot);display:flex;gap:.8cqw;align-items:flex-end}
+.crew img{height:8.4cqw;width:auto}
+/* title slides */
+.title .eyebrow{position:absolute;left:var(--m);top:12cqw;margin:0;font:800 2.1cqw Inter,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#F58A53}
+.mega{position:absolute;left:var(--m);top:15cqw;font:400 20.5cqw/1.05 Anton,Impact,sans-serif;color:#99DCE1;margin:0;letter-spacing:-.005em;white-space:nowrap;display:inline-block}
+.by{position:absolute;left:var(--m);bottom:var(--bot);margin:0;font-size:1.7cqw;line-height:1.4;color:#fff}
 .by span{display:block;color:#F58A53;font-size:1.5cqw}
-.quote{font:700 1.9cqw/1.4 Inter,sans-serif!important;color:#EAF4F5!important;max-width:52cqw;margin-top:2cqw!important}
-.end .eyebrow{margin-top:9cqw}
-.end .by{font-size:2cqw!important;color:#F58A53!important}
-.tag{position:absolute!important;right:5.2cqw;top:6cqw;font:800 1.3cqw Inter,sans-serif;letter-spacing:.14em;color:#F58A53}
-.two-col{grid-template-columns:1fr 1fr;column-gap:1.5cqw}
-.foot{position:absolute!important;left:5.2cqw;right:5.2cqw;bottom:5.6cqw;font-size:1.2cqw!important;color:#9fb4bb!important;margin:0!important}
-.split{align-items:start}
-.txt .shot{aspect-ratio:16/6.4;margin-top:1.2cqw}
-.mega{display:inline-block}
+.end .by{font-size:2cqw;color:#F58A53}
 
-/* spacing pass */
-.slide{display:flex;flex-direction:column;padding:4.4cqw 5.2cqw 7.4cqw}.slide.title{display:block}
-.slide h2{font-size:6.2cqw}
-.kick{margin:1cqw 0 0;font-size:1.3cqw}
-.two,.split,.three,.chips{flex:1;align-items:center;margin-top:0;padding-top:2.2cqw}
-.slide p{font-size:1.75cqw;line-height:1.5;margin-bottom:1.5cqw}
-.slide h3{font-size:1.35cqw;margin-bottom:1.3cqw}
-.bul li{font-size:1.75cqw}.bul li:before{top:.7cqw}
-.crewlist{gap:.5cqw}.crewlist li{font-size:1.5cqw;padding-bottom:.7cqw}.crewlist b{font-size:2.1cqw}
-.two.shots{align-items:start}.shots .shot{aspect-ratio:16/8.6}
-.foot{position:static!important;margin:2cqw 0 0!important;text-align:center;font-size:1.3cqw!important}
-.slide:nth-child(2) .two{padding-bottom:11cqw}
-.vidwrap{height:35cqw}
-.txt .shot{aspect-ratio:16/6.8}
-.title .eyebrow{margin-top:12cqw}
-.bul.two-col{grid-template-columns:1fr 1fr;gap:1.3cqw 1.5cqw}
-.crewlist{gap:.3cqw}.crewlist li{font-size:1.3cqw;padding-bottom:.45cqw}.crewlist b{font-size:1.9cqw}.crewlist em{display:none}
-.txt .shot{aspect-ratio:16/8}
-.shots .shot{aspect-ratio:16/8.2}.shots .shot img{object-position:top}
-.split{padding-top:1.4cqw}
+.slide:nth-child(2) .cols{bottom:20.4cqw}.slide:nth-child(2) .col p{font-size:1.6cqw;line-height:1.45;margin-bottom:1.3cqw}
+.slide:nth-child(2) .crew img{height:6.6cqw}.slide:nth-child(2) .crew{bottom:var(--bot)}
+.band{position:absolute;left:var(--m);bottom:var(--bot);width:55cqw;display:grid;grid-template-columns:repeat(3,1fr);gap:1.3cqw}
+.band div{background:#0f1a20;border:.2cqw solid #1c3a43;border-radius:1.2cqw;padding:1.2cqw 1.3cqw;display:flex;flex-direction:column;gap:.5cqw}
+.band b{font:400 1.8cqw/1 Anton,Impact,sans-serif;color:#99DCE1;letter-spacing:.02em}.band span{font-size:1.15cqw;line-height:1.35;color:#9fb4bb}
+.end3{bottom:15.2cqw}.end .by{bottom:var(--bot)}
+.sub{position:absolute;left:var(--m);top:41cqw;width:52cqw;margin:0;font-size:1.7cqw;line-height:1.45;color:#cfe0e3}
+.slide .lead{font-size:1.75cqw;color:#EAF4F5}
+.steps{list-style:none;margin:0 0 1.6cqw;padding:0;counter-reset:s;display:grid;gap:.9cqw}
+.steps li{counter-increment:s;position:relative;padding-left:3.2cqw;font-size:1.45cqw;line-height:1.35;color:#cfe0e3}
+.steps li:before{content:counter(s);position:absolute;left:0;top:-.1cqw;width:2.2cqw;height:2.2cqw;border-radius:50%;background:#F58A53;color:#1a0d05;font:800 1.2cqw/2.2cqw Inter;text-align:center}
+.steps b{color:#fff}
+.crewlist li{grid-template-columns:2.4cqw 6.2cqw 1fr}
+.crewlist span u{display:block;text-decoration:none;font-size:1.3cqw}.crewlist span em{display:block;font-style:normal;font-weight:500;font-size:1.05cqw;color:#9fb4bb;margin-top:.15cqw;line-height:1.25}
+.crewlist span{line-height:1.2}
+.feats{list-style:none;margin:0;padding:0;display:grid;grid-template-rows:repeat(8,1fr);flex:1}
+.feats li{display:grid;grid-template-columns:15.5cqw 1fr;column-gap:1.2cqw;align-items:center;border-top:.1cqw solid #16303a}
+.feats li:last-child{border-bottom:.1cqw solid #16303a}
+.feats b{font-size:1.4cqw;color:#99DCE1;font-weight:800;line-height:1.2}.feats span{font-size:1.25cqw;color:#cfe0e3;line-height:1.3}
+.feats.three{grid-template-rows:repeat(3,auto);flex:none;margin-bottom:1.6cqw}.feats.three li{grid-template-columns:1fr;padding:1.2cqw 0;row-gap:.3cqw}
+.feats.three b{font-size:1.7cqw}.feats.three span{font-size:1.4cqw}
+.note{font-size:1.5cqw!important;color:#9fb4bb!important;margin-top:auto!important}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1cqw;margin-bottom:1.4cqw}
+.stats div{background:#0f1a20;border:.2cqw solid #1c3a43;border-radius:1.1cqw;padding:.9cqw 1cqw;text-align:center}
+.stats b{display:block;font:400 2.8cqw/1 Anton,Impact,sans-serif;color:#F58A53}.stats span{font-size:1.05cqw;color:#9fb4bb}
+.chips{position:absolute;left:var(--m);right:var(--m);bottom:3.2cqw;display:flex;gap:.9cqw;flex-wrap:nowrap}
+.chips span{font-weight:700;font-size:1.15cqw;padding:.65cqw 1.2cqw;border:.2cqw solid #1c3a43;background:#0f1a20;border-radius:99px;color:#EAF4F5;white-space:nowrap}
+.slide:has(.chips) .cols{bottom:9.4cqw}
+.slide:has(.chips) .bul{margin-bottom:1.4cqw;gap:.7cqw}.slide:has(.chips) .bul li{font-size:1.5cqw}
+
+.sub{top:38cqw;width:46cqw;font-size:1.55cqw}
+.slide:nth-child(2) .cols{bottom:18cqw}.slide:nth-child(2) .col p{font-size:1.5cqw;line-height:1.4;margin-bottom:1.1cqw}
+.slide:nth-child(2) .col h3{margin-bottom:1cqw}
+.band{width:52cqw}.band div{padding:1cqw 1.1cqw}
+.crewlist li{padding:0}.crewlist span u{font-size:1.2cqw;line-height:1.15}.crewlist span em{font-size:1cqw;line-height:1.15;margin-top:.1cqw}
+.crewlist b{font-size:1.85cqw}
+.feats li{grid-template-columns:16.5cqw 1fr}.feats b{font-size:1.35cqw}.feats span{font-size:1.2cqw}
+.feats.three li{padding:.9cqw 0}.feats.three b{font-size:1.6cqw}.feats.three span{font-size:1.3cqw}
+.slide:nth-child(5) .lead{font-size:1.6cqw}
+.chips{bottom:7.4cqw;gap:.7cqw;justify-content:space-between}.chips span{font-size:1cqw;padding:.55cqw .9cqw}
+.slide:has(.chips) .cols{bottom:12cqw}
+.end3{bottom:15.5cqw}
+.sub{top:37.4cqw;width:56cqw;font-size:1.7cqw}
+.steps{grid-template-columns:1fr 1fr;column-gap:2cqw;row-gap:1.1cqw;margin-bottom:1.4cqw}
+.steps li{font-size:1.25cqw;line-height:1.3;padding-left:2.9cqw}
+.steps li:before{width:2cqw;height:2cqw;font-size:1.1cqw;line-height:2cqw}
 </style>
 </head>
 <body>
 <div id="bar"></div>
 <div id="stage"><div id="deck">
-<div data-i="0" class="slide on title"><div class="grid"></div><p class="eyebrow">Building a junior astronaut mission trainer</p><h1 class="mega">AQUANAUTS</h1><p class="by"><span>Presented by :</span>Eshun Burge and Colton McGill</p><div class="crew"><img src="img/crab.png" alt=""><img src="img/axolotl.png" alt=""><img src="img/ray.png" alt=""><img src="img/octopus.png" alt=""></div></div>
-<div data-i="1" class="slide"><div class="grid"></div><h2>THE CHALLENGE</h2><p class="kick">Building a junior astronaut mission trainer</p>
-<div class="two"><div><h3>The problem</h3><p>Space exploration is often taught in one of two ways: oversimplified to the point that students miss important concepts, or explained in language too technical for younger learners to understand.</p><p>As STEM students ourselves, we believe learning should strike a balance between accessibility and depth, making complex concepts both understandable and engaging.</p></div>
-<div><h3>The solution</h3><p>To bridge this gap, we developed Aquanauts, an interactive astronaut simulation game that brings real-world space exploration challenges to life.</p><p>Through hands-on missions inspired by NASA data, students navigate realistic scenarios that astronauts have faced or could encounter in space, developing decision-making skills along the way.</p></div></div><div class="crew"><img src="img/angler.png" alt=""><img src="img/nautilus.png" alt=""><img src="img/tardigrade.png" alt=""><img src="img/pufferfish.png" alt=""></div></div>
-<div data-i="2" class="slide"><div class="grid"></div><span class="tag">AQUANAUTS</span><h2>THE LESSONS</h2><p class="kick">8 characters, 8 lessons, 8 levels, 8 certifications</p>
-<div class="split"><div class="txt"><ul class="crewlist"><li><i>01</i><b>Bloop</b><span>Life support: keep your crew alive</span></li><li><i>02</i><b>Moss</b><span>Energy systems: power the mission</span></li><li><i>03</i><b>Nori</b><span>Food and agriculture: grow beyond earth</span></li><li><i>04</i><b>Luma</b><span>Space safety: shield your crew</span></li><li><i>05</i><b>Pip</b><span>Engineering: build the best base</span></li><li><i>06</i><b>Skim</b><span>Sustainability: make every source count</span></li><li><i>07</i><b>Pebble</b><span>Mission planning: think ahead of schedule</span></li><li><i>08</i><b>Tank</b><span>Multitasking: the final commands</span></li></ul></div><div class="txt"><p>Players walk a 3D lunar base with a keyboard or touchscreen. Each mission starts with a short lesson, then players apply it by finding tools and repairing equipment. A glowing trail guides the way and a quiz ends each mission.</p><div class="shot"><img src="media/deck/shot-map.jpg" alt="The Moon Base map" class="top"></div></div></div></div>
-<div data-i="3" class="slide"><div class="grid"></div><span class="tag">AQUANAUTS</span><h2>THE DETAILS</h2><p class="kick">What is inside the website</p>
-<div class="split"><div class="txt"><ul class="bul two-col"><li>48 Quiz Questions</li><li>64 Vocab Words</li><li>21 Prizes to Win</li><li>8 Crew Pets to Adopt</li><li>8 Certifications</li><li>Daily Streak Badges</li><li>Coins to Spend in the Cantina</li><li>Accounts That Save Progress</li><li>Play as a Guest</li><li>Daily Goal Choices</li><li>Teacher Mode</li><li>Works on Any Screen Size</li></ul></div>
-<div class="txt"><p>Aquanauts pairs the game with a mission control website. Kids track progress, take quizzes, earn coins and adopt crew pets.</p><div class="shot"><img src="media/deck/shot-dash.jpg" alt="The Aquanauts dashboard" class="top"></div></div></div></div>
-<div data-i="4" class="slide"><div class="grid"></div><span class="tag">AQUANAUTS</span><h2>THE BOARD</h2><p class="kick">Our custom game board</p>
-<div class="split"><div class="txt"><p>Play Aquanauts hands-on with the physical game board, which connects to the game.</p><p style="margin-bottom:.6cqw">The board has:</p><ul class="bul"><li>A spinning octopus head</li><li>Five illuminated LEDs</li><li>Three rotating dials</li></ul><p>Touching real dials and lights while playing makes STEM feel hands-on.</p></div>
-<div class="vidwrap"><video id="vid" src="media/deck/board-video.mp4" poster="media/deck/board-poster.jpg" muted loop playsinline preload="auto"></video></div></div></div>
-<div data-i="5" class="slide"><div class="grid"></div><span class="tag">AQUANAUTS</span><h2>THE PLATFORM</h2><p class="kick">Progressive web app and web game, adaptable for any size device</p>
-<div class="two shots"><div><h3>On the website</h3><p>Learn about the game, meet the crew and visit the shop.</p><div class="shot"><img src="media/deck/shot-home.jpg" alt="Aquanauts homepage"></div></div>
-<div><h3>On the game</h3><p>Walk the base, meet the crew and complete mission tasks.</p><div class="shot"><img src="media/deck/shot-game.jpg" alt="Aquanauts game"></div></div></div>
-<p class="foot">Built with HTML, CSS and JavaScript, Three.js, Vite, Firebase and GitHub Pages. Missions inspired by NASA DONKI and OSDR research.</p></div>
-<div data-i="6" class="slide title end"><div class="grid"></div><p class="eyebrow">Every kid can be an astronaut with</p><h1 class="mega">AQUANAUTS</h1><p class="quote">Learn by doing. Replay with no penalty.</p><p class="by">Thank you!</p><div class="crew"><img src="img/crab.png" alt=""><img src="img/axolotl.png" alt=""><img src="img/ray.png" alt=""><img src="img/octopus.png" alt=""></div></div>
+<div data-i="0" class="slide on title"><div class="grid"></div><p class="eyebrow">Building a junior astronaut mission trainer</p><h1 class="mega">AQUANAUTS</h1><p class="sub">An interactive astronaut training game for kids.</p><p class="by"><span>Presented by :</span>Eshun Burge and Colton McGill</p><div class="crew"><img src="img/crab.png" alt=""><img src="img/axolotl.png" alt=""><img src="img/ray.png" alt=""><img src="img/octopus.png" alt=""></div></div>
+<div data-i="1" class="slide"><div class="grid"></div><header><h2>THE CHALLENGE</h2><p class="kick">Building a junior astronaut mission trainer</p></header>
+<main class="cols"><section class="col"><h3>The problem</h3><p>Space exploration is often taught in one of two ways: oversimplified to the point that students miss important concepts, or explained in language too technical for younger learners to understand.</p><p>As STEM students ourselves, we believe learning should strike a balance between accessibility and depth, making complex concepts both understandable and engaging.</p></section>
+<section class="col"><h3>The solution</h3><p>To bridge this gap, we developed Aquanauts, an interactive astronaut simulation game that brings real-world space exploration challenges to life.</p><p>Through hands-on missions inspired by NASA data, students navigate realistic scenarios that astronauts have faced or could encounter in space, developing decision-making skills along the way.</p></section></main>
+<div class="band"><div><b>Learn by doing</b><span>Players repair real systems instead of memorizing facts.</span></div><div><b>Real science</b><span>Informed by NASA DONKI and OSDR research.</span></div><div><b>A friendly crew</b><span>Sea-creature astronauts make space feel welcoming.</span></div></div><div class="crew"><img src="img/angler.png" alt=""><img src="img/nautilus.png" alt=""><img src="img/tardigrade.png" alt=""><img src="img/pufferfish.png" alt=""></div></div>
+<div data-i="2" class="slide"><div class="grid"></div><span class="tag">AQUANAUTS</span><header><h2>THE LESSONS</h2><p class="kick">8 characters, 8 lessons, 8 levels, 8 certifications</p></header>
+<main class="cols"><section class="col"><ul class="crewlist"><li><i>01</i><b>Bloop</b><span><u>Life support: keep your crew alive</u><em>Manage oxygen, air and water to keep astronauts safe.</em></span></li><li><i>02</i><b>Moss</b><span><u>Energy systems: power the mission</u><em>Solar panels, batteries and smart choices keep it running.</em></span></li><li><i>03</i><b>Nori</b><span><u>Food and agriculture: grow beyond earth</u><em>Grow crops in a greenhouse and keep the crew fed.</em></span></li><li><i>04</i><b>Luma</b><span><u>Space safety: shield your crew</u><em>Spot space weather and shield astronauts from radiation.</em></span></li><li><i>05</i><b>Pip</b><span><u>Engineering: build the best base</u><em>Design, test and repair a reliable outpost.</em></span></li><li><i>06</i><b>Skim</b><span><u>Sustainability: make every source count</u><em>Recycle and stretch limited resources.</em></span></li><li><i>07</i><b>Pebble</b><span><u>Mission planning: think ahead</u><em>Set priorities and prepare for the unexpected.</em></span></li><li><i>08</i><b>Tank</b><span><u>Multitasking: the final commands</u><em>Put everything you learned to the test.</em></span></li></ul></section>
+<section class="col"><h3>How every mission works</h3><ol class="steps"><li><b>Learn.</b> A crew member teaches one short idea.</li><li><b>Do.</b> Find the tools, reach the equipment and fix it.</li><li><b>Follow the trail.</b> Captions and a glowing path show the next step.</li><li><b>Check.</b> A quiz locks in what you learned.</li></ol><div class="shot fill"><img src="media/deck/shot-map.jpg" alt="The Moon Base map"></div></section></main></div>
+<div data-i="3" class="slide"><div class="grid"></div><span class="tag">AQUANAUTS</span><header><h2>THE DETAILS</h2><p class="kick">What is inside the website</p></header>
+<main class="cols"><section class="col"><p class="lead">Aquanauts pairs the game with a mission control website for tracking, rewards and practice.</p><ul class="feats"><li><b>Progress tracking</b><span>Streaks, daily goals, next mission.</span></li><li><b>Moon Base map</b><span>Every room and what unlocks next.</span></li><li><b>Quizzes and words</b><span>Quizzes plus vocab words for 8 levels.</span></li><li><b>Coins and the Cantina</b><span>Earn coins, then adopt pets.</span></li><li><b>3D crew pets</b><span>8 interactive pets to adopt.</span></li><li><b>Prizes, certificates</b><span>21 prizes and a certificate per level.</span></li><li><b>Guest or account</b><span>Play now, or sign in to save.</span></li><li><b>Teacher mode</b><span>Open any mission directly for class.</span></li></ul></section>
+<section class="col"><div class="stats"><div><b>48</b><span>quiz questions</span></div><div><b>64</b><span>vocab words</span></div><div><b>21</b><span>prizes</span></div><div><b>8</b><span>crew pets</span></div></div><div class="shot fill"><img src="media/deck/shot-dash.jpg" alt="The Aquanauts dashboard"></div></section></main></div>
+<div data-i="4" class="slide"><div class="grid"></div><span class="tag">AQUANAUTS</span><header><h2>THE BOARD</h2><p class="kick">Our custom game board</p></header>
+<main class="cols"><section class="col"><p class="lead">We designed and built a physical game board that connects to the game, for hands-on play beyond the screen.</p>
+<ul class="feats three"><li><b>A spinning octopus head</b><span>The centerpiece of the board.</span></li><li><b>Five illuminated LEDs</b><span>Lights that bring the board to life.</span></li><li><b>Three rotating dials</b><span>Real controls kids can turn and feel.</span></li></ul>
+<p class="note">Physical play meets digital gameplay.</p></section>
+<section class="col vcol"><div class="vidwrap"><video id="vid" src="media/deck/board-video.mp4" poster="media/deck/board-poster.jpg" muted loop playsinline preload="auto"></video></div></section></main></div>
+<div data-i="5" class="slide"><div class="grid"></div><span class="tag">AQUANAUTS</span><header><h2>THE PLATFORM</h2><p class="kick">Progressive web app and web game, adaptable for any size device</p></header>
+<main class="cols"><section class="col"><h3>On the website</h3><ul class="bul"><li>Learn what the game is about</li><li>Meet the characters</li><li>Shop the products</li></ul><div class="shot fill"><img src="media/deck/shot-home.jpg" alt="Aquanauts homepage"></div></section>
+<section class="col"><h3>On the game</h3><ul class="bul"><li>Explore different rooms and paths</li><li>Follow captions and a glowing trail</li><li>Complete mission tasks</li></ul><div class="shot fill"><img src="media/deck/shot-game.jpg" alt="Aquanauts game"></div></section></main>
+<div class="chips"><span>HTML, CSS and JavaScript</span><span>Three.js and Vite</span><span>Firebase Auth and Firestore</span><span>GitHub Pages</span><span>WordPress embed</span><span>Claude, Canva and Procreate</span></div></div>
+<div data-i="6" class="slide title end"><div class="grid"></div><p class="eyebrow">Every kid can be an astronaut with</p><h1 class="mega" data-max="14.5">AQUANAUTS</h1>
+<div class="band end3"><div><b>Understand why</b><span>Systems make sense when you need them.</span></div><div><b>Replay freely</b><span>No time limits and no penalties.</span></div><div><b>See the careers</b><span>Many sciences, one shared mission.</span></div></div><p class="by">Thank you!</p><div class="crew"><img src="img/crab.png" alt=""><img src="img/axolotl.png" alt=""><img src="img/ray.png" alt=""><img src="img/octopus.png" alt=""></div></div>
 </div></div>
 <div id="ui"><button id="pv" aria-label="Previous slide">&larr;</button><span class="ct" id="ct"></span><button id="nx" aria-label="Next slide">&rarr;</button><button id="fs" aria-label="Full screen">Full screen</button><a href="media/deck/Aquanauts-Pitch-Deck.pdf" target="_blank" rel="noopener" download aria-label="Download the PDF">PDF</a></div>
 <script>
@@ -142,7 +163,7 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden;-webkit-text-size
     var a1=from.animate(A,o),a2=to.animate(B,o);
     a2.onfinish=function(){from.classList.remove('on');a1.cancel();a2.cancel();busy=false;s.forEach(function(e,k){e.classList.toggle('on',k===cur)})};
   }
-  function fit(){[].forEach.call(document.querySelectorAll('.mega'),function(m){m.style.fontSize='20cqw';var d=document.getElementById('deck'),w=m.getBoundingClientRect().width,t=d.getBoundingClientRect().width*0.89;m.style.fontSize=Math.min(20.5,20*t/w)+'cqw'})}
+  function fit(){[].forEach.call(document.querySelectorAll('.mega'),function(m){m.style.fontSize='20cqw';var d=document.getElementById('deck'),w=m.getBoundingClientRect().width,t=d.getBoundingClientRect().width*0.89;m.style.fontSize=Math.min(+(m.dataset.max||20.5),20*t/w)+'cqw'})}
   fit();addEventListener('load',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);addEventListener('resize',fit);
   var h=parseInt((location.hash||'').slice(1),10);set(isNaN(h)?0:Math.max(0,Math.min(n-1,h-1)));
   document.getElementById('nx').onclick=function(){go(cur+1)};

@@ -642,3 +642,11 @@ html{overflow-x:clip}
 @media(max-width:800px){.jump{grid-template-columns:1fr}.shophead .bal{justify-items:start}}
 .pr-grid.two{grid-template-columns:1fr 1fr}@media(max-width:800px){.pr-grid.two{grid-template-columns:1fr}}
 .lc-btns.one,.prac-row.one{grid-template-columns:1fr}
+
+/* aligned quiz buttons */
+.lh-act{display:grid;grid-template-columns:1fr;gap:16px;justify-items:stretch;width:240px;max-width:100%}
+.lh-act .btn{width:100%;justify-content:center;text-align:center;box-sizing:border-box}
+.lh-act p{text-align:center;margin-top:4px}
+.lc-btns{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch;margin:8px 6px 6px 0}
+.lc-btns .btn{width:100%;min-height:48px;display:inline-flex;align-items:center;justify-content:center;text-align:center;box-sizing:border-box;margin:0}
+.prac-row{gap:18px}.prac-row .prac-btn{width:100%;min-height:76px;box-sizing:border-box}
