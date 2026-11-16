@@ -37,7 +37,7 @@ function AQ_DASH() {
     shop: '<svg viewBox="0 0 24 24"><path d="M4 8h16l-1.200 12H5.200L4 8zM8 8V6a4 4 0 0 1 8 0v2"/></svg>',
     user: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.400 3.600-7 8-7s8 2.600 8 7"/></svg>'
   };
-  const NAV = [['home', 'Control center', ico.home], ['map', 'Moon Base', ico.map], ['courses', 'Adventures', ico.book], ['learn', 'Words & quizzes', ico.quiz], ['shop', 'Cantina', ico.shop], ['profile', 'Profile', ico.user]];
+  const NAV = [['home', 'Control center', ico.home], ['map', 'Moon Base', ico.map], ['courses', 'Adventures', ico.book], ['learn', 'Quizzes', ico.quiz], ['shop', 'Cantina', ico.shop], ['profile', 'Profile', ico.user]];
 
   /* ---------- state ---------- */
   const blank = () => ({ joined: Date.now(), goal: 10, large: false, quiz: {}, coins: 0, pct: {}, plays: [iso(new Date())], earned: {}, pets: [], active: null, avatar: 'pufferfish', name: user.first || '', certName: [user.first, full.last].filter(Boolean).join(' '), visited: [], log: [{ t: Date.now(), text: 'Joined Aquanauts' }] });
@@ -99,7 +99,7 @@ function AQ_DASH() {
 
   /* ---------- views ---------- */
   let view = 'home', buddy = null, modalViewer = null, jumpTo = null, mapSel = null;
-  const TITLES = { home: 'Control center', map: 'Moon Base', courses: 'Adventures', learn: 'Words & quizzes', shop: 'Cantina', profile: 'Profile' };
+  const TITLES = { home: 'Control center', map: 'Moon Base', courses: 'Adventures', learn: 'Quizzes', shop: 'Cantina', profile: 'Profile' };
 
   function stopViewers() { if (buddy) { buddy.dispose(); buddy = null; } }
 
@@ -136,9 +136,8 @@ function AQ_DASH() {
         : `<h2>Every course finished</h2><p class="sub">You ran the whole outpost. Open your certificates any time.</p><a class="btn sm" href="#courses">See certificates</a>`}</div>
       <div class="card"><div class="row-head"><h2>This week</h2></div><p class="sub">Your goal is ${S.goal || 10} minutes a day. Play a little every day to grow your streak.</p><div class="week">${week}</div><p class="wk">${st > 0 ? `${st} ${st === 1 ? 'day' : 'days'} in a row. Play today to keep it going.` : 'Play today to start your streak.'}</p></div>
     </section>
-    <section class="card practice"><div class="row-head"><h2>Practice time</h2><a class="link" href="#learn">All words and quizzes</a></div>
-      <div class="pr-grid">
-        <button class="pr-tile" ${c ? `data-words="${c.id}"` : 'data-quiz="mix"'} type="button"><span class="pr-ic"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5zM19 19v2H6"/></svg></span><b>Vocab words</b><span>${c ? `Learn the words for ${c.who}'s level` : 'Review your words'}</span></button>
+    <section class="card practice"><div class="row-head"><h2>Quiz time</h2><a class="link" href="#learn">All quizzes</a></div>
+      <div class="pr-grid two">
         <button class="pr-tile" ${c ? `data-quiz="${c.id}"` : 'data-quiz="mix"'} type="button"><span class="pr-ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v13H9l-5 4V4zM9.500 8.500a2.500 2.500 0 1 1 3.500 2.300c-.7.400-1 .9-1 1.700M12 15v.1"/></svg></span><b>Quick quiz</b><span>${c ? `${QN} questions on ${c.short.toLowerCase()}. Win 10 coins` : 'Test what you know'}</span></button>
         <button class="pr-tile" data-quiz="mix" type="button"><span class="pr-ic"><svg viewBox="0 0 24 24"><path d="M3 7h4l10 10h4M3 17h4l3-3M14 10l3-3h4M18 4l3 3-3 3M18 14l3 3-3 3"/></svg></span><b>Mixed quiz</b><span>Questions from every level you have opened</span></button>
       </div></section>
@@ -195,26 +194,24 @@ function AQ_DASH() {
   const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
   function vLearn() {
-    const open = COURSES.filter(c => status(c) !== 'lock'), nW = Object.values(STUDY).reduce((a, s) => a + s.words.length, 0), nQ = Object.values(STUDY).reduce((a, s) => a + s.quiz.length, 0);
-    const passed = Object.values(S.quiz).filter(q => q && q.passed).length;
-    return `<div class="card learn-hero"><div><span class="eyebrow">Practice</span><h2>Words and quizzes</h2><p class="sub">Every adventure has a list of new words to learn and a quiz to test yourself. Pass a quiz to win 10 coins.</p>
-      <div class="lh-stats"><div><b>${nW}</b><span>vocab words</span></div><div><b>${nQ}</b><span>quiz questions</span></div><div><b>${passed}</b><span>of 8 quizzes passed</span></div></div></div>
+    const nQ = Object.values(STUDY).reduce((a, s) => a + s.quiz.length, 0), passed = Object.values(S.quiz).filter(q => q && q.passed).length;
+    return `<div class="card learn-hero"><div><span class="eyebrow">Practice</span><h2>Quizzes</h2><p class="sub">Every adventure has a short quiz. Pass one to win 10 coins.</p>
+      <div class="lh-stats"><div><b>${nQ}</b><span>quiz questions</span></div><div><b>${passed}</b><span>of 8 quizzes passed</span></div></div></div>
       <div class="lh-act"><button class="btn" data-quiz="mix" type="button">Mixed quiz</button><p>6 questions from every adventure you have opened.</p></div></div>
     <div class="lgrid">${COURSES.map(c => {
       const st = status(c), q = S.quiz[c.id], on = st !== 'lock', n = STUDY[c.id];
       return `<article class="lcard ${on ? '' : 'locked'}"><div class="lc-top"><div class="pic"><img src="img/${c.img}.png" alt="${c.who}"></div><div><small>Level 0${c.id} · ${c.who}</small><h3>${c.short}</h3></div></div>
-        <ul class="lc-facts"><li><b>${n.words.length}</b> vocab words</li><li><b>${n.quiz.length}</b> quiz questions</li></ul>
-        ${on ? `<div class="lc-btns"><button class="btn sm ghost" data-words="${c.id}" type="button">Learn the words</button><button class="btn sm" data-quiz="${c.id}" type="button">${q && q.passed ? 'Quiz passed. Play again' : 'Take the quiz'}</button></div>${q ? `<p class="lc-best">Best score: ${q.best} of ${QN}</p>` : '<p class="lc-best">Pass the quiz to win 10 coins.</p>'}`
+        <ul class="lc-facts"><li><b>${n.quiz.length}</b> questions to practice</li></ul>
+        ${on ? `<div class="lc-btns one"><button class="btn sm" data-quiz="${c.id}" type="button">${q && q.passed ? 'Quiz passed. Play again' : 'Take the quiz'}</button></div>${q ? `<p class="lc-best">Best score: ${q.best} of ${QN}</p>` : '<p class="lc-best">Pass the quiz to win 10 coins.</p>'}`
         : `<p class="lc-lock">Finish ${COURSES[c.id - 2].who}'s level to open this one.</p>`}</article>`;
     }).join('')}</div>`;
   }
 
   function vCourses() {
-    return `<div class="card"><h2>Your adventures</h2><p class="sub">Finish each course in order to unlock the next room on the Moon Base. Practice the words and take a quick quiz for bonus coins.</p></div><div class="clist">${COURSES.map(c => {
+    return `<div class="card"><h2>Your adventures</h2><p class="sub">Finish each course in order to unlock the next room on the Moon Base. Take a quick quiz after each level for bonus coins.</p></div><div class="clist">${COURSES.map(c => {
       const st = status(c), p = S.pct[c.id] || 0, q = S.quiz[c.id], open = st !== 'lock';
-      const study = open ? `<button class="chip" data-words="${c.id}" type="button">Vocab words</button><button class="chip ${q && q.passed ? 'ok' : ''}" data-quiz="${c.id}" type="button">${q ? 'Quiz · best ' + q.best + ' of ' + QN : 'Quick quiz'}</button>` : `<span class="chip off">Vocab words</span><span class="chip off">Quick quiz</span>`;
       return `<div class="crow ${st === 'lock' ? 'locked' : ''}"><div class="pic"><img src="img/${c.img}.png" alt="${c.who}"></div>
-        <div class="info"><h3>${c.title}</h3><p>${c.who} · ${c.room}</p><div class="study">${study}</div></div>
+        <div class="info"><h3>${c.title}</h3><p>${c.who} · ${c.room}</p></div>
         <div class="meta"><div class="bar-track"><div class="bar-fill" data-w="${p}"></div></div><div class="bar-meta"><span>${st === 'done' ? 'Finished' : st === 'lock' ? 'Locked' : p + '% done'}</span></div></div>
         <div class="acts">${st === 'done' ? `<a class="btn sm" href="certificate.html?name=${encodeURIComponent(S.certName)}&course=${c.id}">Certificate</a><a class="btn sm ghost" href="${GAME_URL}" data-play>Review</a>` : st === 'cur' ? `<a class="btn sm" href="${GAME_URL}" data-play>${p ? 'Continue' : 'Start'}</a>` : `<span class="btn sm ghost off">Locked</span>`}</div></div>`;
     }).join('')}</div>`;
@@ -240,17 +237,16 @@ function AQ_DASH() {
     }
     const c = COURSES.find(x => 'c' + x.id === id), st = status(c), p = S.pct[c.id] || 0, prev = COURSES[c.id - 2], q = S.quiz[c.id];
     const tag = st === 'done' ? 'Finished' : st === 'cur' ? (p ? p + '% done' : 'Next mission') : 'Locked';
-    const words = STUDY[c.id].words.slice(0, 4).map(w => `<span class="chip off w">${w[0]}</span>`).join('');
     const acts = st === 'cur' ? `<a class="btn sm" href="${GAME_URL}" data-play>${p ? 'Continue level' : 'Start level'}</a>`
       : st === 'done' ? `<a class="btn sm" href="certificate.html?name=${encodeURIComponent(S.certName)}&course=${c.id}">View certificate</a><a class="btn sm ghost" href="${GAME_URL}" data-play>Replay</a>`
         : `<span class="btn sm ghost off">Finish ${prev.who}'s level first</span>`;
-    const study = st !== 'lock' ? `<div class="prac"><small>Practice this level</small><div class="prac-row"><button class="prac-btn" data-words="${c.id}" type="button"><b>Vocab words</b><span>${STUDY[c.id].words.length} words to learn</span></button><button class="prac-btn ${q && q.passed ? 'ok' : ''}" data-quiz="${c.id}" type="button"><b>${q && q.passed ? 'Quiz passed' : 'Take the quiz'}</b><span>${q ? 'Best ' + q.best + ' of ' + QN : QN + ' questions, win 10 coins'}</span></button></div></div>` : '';
+    const study = st !== 'lock' ? `<div class="prac"><small>Test yourself</small><div class="prac-row one"><button class="prac-btn ${q && q.passed ? 'ok' : ''}" data-quiz="${c.id}" type="button"><b>${q && q.passed ? 'Quiz passed' : 'Take the quiz'}</b><span>${q ? 'Best ' + q.best + ' of ' + QN : QN + ' questions, win 10 coins'}</span></button></div></div>` : '';
     openModal(`<div class="m-level ${st === 'lock' ? 'locked' : ''}"><div class="lv-pic"><img src="img/${c.img}.png" alt="${c.who}"></div>
       <div class="lv-body"><span class="eyebrow">Level 0${c.id} · ${c.room}</span><h3>${c.title}</h3><span class="tag ${st}">${tag}</span>
       <p class="lv-big">${BIG[c.id]}</p><p class="lv-desc">${DESC[c.id]}</p>${p ? `<div class="bar-track"><div class="bar-fill" style="width:${p}%"></div></div>` : ''}<div class="acts">${acts}</div></div>
       <div class="lv-more"><div class="lv-cols"><div><small>What you will do</small><ul class="lv-list">${DO[c.id].map(d => `<li>${d}</li>`).join('')}</ul></div>
       <div class="lv-sci"><small>Real science behind it</small><b>${SCI[c.id][0]}</b><p>${SCI[c.id][1]}</p></div></div>
-      <div class="lv-words"><small>Words you will meet</small><div>${words}</div></div>${study}</div></div>`, () => { $$('#mCard [data-play]').forEach(a => a.addEventListener('click', e => { if (GAME_URL === '#') { e.preventDefault(); toast('The game opens here once it is connected.'); } })); });
+      ${study}</div></div>`, () => { $$('#mCard [data-play]').forEach(a => a.addEventListener('click', e => { if (GAME_URL === '#') { e.preventDefault(); toast('The game opens here once it is connected.'); } })); });
   }
 
   function quizModal(id) {
@@ -277,13 +273,13 @@ function AQ_DASH() {
     };
     const finish = () => {
       const q = S.quiz[id] || { best: 0, passed: false }, first = !mix && !q.passed && score >= qs.length - 1; if (!mix) q.best = Math.max(q.best, score);
-      let msg = score === qs.length ? 'Perfect score!' : score >= qs.length - 1 ? 'Nice work!' : 'Good try. Check the words and have another go.';
+      let msg = score === qs.length ? 'Perfect score!' : score >= qs.length - 1 ? 'Nice work!' : 'Good try. Have another go.';
       if (first) { q.passed = true; S.coins += 10; S.log.unshift({ t: Date.now(), text: `Passed the ${c.short} quiz (+10 coins)` }); bump(); }
       if (!mix) S.quiz[id] = q; save();
       if (score === qs.length && !mix) award('badge-quick-thinker');
       save(); header();
       openModal(`<div class="m-quiz"><span class="eyebrow">${c.who} · Quiz done</span><h3>${score} of ${qs.length} right</h3><p class="sub">${msg}${first ? ' You earned 10 coins.' : ''}</p>
-        <div class="acts"><button class="btn sm" id="again" type="button">Try again</button>${mix ? '' : `<button class="btn sm ghost" data-words="${id}" type="button">Vocab words</button>`}<button class="btn sm ghost" id="qdone" type="button">Done</button></div></div>`,
+        <div class="acts"><button class="btn sm" id="again" type="button">Try again</button><button class="btn sm ghost" id="qdone" type="button">Done</button></div></div>`,
         () => { $('#again').onclick = () => quizModal(id); $('#qdone').onclick = () => { closeModal(); draw(); }; });
     };
     ask();
