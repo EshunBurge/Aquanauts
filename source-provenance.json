@@ -1,13 +1,13 @@
 {
   "repository": "https://github.com/eshunburge/Aquanauts",
-  "revision": "5dd6126aba86ea5fcbdd3813c052ef5e8770730e",
+  "revision": "1a1b4e95b33c360f18ab9139166eb51e4bfe97c1",
   "baselineSha256": {
     "FIREBASE_SETUP.md": "d29df9e61708077fcaba76cfb2a7a98d996c6cd4964b8a3263c311eaf2134df7",
     "SECURITY.md": "ba9643955bfcb04524a6fe5a8c2929b54abc2e67bb3480ce806e742d506e4dc9",
     "certificate.html": "e31669488dcd0b73b2475bec1a2288834eb77c28f181591b8aabd10a8dbbc7a5",
-    "css/dashboard.css": "8f3997f1780a23c6a616ff3c2d558a0cc1a2323f08a21827eb0e4aeb357cae0a",
-    "css/styles.css": "33c5d14a30327c6295fa61a762cbccc365c2331ed5a40005e332c42d9ffcd25c",
-    "dashboard.html": "bd4b10d6149aabf3424d11e3e477cbc2df6402fb3633b2262d818a1f854d8394",
+    "css/dashboard.css": "5b827bc7f18f792c1d28d8af99d6a8ee7ec57a50177faf5b563474149d00a418",
+    "css/styles.css": "990d7e48163dec72f350132b2a03100b6a822c4f907c2c54189b6d2222d6daff",
+    "dashboard.html": "4c90b983a4f2b9e71c84dfff8ff786610d19af5d16708960400e5c276ca3f0bf",
     "firestore.rules": "98576167eebc5a2c9ad116150221804d81467ddb70148f86476ea3a314f9bcd0",
     "img/angler.png": "125bd82ba0d6a991ca421b1a1f8e9fe8e70071a93e74799251bb190d2cda529f",
     "img/axolotl.png": "509af99b3027f6199dd190615bbe9a8c671e2a8c2d09e773cbb6ffbd27b12c67",
@@ -27,15 +27,15 @@
     "img/pufferfish.png": "4c911fdb135862ec06ece2bfa8c5093bc2126025b7ec3e15020175c701fa7128",
     "img/ray.png": "e958a6a73a10709e3e72f2153df89fa343ea661eb89482a4b8b435ce81c67a24",
     "img/tardigrade.png": "00a351423c8f1fe050761b34d87452fa2ea2532a16901bffe18ca7080b51086d",
-    "index.html": "c53e09866cd186a1ba13ec2b54557c42e8da53ba6bf73f8f79fae6d254586501",
+    "index.html": "51f00a9297ae1820f92f3756e1e697b950b642081fc7e35c108ffd71f78f8dbf",
     "js/aq-backend.js": "7fdc0f802c6d71070da164e7ce46b5e2c65afa74f31b149082ccbd9c2d7a799c",
-    "js/dashboard.js": "cb8da8923b7197da72b57b66f32862f3a0b8386577e549c57e4e204d9818acdb",
+    "js/dashboard.js": "bb372510f3c7e97ef56aa5e11dce00ba0fadaa53aa2b391fcc4a3e29b59b9aeb",
     "js/firebase-config.js": "8d9ea6fefdbe908a24a7f4a2116d894263f4b41fe4655c212a4cd559fcb69baf",
-    "js/main.js": "ccc45b1b70ac79360b42b354a10314d45213fb81db20c304e652d64b50fdb9e2",
+    "js/main.js": "ee32107fac48a0e33356a44388dadff044160565c83ee3105eb90cb917847f05",
     "js/pets.js": "cad88ec08c0069835975f5eb91435c6c3e830d0cac2238c043586e6adf48e3b6",
     "js/prizes-data.js": "fba4348eb91dd48b626acc39e189b056359028fdc30d3da1c5ccb30de6dd54aa",
     "js/three.min.js": "f34446bf875b5fb0dcd93819ffe1d9e182d46634ee855f5d904c6c4ac7cdbc95",
-    "login.html": "ba4b938d5ebc35f38ba66ff68194eb8a7a42e5a0dfb184fc6350f2da2e1d8c4d",
+    "login.html": "5613862223eea50dc4e77645cf5470c54df7f5471290e600a582e6df47182875",
     "media/board-play.jpg": "eec4568bfe30adb35e8d9f3a2821bd44a701dabedaaa61ed442f4c52a8ba00cf",
     "media/board-play.mp4": "0649a675a946a01a4cb0dc43ede9a9017ab1268c74fc6de72a385bfbd7bc51e9",
     "media/board-topdown.jpg": "61fc4223888f14ed7db3107bfdb6b1cfc9316975a39d77f0d1becf1e54938457",
@@ -50,6 +50,6 @@
     "models/puff.glb": "f6f9d3109ecf09dfd5a4e929308ed13eeb3150c8301c6474af53a193f2493d54",
     "models/spiral.glb": "6bf4e0735cd75a35c131b9a88e6d32c3496fd625500532637cfaaf027d1fdcb8",
     "models/wiggles.glb": "9fc5cd0058558b403b2fb5b793bfde4e976edbf610ba08024c58e150e82dc052",
-    "shop.html": "c40f6389585bf1a93900a7d8aebe9a16bafa9d4fec8cd7bfed620df551ce6220"
+    "shop.html": "dfc28462d24906dccfb4c4e3ef68a937fa571299b5aed194a11e0236b5df849b"
   }
 }

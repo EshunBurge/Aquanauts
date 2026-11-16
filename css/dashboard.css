@@ -640,3 +640,5 @@ html{overflow-x:clip}
 .cs-head .sub{margin:0}
 .cs-n{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:var(--aqua);color:#031012;display:grid;place-items:center;font-family:var(--font-display);font-size:1.4rem}
 @media(max-width:800px){.jump{grid-template-columns:1fr}.shophead .bal{justify-items:start}}
+.pr-grid.two{grid-template-columns:1fr 1fr}@media(max-width:800px){.pr-grid.two{grid-template-columns:1fr}}
+.lc-btns.one,.prac-row.one{grid-template-columns:1fr}

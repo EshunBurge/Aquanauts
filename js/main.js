@@ -403,5 +403,3 @@
     $('#logout').addEventListener('click', async () => { if (window.AQ && AQ.live) await AQ.logOut(); localStorage.removeItem('aq_user'); location.href = 'login.html'; });
   }
 })();
-/* board hotspots: tap to show the tip on touch screens */
-document.addEventListener('click', e => { const h = e.target.closest('.hot'); document.querySelectorAll('.hot.open').forEach(x => { if (x !== h) x.classList.remove('open'); }); if (h) h.classList.toggle('open'); });
