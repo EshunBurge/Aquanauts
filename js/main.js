@@ -55,7 +55,7 @@
       <div class="foot-grid">
         <div><a href="index.html" class="brand">Aquanauts<i></i></a><p>An astronaut simulation game that teaches kids real-world problem solving.</p></div>
         <div><h5>Explore</h5><ul><li><a href="index.html">Home</a></li><li><a href="index.html#crew">The crew</a></li><li><a href="index.html#how">How it works</a></li><li><a href="shop.html">Shop</a></li></ul></div>
-        <div><h5>Account</h5><ul><li><a href="${user ? 'dashboard.html' : 'login.html'}">${user ? 'My dashboard' : 'Log in'}</a></li>${user ? '' : '<li><a href="login.html#signup">Sign up</a></li>'}<li><a href="#">Privacy</a></li></ul></div>
+        <div><h5>Account</h5><ul><li><a href="${user ? 'dashboard.html' : 'login.html'}">${user ? 'My dashboard' : 'Log in'}</a></li>${user ? '' : '<li><a href="login.html#signup">Sign up</a></li>'}<li><a href="privacy.html">Privacy</a></li></ul></div>
       </div>
       <div class="foot-bottom"><span>© <span id="yr"></span> Aquanauts. All rights reserved.</span><span>Demo app. The shop is not real.</span></div>
     </div>
@@ -128,11 +128,10 @@
           <div class="mini-qty"><button data-act="dec" data-id="${i.id}" aria-label="Decrease">−</button><span>${i.qty}</span><button data-act="inc" data-id="${i.id}" aria-label="Increase">+</button></div></div>
         <div><div class="line-total">${money(i.price * i.qty)}</div><button class="rm" data-act="rm" data-id="${i.id}">Remove</button></div>
       </div>`).join('')}</div>`;
-    const sub = cart.reduce((a, i) => a + i.price * i.qty, 0), ship = sub >= 75 ? 0 : 6.99;
+    const sub = cart.reduce((a, i) => a + i.price * i.qty, 0);
     foot.innerHTML = `
       <div class="sum"><span>Subtotal</span><span>${money(sub)}</span></div>
-      <div class="sum"><span>Shipping</span><span>${ship ? money(ship) : 'Free'}</span></div>
-      <div class="sum total"><span>Total</span><span>${money(sub + ship)}</span></div>
+      <div class="sum total"><span>Total</span><span>${money(sub)}</span></div>
       <button class="btn btn-primary btn-block" id="checkout">Checkout ${ICON.arrow}</button>
       <p style="text-align:center;font-size:.76rem;color:var(--muted)">Demo store: no real payment is taken.</p>`;
     $('#checkout').addEventListener('click', openDemoCheckout);

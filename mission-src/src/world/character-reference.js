@@ -12,4 +12,4 @@ export const characters={
 };
 let sheet;
 export function portraitCanvas(id){return (sheet??=new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=publicPath('assets/characters/original-sheet.png');})).then(im=>{const [x,y,w,h]=characters[id].crop,cv=document.createElement('canvas');cv.width=h;cv.height=w;const c=cv.getContext('2d');c.translate(h,0);c.rotate(Math.PI/2);c.drawImage(im,x,y,w,h,0,0,w,h);const data=c.getImageData(0,0,h,w);for(let i=0;i<data.data.length;i+=4){const min=Math.min(data.data[i],data.data[i+1],data.data[i+2]);if(min>240)data.data[i+3]=0;}c.putImageData(data,0,0);return cv;});}
-export function setPortraitImages(){document.querySelectorAll('img[data-character]').forEach(el=>portraitCanvas(el.dataset.character).then(cv=>{el.src=cv.toDataURL();}));}
+export function setPortraitImages(){document.querySelectorAll('img[data-character],image[data-character]').forEach(el=>portraitCanvas(el.dataset.character).then(cv=>{const u=cv.toDataURL();el.tagName.toLowerCase()==='image'?el.setAttribute('href',u):el.src=u;}));}

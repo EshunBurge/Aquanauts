@@ -916,3 +916,6 @@ html,body{max-width:100%;overflow-x:clip}
 .dc-sum{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 4px;border-top:2px solid var(--line);margin-bottom:18px;color:var(--muted);font-weight:600}.dc-sum b{color:var(--text);font-size:1.2rem}
 .dc-btns{display:grid;gap:10px}.dc-btns .btn{width:100%;justify-content:center}
 @keyframes dcIn{from{opacity:0;transform:translateY(20px) scale(.96)}}
+
+.info-grid{grid-template-columns:repeat(2,1fr)}
+@media(max-width:1000px){.info-grid{grid-template-columns:1fr}}

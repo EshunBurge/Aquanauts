@@ -64,12 +64,10 @@
         <div class="qty"><button id="qtyDec" aria-label="Decrease quantity">&minus;</button><output id="qtyVal">1</output><button id="qtyInc" aria-label="Increase quantity">+</button></div>
         <button class="btn" id="addBtn" data-pid="${p.id}">Add to cart</button>
       </div>
-      <ul class="trust rise" style="animation-delay:.5s"><li>Ships in 3 to 5 business days</li><li>Free shipping over $75</li><li>30-day returns</li></ul>
       <p class="fine rise" style="animation-delay:.56s"><button class="linkish" type="button" data-open-cart>View cart (<span id="cartCount">0</span>)</button></p>`;
     const info = p.kind === 'board'
       ? [['On the board', '<ul><li>Life support, greenhouse and radiation dials</li><li>Sun and storm lights, and an octopus with glowing eyes</li></ul>'], ['Details', '<dl><div><dt>Ages</dt><dd>7 to 12</dd></div><div><dt>Made for</dt><dd>The Aquanauts game</dd></div></dl>']]
       : [['The crew member', `<ul><li>${p.blurb}</li><li>Job: ${p.role}</li></ul>`], ['Details', `<dl><div><dt>Room</dt><dd>${p.room}</dd></div><div><dt>Collect</dt><dd>All 8 crew members</dd></div></dl>`]];
-    info.push(['Shipping and returns', `<p>Orders ship in 3 to 5 business days. Shipping is free over $75 and $6.99 under that. You can return ${p.kind === 'board' ? 'the board' : 'your plush'} within 30 days for a refund.</p>`]);
     $('#pInfo').innerHTML = info.map(([h, b], i) => `<div class="info"><h3>${h}</h3>${b}</div>`).join('');
     const rel = P.filter(x => x.id !== p.id).sort((a, b) => (a.kind === p.kind ? -1 : 0) - (b.kind === p.kind ? -1 : 0)).slice(0, 4);
     $('#related').innerHTML = rel.map(x => card(x)).join('');
