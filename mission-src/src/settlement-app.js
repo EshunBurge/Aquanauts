@@ -84,7 +84,7 @@ function loop(now){const dt=Math.min((now-last)/1000,.075);last=now;const active
  if(energy.result&&energy.result!==lastEnergyResult){lastEnergyResult=energy.result;if(energy.result.passed)completeMoss();else notify('Moss: Try two batteries and pause extra lab lights. Let’s test again!');}
  if(live&&(plant.air<42||plant.water<25||plant.temperature<12||plant.temperature>29||plant.battery<2)){plant={...plant,air:76,co2:1.4,water:58,temperature:18.2,battery:24,session:null};notify('Your crew topped up the training reserves. Keep experimenting!');}
  runtimeTick+=dt;if(active&&runtimeTick>4){saveRuntime();runtimeTick=0;}$('interact-button').hidden=!near||!active;if(near)$('interact-button').querySelector('span').textContent=typeof near.label==='function'?near.label():near.label;updatePhysicalHUD(active);if(now>toastUntil)$('toast').hidden=true;if(now>celebrateUntil)$('celebration').hidden=true;uiTick+=dt;if(uiTick>.12){updateHUD();uiTick=0;}requestAnimationFrame(loop);}
-applySettings();updateMiniMap();welcome();requestAnimationFrame(loop);
+applySettings();updateMiniMap();welcome();if(new URLSearchParams(location.search).has('play'))$('enter-world')?.click();requestAnimationFrame(loop);
 
 // Same-origin navigation only; profile synchronization remains in the existing site.
 if(import.meta.env.VITE_WEBSITE_INTEGRATION==='true'){

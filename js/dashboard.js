@@ -7,7 +7,7 @@ function AQ_DASH() {
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const user = JSON.parse(localStorage.getItem('aq_user') || 'null');
   if (!user) { location.replace('login.html'); return; }
-  const GAME_URL = 'mission/'; // Same-origin adventure; existing player profile remains authoritative.
+  const GAME_URL = 'mission/?play=1'; // Same-origin adventure; existing player profile remains authoritative.
   const KEY = 'aq_state_' + user.email;
   const full = (JSON.parse(localStorage.getItem('aq_users') || '[]').find(u => u.email === user.email) || {});
 
