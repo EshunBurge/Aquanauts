@@ -7,7 +7,7 @@ const root=fileURLToPath(new URL('../',import.meta.url));
 await rm(path.join(root,'dist'),{recursive:true,force:true});
 await mkdir(path.join(root,'dist'),{recursive:true});
 execFileSync('npm',['run','build','--','--base=./'],{cwd:path.join(root,'mission-src'),stdio:'inherit',env:{...process.env,VITE_WEBSITE_INTEGRATION:'true'}});
-for(const name of ['index.html','login.html','dashboard.html','shop.html','certificate.html','css','js','img','media','models'])
+for(const name of ['index.html','login.html','dashboard.html','shop.html','product.html','presentation.html','certificate.html','404.html','favicon.svg','css','js','img','media','models'])
  await cp(path.join(root,name),path.join(root,'dist',name),{recursive:true});
 // Keep a generated mission/ alongside the existing static website too. This
 // supports its current GitHub Pages "main / root" publication without replacing

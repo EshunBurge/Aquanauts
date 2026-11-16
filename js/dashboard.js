@@ -31,12 +31,13 @@ function AQ_DASH() {
     home: '<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10M10 20v-6h4v6"/></svg>',
     map: '<svg viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg>',
     book: '<svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5zM19 19v2H6"/></svg>',
+    quiz: '<svg viewBox="0 0 24 24"><path d="M4 4h16v13H9l-5 4V4zM9.500 8.500a2.500 2.500 0 1 1 3.500 2.300c-.7.400-1 .9-1 1.700M12 15v.1"/></svg>',
     star: '<svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.800 6.600 19.700l1.100-6.100L3.200 9.400l6.100-.8L12 3z"/></svg>',
     paw: '<svg viewBox="0 0 24 24"><circle cx="6" cy="11" r="2"/><circle cx="10" cy="6.500" r="2"/><circle cx="15" cy="6.500" r="2"/><circle cx="19" cy="11" r="2"/><path d="M12 12c-3 0-6 3-6 5.500 0 1.700 1.500 2.500 3 2.500 1.200 0 2-.5 3-.5s1.800.5 3 .5c1.500 0 3-.8 3-2.500C18 15 15 12 12 12z"/></svg>',
     shop: '<svg viewBox="0 0 24 24"><path d="M4 8h16l-1.200 12H5.200L4 8zM8 8V6a4 4 0 0 1 8 0v2"/></svg>',
     user: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.400 3.600-7 8-7s8 2.600 8 7"/></svg>'
   };
-  const NAV = [['home', 'Control center', ico.home], ['map', 'Moon Base', ico.map], ['courses', 'Adventures', ico.book], ['shop', 'Cantina', ico.shop], ['profile', 'Profile', ico.user]];
+  const NAV = [['home', 'Control center', ico.home], ['map', 'Moon Base', ico.map], ['courses', 'Adventures', ico.book], ['learn', 'Words & quizzes', ico.quiz], ['shop', 'Cantina', ico.shop], ['profile', 'Profile', ico.user]];
 
   /* ---------- state ---------- */
   const blank = () => ({ joined: Date.now(), goal: 10, large: false, quiz: {}, coins: 0, pct: {}, plays: [iso(new Date())], earned: {}, pets: [], active: null, avatar: 'pufferfish', name: user.first || '', certName: [user.first, full.last].filter(Boolean).join(' '), visited: [], log: [{ t: Date.now(), text: 'Joined Aquanauts' }] });
@@ -97,8 +98,8 @@ function AQ_DASH() {
   }
 
   /* ---------- views ---------- */
-  let view = 'home', buddy = null, modalViewer = null, petTab = 'pets', mapSel = null;
-  const TITLES = { home: 'Control center', map: 'Moon Base', courses: 'Adventures', shop: 'Cantina', profile: 'Profile' };
+  let view = 'home', buddy = null, modalViewer = null, jumpTo = null, mapSel = null;
+  const TITLES = { home: 'Control center', map: 'Moon Base', courses: 'Adventures', learn: 'Words & quizzes', shop: 'Cantina', profile: 'Profile' };
 
   function stopViewers() { if (buddy) { buddy.dispose(); buddy = null; } }
 
@@ -117,7 +118,7 @@ function AQ_DASH() {
     return `
     <section class="hello">
       <div class="card welcome"><span class="eyebrow">Your mission</span><h2>Welcome back, ${esc(S.name || user.first)}.</h2><p>${hello}</p>
-        <a class="btn sm" href="${GAME_URL}" data-play>Play Mission</a></div>
+        <a class="btn sm" href="${GAME_URL}" data-play>${c ? ((S.pct[c.id] || 0) > 0 ? 'Continue course' : 'Start your first course') : 'Play again'}</a></div>
       <div class="card buddy">${ap ? `<canvas id="buddyCv" aria-label="${ap.name} the ${ap.species}"></canvas><div class="bar"><div><b>${ap.name}</b><br><span>${ap.species}. Drag to turn.</span></div><a class="link" href="#pets">Change</a></div>`
         : `<div class="empty"><h3>No pet yet</h3><p>Pets keep you company on your dashboard. Adopt one with your coins.</p><a class="btn sm" href="#pets">Visit the cantina</a></div>`}</div>
     </section>
@@ -135,6 +136,12 @@ function AQ_DASH() {
         : `<h2>Every course finished</h2><p class="sub">You ran the whole outpost. Open your certificates any time.</p><a class="btn sm" href="#courses">See certificates</a>`}</div>
       <div class="card"><div class="row-head"><h2>This week</h2></div><p class="sub">Your goal is ${S.goal || 10} minutes a day. Play a little every day to grow your streak.</p><div class="week">${week}</div><p class="wk">${st > 0 ? `${st} ${st === 1 ? 'day' : 'days'} in a row. Play today to keep it going.` : 'Play today to start your streak.'}</p></div>
     </section>
+    <section class="card practice"><div class="row-head"><h2>Practice time</h2><a class="link" href="#learn">All words and quizzes</a></div>
+      <div class="pr-grid">
+        <button class="pr-tile" ${c ? `data-words="${c.id}"` : 'data-quiz="mix"'} type="button"><span class="pr-ic"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5zM19 19v2H6"/></svg></span><b>Vocab words</b><span>${c ? `Learn the words for ${c.who}'s level` : 'Review your words'}</span></button>
+        <button class="pr-tile" ${c ? `data-quiz="${c.id}"` : 'data-quiz="mix"'} type="button"><span class="pr-ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v13H9l-5 4V4zM9.500 8.500a2.500 2.500 0 1 1 3.500 2.300c-.7.400-1 .9-1 1.700M12 15v.1"/></svg></span><b>Quick quiz</b><span>${c ? `${QN} questions on ${c.short.toLowerCase()}. Win 10 coins` : 'Test what you know'}</span></button>
+        <button class="pr-tile" data-quiz="mix" type="button"><span class="pr-ic"><svg viewBox="0 0 24 24"><path d="M3 7h4l10 10h4M3 17h4l3-3M14 10l3-3h4M18 4l3 3-3 3M18 14l3 3-3 3"/></svg></span><b>Mixed quiz</b><span>Questions from every level you have opened</span></button>
+      </div></section>
     <section class="cols">
       <div class="card"><div class="row-head"><h2>Prizes to win next</h2><a class="link" href="#prizes">All prizes</a></div><div class="next-list">${nextHtml}</div></div>
       <div class="card"><div class="row-head"><h2>Recent activity</h2></div><ul class="feed">${feed}</ul></div>
@@ -159,9 +166,10 @@ function AQ_DASH() {
     COURSES.forEach(c => mk('c' + c.id, '0' + c.id, c.who, c.short, status(c), c.img, c.col, c.row));
     mk('hub', 'START', 'Central Hub', 'Briefing and map', 'open', null, 1, 1);
     const doneIds = COURSES.filter(c => status(c) === 'done').map(c => c.id);
-    const tun = [['M170 100H830', [1, 2]], ['M830 100V620', [3, 4]], ['M830 620H170', [5, 6]], ['M170 620V100', [7, 8]], ['M170 360H500', []]]
+    const tun = [['M170 100H830', [1, 2]], ['M830 100V620', [3, 4]], ['M830 620H170', [5, 6]], ['M170 620V100', [7, 8]]]
       .map(([d, ids]) => `<path class="tun${ids.some(i => doneIds.includes(i)) ? ' on' : ''}" pathLength="1" d="${d}"/>`).join('');
-    return `<svg class="map-svg" viewBox="0 0 1000 740" role="group" aria-label="Moon Base map">${tun}${nodes}
+    const link = `<g class="startlink" aria-hidden="true"><path class="sl-path" d="M500 308V240Q500 214 474 214H276Q250 214 250 188V168"/><polygon class="sl-head" points="236,170 264,170 250,150"/><g class="sl-tag" transform="translate(372,214)"><rect x="-58" y="-16" width="116" height="32" rx="16"/><text x="0" y="5" text-anchor="middle">Start here</text></g></g>`;
+    return `<svg class="map-svg" viewBox="0 0 1000 740" role="group" aria-label="Moon Base map">${tun}${link}${nodes}
       <g class="legend"><rect x="40" y="702" width="18" height="18" rx="5" fill="#99dce1"/><text x="68" y="716">Finished</text><rect x="190" y="702" width="18" height="18" rx="5" fill="#f58a53"/><text x="218" y="716">Next</text><rect x="310" y="702" width="18" height="18" rx="5" fill="#0f232b"/><text x="338" y="716">Locked</text></g></svg>`;
   }
   function mapPanel() {
@@ -181,31 +189,30 @@ function AQ_DASH() {
   function vMap() { return `<section class="map-grid"><div class="map-wrap"><div class="map-scroll" id="mapScroll">${mapSvg()}</div>${mapList()}</div></section>`; }
 
   /* ----- study: words + quizzes (BACKEND: load real lessons and quizzes per course) ----- */
-  const STUDY = {
-    1: { words: [['Oxygen', 'The gas we need to breathe.'], ['Filter', 'Catches dirt to clean air or water.'], ['Carbon dioxide', 'The gas we breathe out.'], ['Pressure', 'The push of air on everything around it.'], ['Hydration', 'Having enough water in your body.']],
-      quiz: [['Which gas do astronauts need to breathe?', 'Oxygen', ['Helium', 'Steam']], ['What does a filter do?', 'Catches dirt to clean air or water', ['Makes things hotter', 'Makes things louder']], ['Which gas do we breathe out?', 'Carbon dioxide', ['Oxygen', 'Sunlight']], ['What does a sealed base keep inside?', 'Air', ['Rocks', 'Rain']]] },
-    2: { words: [['Solar panel', 'Turns sunlight into electricity.'], ['Battery', 'Stores energy to use later.'], ['Generator', 'A machine that makes electricity.'], ['Circuit', 'The loop that electricity travels around.'], ['Renewable', 'Energy that never runs out.']],
-      quiz: [['What does a solar panel turn into electricity?', 'Sunlight', ['Water', 'Sound']], ['What does a battery do?', 'Stores energy for later', ['Makes plants grow', 'Cleans the air']], ['What is a circuit?', 'A loop electricity travels around', ['A kind of rock', 'A space suit']], ['Which choice saves power?', 'Switching off lights you do not need', ['Leaving every light on', 'Opening the door']]] },
-    3: { words: [['Hydroponics', 'Growing plants in water, not soil.'], ['Nutrient', 'Food that helps a plant grow.'], ['Photosynthesis', 'How plants turn light into food.'], ['Harvest', 'Picking the food you grew.'], ['Seed', 'A tiny start for a new plant.']],
-      quiz: [['What is hydroponics?', 'Growing plants in water', ['Digging tunnels', 'Cooking food']], ['What do plants use to make food?', 'Light', ['Rocks', 'Plastic']], ['What does a nutrient do?', 'Helps a plant grow', ['Makes it glow', 'Makes it sleepy']], ['What does harvest mean?', 'Picking the food you grew', ['Planting a seed', 'Watering a plant']]] },
-    4: { words: [['Radiation', 'Invisible energy from the Sun and space.'], ['Meteoroid', 'A small rock flying through space.'], ['Vacuum', 'A place with no air at all.'], ['Solar flare', 'A burst of energy from the Sun.'], ['Shield', 'Something that blocks harm.']],
-      quiz: [['What is a vacuum?', 'A place with no air', ['A kind of storm', 'A type of fuel']], ['What is a meteoroid?', 'A small rock flying through space', ['A bright star', 'A moon base']], ['What does a shield protect you from?', 'Harmful radiation', ['Being hungry', 'Being late']], ['Where does a solar flare come from?', 'The Sun', ['The ocean', 'A battery']]] },
-    5: { words: [['Structure', 'Something built to hold weight.'], ['Prototype', 'A first test version of an idea.'], ['Material', 'What something is made from.'], ['Load', 'The weight a structure carries.'], ['Repair', 'Fixing something that broke.']],
-      quiz: [['What is a prototype?', 'A first test version', ['A finished city', 'A kind of fuel']], ['What is a structure?', 'Something built to hold weight', ['A type of food', 'A bright light']], ['Why test before you build for real?', 'To find problems early', ['To waste time', 'To make noise']], ['Which of these is a material?', 'Steel', ['Friday', 'Giggling']]] },
-    6: { words: [['Resource', 'Something useful you can use up.'], ['Recycle', 'Turn used things into new things.'], ['Waste', 'Stuff that gets thrown away.'], ['Renewable', 'Can be replaced again and again.'], ['Conserve', 'Use less so it lasts longer.']],
-      quiz: [['What does recycle mean?', 'Turn used things into new things', ['Throw things away', 'Hide things']], ['What does conserve mean?', 'Use less so it lasts longer', ['Use it all today', 'Buy more']], ['Which of these is renewable?', 'Sunlight', ['Coal', 'A broken bolt']], ['What is waste?', 'Stuff that gets thrown away', ['A new tool', 'A bright idea']]] },
-    7: { words: [['Goal', 'What you want to reach.'], ['Risk', 'Something that could go wrong.'], ['Backup plan', 'What you do if plan one fails.'], ['Priority', 'The thing that matters most.'], ['Trade-off', 'Giving up one thing to get another.']],
-      quiz: [['What is a risk?', 'Something that could go wrong', ['A kind of snack', 'A nice surprise']], ['What is a backup plan?', 'What you do if plan one fails', ['A plan to do nothing', 'A very old map']], ['What is a priority?', 'The thing that matters most', ['The thing you forgot', 'The smallest job']], ['What is a goal?', 'What you want to reach', ['A broken tool', 'A loud noise']]] },
-    8: { words: [['System', 'Parts that work together.'], ['Teamwork', 'Working together to finish a job.'], ['Emergency', 'A sudden problem that needs quick help.'], ['Mission control', 'The team that guides the mission.'], ['Crew', 'The people who work on a mission.']],
-      quiz: [['What is a system?', 'Parts that work together', ['One lonely bolt', 'A type of rock']], ['What should you do first in an emergency?', 'Stay calm and tell the crew', ['Hide in a cupboard', 'Keep it a secret']], ['What does teamwork mean?', 'Working together to finish a job', ['Doing it all alone', 'Waiting for someone else']], ['Who is mission control?', 'The team that guides the mission', ['A kind of robot arm', 'A moon crater']]] }
-  };
+  const STUDY = window.AQ_STUDY, QN = 5, PASS = 4;
+
   S.quiz = S.quiz || {};
   const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+  function vLearn() {
+    const open = COURSES.filter(c => status(c) !== 'lock'), nW = Object.values(STUDY).reduce((a, s) => a + s.words.length, 0), nQ = Object.values(STUDY).reduce((a, s) => a + s.quiz.length, 0);
+    const passed = Object.values(S.quiz).filter(q => q && q.passed).length;
+    return `<div class="card learn-hero"><div><span class="eyebrow">Practice</span><h2>Words and quizzes</h2><p class="sub">Every adventure has a list of new words to learn and a quiz to test yourself. Pass a quiz to win 10 coins.</p>
+      <div class="lh-stats"><div><b>${nW}</b><span>vocab words</span></div><div><b>${nQ}</b><span>quiz questions</span></div><div><b>${passed}</b><span>of 8 quizzes passed</span></div></div></div>
+      <div class="lh-act"><button class="btn" data-quiz="mix" type="button">Mixed quiz</button><p>6 questions from every adventure you have opened.</p></div></div>
+    <div class="lgrid">${COURSES.map(c => {
+      const st = status(c), q = S.quiz[c.id], on = st !== 'lock', n = STUDY[c.id];
+      return `<article class="lcard ${on ? '' : 'locked'}"><div class="lc-top"><div class="pic"><img src="img/${c.img}.png" alt="${c.who}"></div><div><small>Level 0${c.id} · ${c.who}</small><h3>${c.short}</h3></div></div>
+        <ul class="lc-facts"><li><b>${n.words.length}</b> vocab words</li><li><b>${n.quiz.length}</b> quiz questions</li></ul>
+        ${on ? `<div class="lc-btns"><button class="btn sm ghost" data-words="${c.id}" type="button">Learn the words</button><button class="btn sm" data-quiz="${c.id}" type="button">${q && q.passed ? 'Quiz passed. Play again' : 'Take the quiz'}</button></div>${q ? `<p class="lc-best">Best score: ${q.best} of ${QN}</p>` : '<p class="lc-best">Pass the quiz to win 10 coins.</p>'}`
+        : `<p class="lc-lock">Finish ${COURSES[c.id - 2].who}'s level to open this one.</p>`}</article>`;
+    }).join('')}</div>`;
+  }
 
   function vCourses() {
     return `<div class="card"><h2>Your adventures</h2><p class="sub">Finish each course in order to unlock the next room on the Moon Base. Practice the words and take a quick quiz for bonus coins.</p></div><div class="clist">${COURSES.map(c => {
       const st = status(c), p = S.pct[c.id] || 0, q = S.quiz[c.id], open = st !== 'lock';
-      const study = open ? `<button class="chip" data-words="${c.id}" type="button">Vocab words</button><button class="chip ${q && q.passed ? 'ok' : ''}" data-quiz="${c.id}" type="button">${q ? 'Quiz · best ' + q.best + ' of 4' : 'Quick quiz'}</button>` : `<span class="chip off">Vocab words</span><span class="chip off">Quick quiz</span>`;
+      const study = open ? `<button class="chip" data-words="${c.id}" type="button">Vocab words</button><button class="chip ${q && q.passed ? 'ok' : ''}" data-quiz="${c.id}" type="button">${q ? 'Quiz · best ' + q.best + ' of ' + QN : 'Quick quiz'}</button>` : `<span class="chip off">Vocab words</span><span class="chip off">Quick quiz</span>`;
       return `<div class="crow ${st === 'lock' ? 'locked' : ''}"><div class="pic"><img src="img/${c.img}.png" alt="${c.who}"></div>
         <div class="info"><h3>${c.title}</h3><p>${c.who} · ${c.room}</p><div class="study">${study}</div></div>
         <div class="meta"><div class="bar-track"><div class="bar-fill" data-w="${p}"></div></div><div class="bar-meta"><span>${st === 'done' ? 'Finished' : st === 'lock' ? 'Locked' : p + '% done'}</span></div></div>
@@ -237,20 +244,20 @@ function AQ_DASH() {
     const acts = st === 'cur' ? `<a class="btn sm" href="${GAME_URL}" data-play>${p ? 'Continue level' : 'Start level'}</a>`
       : st === 'done' ? `<a class="btn sm" href="certificate.html?name=${encodeURIComponent(S.certName)}&course=${c.id}">View certificate</a><a class="btn sm ghost" href="${GAME_URL}" data-play>Replay</a>`
         : `<span class="btn sm ghost off">Finish ${prev.who}'s level first</span>`;
-    const study = st !== 'lock' ? `<button class="chip" data-words="${c.id}" type="button">Vocab words</button><button class="chip ${q && q.passed ? 'ok' : ''}" data-quiz="${c.id}" type="button">${q ? 'Quiz · best ' + q.best + ' of 4' : 'Quick quiz'}</button>` : '';
+    const study = st !== 'lock' ? `<div class="prac"><small>Practice this level</small><div class="prac-row"><button class="prac-btn" data-words="${c.id}" type="button"><b>Vocab words</b><span>${STUDY[c.id].words.length} words to learn</span></button><button class="prac-btn ${q && q.passed ? 'ok' : ''}" data-quiz="${c.id}" type="button"><b>${q && q.passed ? 'Quiz passed' : 'Take the quiz'}</b><span>${q ? 'Best ' + q.best + ' of ' + QN : QN + ' questions, win 10 coins'}</span></button></div></div>` : '';
     openModal(`<div class="m-level ${st === 'lock' ? 'locked' : ''}"><div class="lv-pic"><img src="img/${c.img}.png" alt="${c.who}"></div>
       <div class="lv-body"><span class="eyebrow">Level 0${c.id} · ${c.room}</span><h3>${c.title}</h3><span class="tag ${st}">${tag}</span>
-      <p class="lv-big">${BIG[c.id]}</p><p class="lv-desc">${DESC[c.id]}</p></div>
+      <p class="lv-big">${BIG[c.id]}</p><p class="lv-desc">${DESC[c.id]}</p>${p ? `<div class="bar-track"><div class="bar-fill" style="width:${p}%"></div></div>` : ''}<div class="acts">${acts}</div></div>
       <div class="lv-more"><div class="lv-cols"><div><small>What you will do</small><ul class="lv-list">${DO[c.id].map(d => `<li>${d}</li>`).join('')}</ul></div>
       <div class="lv-sci"><small>Real science behind it</small><b>${SCI[c.id][0]}</b><p>${SCI[c.id][1]}</p></div></div>
-      <div class="lv-words"><small>Words you will meet</small><div>${words}</div></div>
-      <div class="bar-track"><div class="bar-fill" style="width:${p}%"></div></div>
-      <div class="acts">${acts}</div>${study ? `<div class="study">${study}</div>` : ''}</div></div>`);
+      <div class="lv-words"><small>Words you will meet</small><div>${words}</div></div>${study}</div></div>`);
   }
 
   function quizModal(id) {
-    const c = COURSES.find(x => x.id === +id);
-    const qs = shuffle(STUDY[id].quiz).map(([q, ok, bad]) => ({ q, ok, opts: shuffle([ok, ...bad]) }));
+    const c = id === 'mix' ? { who: 'Mixed quiz', short: 'mixed' } : COURSES.find(x => x.id === +id);
+    const mix = id === 'mix', unlocked = COURSES.filter(x => status(x) !== 'lock');
+    const pool = mix ? unlocked.flatMap(x => STUDY[x.id].quiz) : STUDY[id].quiz, need = mix ? 6 : QN;
+    const qs = shuffle(pool).slice(0, need).map(([q, ok, bad]) => ({ q, ok, opts: shuffle([ok, ...bad]) }));
     let i = 0, score = 0;
     const ask = () => {
       const k = qs[i];
@@ -269,14 +276,14 @@ function AQ_DASH() {
       });
     };
     const finish = () => {
-      const q = S.quiz[id] || { best: 0, passed: false }, first = !q.passed && score >= 3; q.best = Math.max(q.best, score);
-      let msg = score === qs.length ? 'Perfect score!' : score >= 3 ? 'Nice work!' : 'Good try. Check the words and have another go.';
+      const q = S.quiz[id] || { best: 0, passed: false }, first = !mix && !q.passed && score >= qs.length - 1; if (!mix) q.best = Math.max(q.best, score);
+      let msg = score === qs.length ? 'Perfect score!' : score >= qs.length - 1 ? 'Nice work!' : 'Good try. Check the words and have another go.';
       if (first) { q.passed = true; S.coins += 10; S.log.unshift({ t: Date.now(), text: `Passed the ${c.short} quiz (+10 coins)` }); bump(); }
-      S.quiz[id] = q; save();
-      if (score === qs.length) award('badge-quick-thinker');
+      if (!mix) S.quiz[id] = q; save();
+      if (score === qs.length && !mix) award('badge-quick-thinker');
       save(); header();
       openModal(`<div class="m-quiz"><span class="eyebrow">${c.who} · Quiz done</span><h3>${score} of ${qs.length} right</h3><p class="sub">${msg}${first ? ' You earned 10 coins.' : ''}</p>
-        <div class="acts"><button class="btn sm" id="again" type="button">Try again</button><button class="btn sm ghost" data-words="${id}" type="button">Vocab words</button><button class="btn sm ghost" id="qdone" type="button">Done</button></div></div>`,
+        <div class="acts"><button class="btn sm" id="again" type="button">Try again</button>${mix ? '' : `<button class="btn sm ghost" data-words="${id}" type="button">Vocab words</button>`}<button class="btn sm ghost" id="qdone" type="button">Done</button></div></div>`,
         () => { $('#again').onclick = () => quizModal(id); $('#qdone').onclick = () => { closeModal(); draw(); }; });
     };
     ask();
@@ -290,23 +297,28 @@ function AQ_DASH() {
       return `<div class="card pgrp"><h2>${g}</h2><p class="sub">${sub}</p><div class="pgrid">${items.map(p => { const own = !!S.earned[p.id]; return `<div class="prize ${own ? '' : 'locked'}">${artSvg(p)}<h4>${p.title}</h4><p>${p.line}</p><span class="st">${own ? 'Earned' : 'Not yet'} · +${p.reward} coins</span></div>`; }).join('')}</div></div>`;
     }).join('');
   }
-  function petsHtml() {
-    const owned = PETS.filter(p => S.pets.includes(p.id));
-    const list = petTab === 'pets' ? PETS : owned;
-    const card = p => {
-      const own = S.pets.includes(p.id), act = S.active === p.id;
-      const buy = own ? `<span class="badge-own">${act ? 'On your Home' : 'Owned'}</span>${act ? '' : `<button class="btn sm" data-adopt="${p.id}" type="button">Show on Home</button>`}`
-        : `<span class="price">${coinSvg()}${p.price}</span><button class="btn sm ${S.coins < p.price ? 'ghost' : ''}" data-buy="${p.id}" type="button">${S.coins < p.price ? 'Need ' + (p.price - S.coins) + ' more' : 'Adopt'}</button>`;
-      return `<article class="pet ${own ? 'own' : ''}"><button class="view3d" data-view="${p.id}" type="button" aria-label="See ${p.name} in 3D"><img src="img/pets/${p.id}.png" alt="${p.name} the ${p.species}"><span>View in 3D</span></button>
-        <h3>${p.name}</h3><div class="kind"><span class="rar ${p.rarity}">${p.rarity}</span>${p.species}</div><p>${p.desc}</p><div class="buy">${buy}</div></article>`;
-    };
-    return list.length ? `<div class="petgrid">${list.map(card).join('')}</div>` : `<div class="card"><div class="empty"><h3>No pets yet</h3><p>Earn coins by winning prizes, then adopt your first pet.</p><button class="btn sm" data-tab="pets" type="button">Go to the pets</button></div></div>`;
+  function petCard(p) {
+    const own = S.pets.includes(p.id), act = S.active === p.id;
+    const buy = own ? `<span class="badge-own">${act ? 'On your Home' : 'Owned'}</span>${act ? '' : `<button class="btn sm" data-adopt="${p.id}" type="button">Show on Home</button>`}`
+      : `<span class="price">${coinSvg()}${p.price}</span><button class="btn sm ${S.coins < p.price ? 'ghost' : ''}" data-buy="${p.id}" type="button">${S.coins < p.price ? 'Need ' + (p.price - S.coins) + ' more' : 'Adopt'}</button>`;
+    return `<article class="pet ${own ? 'own' : ''}"><button class="view3d" data-view="${p.id}" type="button" aria-label="See ${p.name} in 3D"><img src="img/pets/${p.id}.png" alt="${p.name} the ${p.species}"><span>View in 3D</span></button>
+      <h3>${p.name}</h3><div class="kind"><span class="rar ${p.rarity}">${p.rarity}</span>${p.species}</div><p>${p.desc}</p><div class="buy">${buy}</div></article>`;
   }
   function vShop() {
-    const owned = S.pets.length, earnedN = Object.keys(S.earned).length, total = PRIZES.filter(p => p.reward).length;
-    return `<div class="card shophead"><div><h2>Cantina</h2><p class="sub">${petTab === 'prizes' ? `${earnedN} of ${total} prizes earned. Every prize pays out coins.` : 'Win prizes to collect coins, then spend them on a pet.'}</p></div></div>
-      <div class="tabs" role="tablist"><button class="${petTab === 'pets' ? 'on' : ''}" data-tab="pets" type="button">Pets</button><button class="${petTab === 'mine' ? 'on' : ''}" data-tab="mine" type="button">My pets (${owned})</button><button class="${petTab === 'prizes' ? 'on' : ''}" data-tab="prizes" type="button">Prizes (${earnedN})</button></div>
-      ${petTab === 'prizes' ? prizesHtml() : petsHtml()}`;
+    const mine = PETS.filter(p => S.pets.includes(p.id)), left = PETS.filter(p => !S.pets.includes(p.id)), earnedN = Object.keys(S.earned).length, total = PRIZES.filter(p => p.reward).length;
+    const ar = '<svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg>';
+    return `<div class="card shophead"><div><h2>Cantina</h2><p class="sub">This is where you spend your coins. Adopt a pet to keep you company, and win prizes to earn more coins.</p></div>
+        <div class="bal"><span>Your coins</span><b>${coinSvg()}${S.coins}</b></div></div>
+      <nav class="jump" aria-label="Jump to a part of the cantina">
+        <button type="button" data-jump="cantina-adopt"><span class="j-ic"><svg viewBox="0 0 24 24"><circle cx="6" cy="11" r="2"/><circle cx="10" cy="6.500" r="2"/><circle cx="15" cy="6.500" r="2"/><circle cx="19" cy="11" r="2"/><path d="M12 12c-3 0-6 3-6 5.500 0 1.700 1.500 2.500 3 2.500 1.200 0 2-.5 3-.5s1.800.5 3 .5c1.500 0 3-.8 3-2.500C18 15 15 12 12 12z"/></svg></span><b>Adopt a pet</b><span>${left.length} waiting for a home</span>${ar}</button>
+        <button type="button" data-jump="cantina-mine"><span class="j-ic"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.500-8-11a4.500 4.500 0 0 1 8-2.800A4.500 4.500 0 0 1 20 10c0 5.500-8 11-8 11z"/></svg></span><b>My pets</b><span>${mine.length ? mine.length + (mine.length === 1 ? ' pet' : ' pets') + ' in your crew' : 'You have none yet'}</span>${ar}</button>
+        <button type="button" data-jump="cantina-prizes"><span class="j-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.500 14L7 22l5-3 5 3-1.500-8"/></svg></span><b>Win prizes</b><span>${earnedN} of ${total} won. Each pays coins</span>${ar}</button>
+      </nav>
+      <section class="cs" id="cantina-adopt"><div class="cs-head"><span class="cs-n">1</span><div><h2>Adopt a pet</h2><p class="sub">Pick a pet and spend coins to bring it home. It will show up on your control center.</p></div></div>
+        ${left.length ? `<div class="petgrid">${left.map(petCard).join('')}</div>` : '<div class="card"><p class="sub" style="margin:0">You have adopted every pet. Amazing!</p></div>'}</section>
+      <section class="cs" id="cantina-mine"><div class="cs-head"><span class="cs-n">2</span><div><h2>My pets</h2><p class="sub">The pets that already live with you.</p></div></div>
+        ${mine.length ? `<div class="petgrid">${mine.map(petCard).join('')}</div>` : '<div class="card"><div class="empty"><h3>No pets yet</h3><p>Win coins from prizes, then adopt your first pet above.</p><button class="btn sm" data-jump="cantina-adopt" type="button">See the pets</button></div></div>'}</section>
+      <section class="cs" id="cantina-prizes"><div class="cs-head"><span class="cs-n">3</span><div><h2>Win prizes</h2><p class="sub">${earnedN} of ${total} prizes won. Every prize pays out coins.</p></div></div>${prizesHtml()}</section>`;
   }
 
   /* ----- profile ----- */
@@ -352,11 +364,11 @@ function AQ_DASH() {
     <section class="card"><h2>Settings</h2><p class="sub">Make the game fit you.</p>
       <div class="set-row"><div><b>Daily goal</b><p>How many minutes would you like to play each day?</p></div><div class="seg" id="goalSeg">${[5, 10, 15, 20].map(m => `<button class="${(S.goal || 10) === m ? 'on' : ''}" data-goal="${m}" type="button">${m} min</button>`).join('')}</div></div>
       <div class="set-row"><div><b>Text size</b><p>Make the words bigger if they are hard to read.</p></div><div class="seg" id="sizeSeg"><button class="${S.large ? '' : 'on'}" data-size="0" type="button">Normal</button><button class="${S.large ? 'on' : ''}" data-size="1" type="button">Large</button></div></div></section>
-    <div class="card demo"><h2>Testing tools</h2><p class="sub">These buttons pretend the game happened so you can try everything out. Remove this card before launch.</p>
+    <div class="card demo"><h2>Demo tools</h2><p class="sub">This is a demo app. These buttons pretend the game happened so you can try everything out.</p>
       <div class="btns"><button class="btn sm ghost" data-demo="coins" type="button">Add 50 coins</button><button class="btn sm ghost" data-demo="adv" type="button">Add 25% to the current adventure</button><button class="btn sm ghost" data-demo="done" type="button">Finish the current adventure</button><button class="btn sm ghost" data-demo="day" type="button">Add a play day</button><button class="btn sm ghost" data-demo="badge" type="button">Game awards a badge</button><button class="btn sm ghost" data-demo="reset" type="button">Reset everything</button></div></div>`;
   }
 
-  const VIEWS = { home: vHome, map: vMap, courses: vCourses, shop: vShop, profile: vProfile };
+  const VIEWS = { home: vHome, map: vMap, courses: vCourses, learn: vLearn, shop: vShop, profile: vProfile };
 
   /* ---------- modal ---------- */
   function openModal(html, after) { $('#mCard').innerHTML = `<button class="m-x" id="mx" aria-label="Close" type="button"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></button><div class="m-scroll">${html}</div>`; $('#modal').classList.add('show'); $('#modal').setAttribute('aria-hidden', 'false'); $('#mx').onclick = closeModal; after && after(); }
@@ -384,10 +396,11 @@ function AQ_DASH() {
     $$('#snav a').forEach(a => a.classList.toggle('on', a.dataset.v === view));
     const v = $('#view'); v.innerHTML = VIEWS[view](); bind(v);
     requestAnimationFrame(() => setTimeout(() => $$('.bar-fill', v).forEach(b => b.style.width = b.dataset.w + '%'), 60));
+    if (jumpTo) { const t = document.getElementById(jumpTo); jumpTo = null; if (t) setTimeout(() => t.scrollIntoView({ block: 'start' }), 80); }
     if (view === 'home' && S.active && $('#buddyCv')) buddy = AQPets.viewer($('#buddyCv'), { id: S.active, auto: true });
   }
   function bind(v) {
-    $$('[data-tab]', v).forEach(b => b.addEventListener('click', () => { petTab = b.dataset.tab; draw(); }));
+    $$('[data-jump]', v).forEach(b => b.addEventListener('click', () => { const t = document.getElementById(b.dataset.jump); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
     $$('[data-view]', v).forEach(b => b.addEventListener('click', () => petModal(b.dataset.view)));
     if (view === 'map') {
       const sel = n => { mapSel = n.dataset.id; if (!S.visited.includes(mapSel)) { S.visited.push(mapSel); evaluate(); header(); } $$('.map-svg .node').forEach(x => x.classList.toggle('sel', x.dataset.id === n.dataset.id)); levelModal(mapSel); };
@@ -414,7 +427,7 @@ function AQ_DASH() {
   document.addEventListener('click', e => { const w = e.target.closest('[data-words]'); if (w) return wordsModal(w.dataset.words); const qz = e.target.closest('[data-quiz]'); if (qz) return quizModal(qz.dataset.quiz); const b = e.target.closest('#mCard [data-buy]'); if (b) confirmBuy(b.dataset.buy); const a = e.target.closest('#mCard [data-adopt]'); if (a) { S.active = a.dataset.adopt; save(); closeModal(); toast('Home pet changed'); draw(); } });
 
   /* ---------- routing + init ---------- */
-  function route() { let h = (location.hash || '#home').slice(1); if (h === 'prizes') { h = 'shop'; petTab = 'prizes'; } else if (h === 'pets') { h = 'shop'; petTab = 'pets'; } view = VIEWS[h] ? h : 'home'; scrollTo(0, 0); draw(); }
+  function route() { let h = (location.hash || '#home').slice(1); if (h === 'prizes') { h = 'shop'; jumpTo = 'cantina-prizes'; } else if (h === 'pets') { h = 'shop'; jumpTo = 'cantina-adopt'; } view = VIEWS[h] ? h : 'home'; scrollTo(0, 0); draw(); }
   $('#snav').innerHTML = NAV.map(([k, t, i]) => `<a href="#${k}" data-v="${k}">${i}<span>${t}</span></a>`).join('');
   $('#meBtn').addEventListener('click', () => { location.hash = '#profile'; });
   $('#logout').addEventListener('click', async () => { if (window.AQ && AQ.live) await AQ.logOut(); localStorage.removeItem('aq_user'); location.href = 'login.html'; });

@@ -56,10 +56,10 @@
     <div class="wrap">
       <div class="foot-grid">
         <div><a href="index.html" class="brand">Aquanauts<i></i></a><p>An astronaut simulation game that teaches kids real-world problem solving.</p></div>
-        <div><h5>Explore</h5><ul><li><a href="index.html">Home</a></li><li><a href="index.html#crew">The crew</a></li><li><a href="index.html#how">How it works</a></li><li><a href="shop.html">Game board</a></li></ul></div>
+        <div><h5>Explore</h5><ul><li><a href="index.html">Home</a></li><li><a href="index.html#crew">The crew</a></li><li><a href="index.html#how">How it works</a></li><li><a href="shop.html">Shop</a></li></ul></div>
         <div><h5>Account</h5><ul><li><a href="${user ? 'dashboard.html' : 'login.html'}">${user ? 'My dashboard' : 'Log in'}</a></li>${user ? '' : '<li><a href="login.html#signup">Sign up</a></li>'}<li><a href="#">Privacy</a></li></ul></div>
       </div>
-      <div class="foot-bottom"><span>© <span id="yr"></span> Aquanauts. All rights reserved.</span><span>For ages 7 to 12</span></div>
+      <div class="foot-bottom"><span>© <span id="yr"></span> Aquanauts. All rights reserved.</span><span>Demo app. The shop is not real.</span></div>
     </div>
   </footer>`);
   $('#yr').textContent = new Date().getFullYear();
@@ -120,12 +120,12 @@
     if (badge) badge.textContent = count;
     const body = $('#drawerBody'), foot = $('#drawerFoot');
     if (!cart.length) {
-      body.innerHTML = `<div class="cart-empty"><img src="img/octopus.png" alt=""><h4 style="font-size:1.6rem;color:var(--aqua)">Cart's empty</h4><p>Dive in and grab the game board.</p><a class="btn btn-primary" href="shop.html">Visit the shop</a></div>`;
+      body.innerHTML = `<div class="cart-empty"><img src="img/octopus.png" alt=""><h4 style="font-size:1.6rem;color:var(--aqua)">Cart's empty</h4><p>Dive in and grab the game board or a plush crew mate.</p><a class="btn btn-primary" href="shop.html">Visit the shop</a></div>`;
       foot.innerHTML = ''; return;
     }
     body.innerHTML = `<div style="display:grid;gap:14px">${cart.map(i => `
       <div class="cart-item">
-        <div class="thumb-mini"><img src="img/octopus.png" alt=""></div>
+        <div class="thumb-mini"><img src="${i.img || 'img/octopus.png'}" alt="" style="${i.img ? 'width:100%;border-radius:12px' : ''}"></div>
         <div><h4>${i.name}</h4><small>${i.variant}</small>
           <div class="mini-qty"><button data-act="dec" data-id="${i.id}" aria-label="Decrease">−</button><span>${i.qty}</span><button data-act="inc" data-id="${i.id}" aria-label="Increase">+</button></div></div>
         <div><div class="line-total">${money(i.price * i.qty)}</div><button class="rm" data-act="rm" data-id="${i.id}">Remove</button></div>
@@ -136,8 +136,27 @@
       <div class="sum"><span>Shipping</span><span>${ship ? money(ship) : 'Free'}</span></div>
       <div class="sum total"><span>Total</span><span>${money(sub + ship)}</span></div>
       <button class="btn btn-primary btn-block" id="checkout">Checkout ${ICON.arrow}</button>
-      <p style="text-align:center;font-size:.76rem;color:var(--muted)">Secure checkout is a placeholder — connect your payment provider.</p>`;
-    $('#checkout').addEventListener('click', () => toast('Connect a payment provider to enable checkout'));
+      <p style="text-align:center;font-size:.76rem;color:var(--muted)">Demo store: no real payment is taken.</p>`;
+    $('#checkout').addEventListener('click', openDemoCheckout);
+  }
+
+  /* ---------- demo checkout screen ---------- */
+  function openDemoCheckout() {
+    const cart = getCart(), n = cart.reduce((a, i) => a + i.qty, 0), sub = cart.reduce((a, i) => a + i.price * i.qty, 0);
+    let el = document.getElementById('demoCo'); if (el) el.remove();
+    el = document.createElement('div'); el.id = 'demoCo'; el.className = 'democo'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-labelledby', 'dcT');
+    el.innerHTML = `<div class="dc-card"><img src="img/octopus.png" alt=""><span class="dc-tag">Demo app</span><h2 id="dcT">This is a demo, so the store is not real</h2>
+      <p>Aquanauts is a demo app built for the NASA Space Apps Challenge. The shop, the cart and this checkout are only here to show how it would work.</p>
+      <ul><li>No payment is taken, and please do not enter any card details.</li><li>Nothing will be ordered or shipped.</li><li>The prices and products are examples.</li></ul>
+      <div class="dc-sum"><span>${n} ${n === 1 ? 'item' : 'items'} in your demo cart</span><b>${money(sub)}</b></div>
+      <div class="dc-btns"><button class="btn btn-primary" id="dcBack" type="button">Got it, keep browsing</button><button class="btn btn-ghost" id="dcClear" type="button">Empty my demo cart</button></div></div>`;
+    document.body.appendChild(el);
+    const close = () => { el.remove(); document.removeEventListener('keydown', esc); };
+    const esc = e => { if (e.key === 'Escape') close(); };
+    document.addEventListener('keydown', esc);
+    el.addEventListener('click', e => { if (e.target === el) close(); });
+    $('#dcBack').onclick = () => { close(); closeCart(); }; $('#dcClear').onclick = () => { saveCart([]); close(); toast('Demo cart emptied'); };
+    $('#dcBack').focus();
   }
   $('#drawerBody').addEventListener('click', e => {
     const b = e.target.closest('[data-act]'); if (!b) return;
@@ -147,9 +166,11 @@
     if (b.dataset.act === 'rm') cart = cart.filter(i => i !== it);
     saveCart(cart);
   });
-  window.addToCart = qty => {
-    const cart = getCart(); const it = cart.find(i => i.id === PRODUCT.id);
-    if (it) it.qty += qty; else cart.push({ ...PRODUCT, qty });
+  window.addToCart = (qty, id) => {
+    const d = (window.AQ_PRODUCTS || []).find(x => x.id === id);
+    const prod = d && d.kind === 'plush' ? { id: 'plush-' + d.id, name: d.crew + ' Plush', variant: 'Plush ' + d.animal, price: d.price, img: d.img } : { ...PRODUCT, img: 'media/board-topdown.jpg' };
+    const cart = getCart(); const it = cart.find(i => i.id === prod.id);
+    if (it) it.qty += qty; else cart.push({ ...prod, qty });
     saveCart(cart); openCart();
   };
   renderCart();
@@ -184,13 +205,20 @@
     prev.addEventListener('click', () => track.scrollBy({ left: -step() * (innerWidth > 1080 ? 2 : 1) }));
     next.addEventListener('click', () => track.scrollBy({ left: step() * (innerWidth > 1080 ? 2 : 1) }));
     track.addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); addEventListener('scroll', upd, { passive: true }); upd();
-    // drag to scroll
+    // drag to scroll (mouse only; always lets go, so the page never gets stuck)
     let down = false, sx = 0, sl = 0, moved = false;
-    track.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') return; down = true; moved = false; sx = e.clientX; sl = track.scrollLeft; track.classList.add('dragging'); });
-    addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 3) moved = true; track.scrollLeft = sl - dx; });
-    addEventListener('pointerup', () => { if (!down) return; down = false; track.classList.remove('dragging'); const s = step(); track.scrollTo({ left: Math.round(track.scrollLeft / s) * s }); });
+    const endDrag = () => { if (!down) return; down = false; track.classList.remove('dragging'); if (moved) { const s = step(); track.scrollTo({ left: Math.round(track.scrollLeft / s) * s }); } };
+    track.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse' || e.button !== 0) return; down = true; moved = false; sx = e.clientX; sl = track.scrollLeft; });
+    addEventListener('pointermove', e => {
+      if (!down) return;
+      if (e.buttons === 0) { endDrag(); return; }
+      const dx = e.clientX - sx;
+      if (!moved && Math.abs(dx) > 6) { moved = true; track.classList.add('dragging'); }
+      if (moved) track.scrollLeft = sl - dx;
+    });
+    ['pointerup', 'pointercancel', 'blur', 'dragend'].forEach(ev => addEventListener(ev, endDrag));
+    document.addEventListener('mouseleave', endDrag);
     // horizontal wheel intent
-    track.addEventListener('wheel', e => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { /* native */ } }, { passive: true });
   }
 
   /* ---------- menu: character changes with the link you point at ---------- */
@@ -216,7 +244,7 @@
     let q = 1;
     $('#qtyDec').addEventListener('click', () => { q = Math.max(1, q - 1); qtyOut.textContent = q; });
     $('#qtyInc').addEventListener('click', () => { q = Math.min(10, q + 1); qtyOut.textContent = q; });
-    $('#addBtn').addEventListener('click', () => { addToCart(q); toast('Added to cart'); });
+    $('#addBtn').addEventListener('click', () => { addToCart(q, $('#addBtn').dataset.pid); toast('Added to cart'); });
   }
   $$('.acc-item').forEach(it => {
     const btn = $('button', it), body = $('.acc-body', it);
@@ -375,3 +403,5 @@
     $('#logout').addEventListener('click', async () => { if (window.AQ && AQ.live) await AQ.logOut(); localStorage.removeItem('aq_user'); location.href = 'login.html'; });
   }
 })();
+/* board hotspots: tap to show the tip on touch screens */
+document.addEventListener('click', e => { const h = e.target.closest('.hot'); document.querySelectorAll('.hot.open').forEach(x => { if (x !== h) x.classList.remove('open'); }); if (h) h.classList.toggle('open'); });
