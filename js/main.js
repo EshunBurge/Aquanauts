@@ -27,7 +27,6 @@
     <div class="nav-inner">
       <a href="index.html" class="brand" aria-label="Aquanauts home">Aquanauts<i></i></a>
       <div class="nav-right">
-        <a class="nav-mission" href="mission/">Play Mission</a>
         <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span></button>
       </div>
     </div>
@@ -36,9 +35,8 @@
     <div class="menu-inner">
       <nav>
         <a href="index.html"><small>01</small>Home</a>
-        <a href="mission/"><small>02</small>Play Mission</a>
-        <a href="shop.html"><small>03</small>Shop</a>
-        <a href="${user ? 'dashboard.html' : 'login.html'}"><small>04</small>${user ? 'My dashboard' : 'Log in'}</a>
+        <a href="shop.html"><small>02</small>Shop</a>
+        <a href="${user ? 'dashboard.html' : 'login.html'}"><small>03</small>${user ? 'My dashboard' : 'Log in'}</a>
       </nav>
     </div>
   </div>
