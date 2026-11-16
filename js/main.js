@@ -142,27 +142,45 @@
     const cart = getCart(), n = cart.reduce((a, i) => a + i.qty, 0), sub = cart.reduce((a, i) => a + i.price * i.qty, 0);
     let el = document.getElementById('demoCo'); if (el) el.remove();
     el = document.createElement('div'); el.id = 'demoCo'; el.className = 'democo'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-labelledby', 'dcT');
-    const items = cart.map(i => `<li><span class="dc-th"><img src="${i.img || 'img/octopus.png'}" alt=""></span><span class="dc-nm"><b>${i.name}</b><small>${i.variant || ''} · Qty ${i.qty}</small></span><span class="dc-pr">${money(i.price * i.qty)}</span></li>`).join('');
+    const items = cart.map(i => `<li><span class="dc-th"><img src="${i.img || 'img/octopus.png'}" alt=""></span><span class="dc-nm"><b>${i.name}</b><small>${i.variant || ''}</small><small>Qty ${i.qty}</small></span><span class="dc-pr">${money(i.price * i.qty)}</span></li>`).join('');
+    const steps = k => `<ol class="dc-steps" aria-label="Checkout steps">${['Cargo', 'Crew', 'Launch'].map((t, i) => `<li class="${i + 1 < k ? 'done' : i + 1 === k ? 'on' : ''}"><i>${i + 1 < k ? '&#10003;' : i + 1}</i>${t}</li>`).join('')}</ol>`;
     el.innerHTML = `<div class="dc-card"><div class="dc-band"><span>Demo mode</span><span>Demo mode</span><span>Demo mode</span><span>Demo mode</span></div>
-      <div class="dc-step" id="dcStep1"><div class="dc-head"><img src="img/octopus.png" alt=""><div><span class="dc-tag">Practice checkout</span><h2 id="dcT">Ready for launch?</h2></div></div>
-        <p class="dc-lead">This is a practice run. The shop is not real, so no money moves and nothing ships. Press the big button to see how an order would feel.</p>
-        <p class="dc-lab">Your cargo</p><ul class="dc-items">${items}</ul>
+      <div class="dc-step" id="dcS1">${steps(1)}<div class="dc-head"><img src="img/octopus.png" alt=""><div><span class="dc-tag">Practice checkout</span><h2 id="dcT">Check your cargo</h2></div></div>
+        <p class="dc-lead">This store is a demo. Nothing here is real, so no money moves and nothing ships.</p>
+        <ul class="dc-items">${items}</ul>
         <div class="dc-sum"><span>${n} ${n === 1 ? 'item' : 'items'}</span><b>${money(sub)}</b></div>
-        <div class="dc-btns"><button class="btn btn-primary" id="dcGo" type="button">Launch my practice order</button><button class="btn btn-ghost" id="dcBack" type="button">Back to the shop</button></div>
-        <p class="dc-fine">Please do not type any card details. There is nothing to pay.</p></div>
-      <div class="dc-step" id="dcStep2" hidden><div class="dc-sky"><i></i><i></i><i></i><i></i><i></i><svg class="dc-rocket" viewBox="0 0 64 96"><path d="M32 4c14 12 18 32 14 54H18C14 36 18 16 32 4Z" fill="#EAF4F5"/><circle cx="32" cy="36" r="8" fill="#99DCE1" stroke="#0a1419" stroke-width="3"/><path d="M18 46L4 66l14-4ZM46 46l14 20-14-4Z" fill="#F58A53"/><path d="M26 62h12l-6 28Z" fill="#F58A53"/></svg></div>
-        <h2>Practice order launched!</h2><p class="dc-lead">Nothing was ordered, charged or shipped. Aquanauts is a demo app, and this is just what the finished shop could feel like.</p>
-        <p class="dc-lab" style="text-align:center">Want real coins? Finish a course in the game to earn some.</p>
-        <div class="dc-btns"><a class="btn btn-primary" href="dashboard.html">Go to my dashboard</a><button class="btn btn-ghost" id="dcDone" type="button">Close</button></div></div></div>`;
+        <div class="dc-btns"><button class="btn btn-primary" id="dcNext1" type="button">Next: crew details</button><button class="btn btn-ghost" id="dcBack" type="button">Back to the shop</button></div></div>
+      <div class="dc-step" id="dcS2" hidden>${steps(2)}<h2>Example crew details</h2>
+        <p class="dc-lead">These are made-up examples. You do not type anything, and we do not collect any information here.</p>
+        <dl class="dc-fake"><div><dt>Deliver to</dt><dd>Captain Pip, Moon Base 1</dd></div><div><dt>Shipping</dt><dd>Rocket express (pretend)</dd></div><div><dt>Payment</dt><dd>Pretend Aqua coins</dd></div><div class="tot"><dt>Charged today</dt><dd>$0.00</dd></div></dl>
+        <div class="dc-btns"><button class="btn btn-primary" id="dcGo" type="button">Start the countdown</button><button class="btn btn-ghost" id="dcPrev" type="button">Back</button></div></div>
+      <div class="dc-step dc-launch" id="dcS3" hidden>${steps(3)}
+        <div class="dc-sky" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><svg class="dc-rocket" viewBox="0 0 64 100"><path d="M32 4c14 12 18 32 14 54H18C14 36 18 16 32 4Z" fill="#EAF4F5"/><circle cx="32" cy="36" r="8" fill="#99DCE1" stroke="#0a1419" stroke-width="3"/><path d="M18 46L4 66l14-4ZM46 46l14 20-14-4Z" fill="#F58A53"/><path class="flame" d="M25 60h14l-7 36Z" fill="#F58A53"/></svg><span class="dc-count" id="dcCount">3</span></div>
+        <div id="dcWait"><h2>Launching...</h2><p class="dc-lead" id="dcCap">Crew, get ready.</p></div>
+        <div id="dcDone" hidden><span class="dc-tag">Order DEMO-0001</span><h2>Mission complete!</h2><p class="dc-lead">Nothing was ordered, charged or shipped. This is how the finished shop could feel.</p><p class="dc-earn">Want real coins? Finish a course in the game.</p>
+          <div class="dc-btns"><a class="btn btn-primary" href="dashboard.html">Go to my dashboard</a><button class="btn btn-ghost" id="dcClose" type="button">Close</button></div></div></div></div>`;
     document.body.appendChild(el);
-    const close = () => { el.remove(); document.removeEventListener('keydown', esc); };
+    const close = () => { clearInterval(tm); el.remove(); document.removeEventListener('keydown', esc); };
     const esc = e => { if (e.key === 'Escape') close(); };
+    let tm; const show = k => { ['dcS1', 'dcS2', 'dcS3'].forEach((id, i) => { $('#' + id).hidden = i + 1 !== k; }); };
     document.addEventListener('keydown', esc);
     el.addEventListener('click', e => { if (e.target === el) close(); });
+    $('#dcNext1').onclick = () => { show(2); $('#dcGo').focus(); };
+    $('#dcPrev').onclick = () => { show(1); $('#dcNext1').focus(); };
     $('#dcBack').onclick = () => { close(); closeCart(); };
-    $('#dcGo').onclick = () => { $('#dcStep1').hidden = true; $('#dcStep2').hidden = false; saveCart([]); };
-    $('#dcDone').onclick = () => { close(); closeCart(); };
-    $('#dcGo').focus();
+    $('#dcGo').onclick = () => {
+      show(3); const sky = $('.dc-sky'), cap = $('#dcCap'), cnt = $('#dcCount'); let c = 3; const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+      const finish = () => { cnt.textContent = ''; $('#dcWait').hidden = true; $('#dcDone').hidden = false; $('#dcClose').focus(); saveCart([]); };
+      if (reduce) return finish();
+      tm = setInterval(() => {
+        c--;
+        if (c > 0) { cnt.textContent = c; cap.textContent = c === 2 ? 'Systems check.' : 'Engines on.'; }
+        else if (c === 0) { cnt.textContent = 'Go!'; cap.textContent = 'Liftoff!'; sky.classList.add('fly'); }
+        else { clearInterval(tm); setTimeout(finish, 900); }
+      }, 1000);
+    };
+    $('#dcClose').onclick = () => { close(); closeCart(); };
+    $('#dcNext1').focus();
   }
   $('#drawerBody').addEventListener('click', e => {
     const b = e.target.closest('[data-act]'); if (!b) return;
