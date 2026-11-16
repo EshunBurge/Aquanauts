@@ -6,7 +6,7 @@
   const price = n => { const [d, c] = n.toFixed(2).split('.'); return `<small>$</small>${d}${c === '00' ? '' : '.' + c}`; };
   const card = (p, cls = '') => `<article class="p-card ${cls}" data-id="${p.id}">
     <a class="p-link" href="product.html?p=${p.id}" aria-label="${p.name}">
-      <div class="p-img"><span class="p-badge">${p.badge}</span><img src="${p.img}" alt="${p.name}" loading="lazy" width="640" height="640"></div>
+      <div class="p-img"><span class="p-badge">${p.badge}</span><img src="${p.img}" alt="${p.name}" loading="lazy" width="640" height="640">${p.kind==='plush'?'<span class="si-tag">Image made with SI</span>':''}</div>
       <div class="p-body"><h3>${p.name}</h3><p class="p-sub">${p.short}</p></div>
     </a>
     <div class="p-row"><span class="p-price">${price(p.price)}</span><button class="btn p-add" type="button" data-add="${p.id}">Add to cart</button></div>
@@ -53,7 +53,7 @@
           <button type="button" class="g-th" data-type="vid" data-src="media/board-turn.mp4" data-poster="media/board-turn.jpg" data-alt="Video: the board on a stand" aria-label="Video: the board on a stand"><img src="media/board-turn.jpg" alt="" loading="lazy"><i class="pl"></i></button>
         </div></div>`;
     } else {
-      left.innerHTML = `<div class="g-main plush-main"><img src="${p.img}" alt="${p.name} plush" width="640" height="640"></div>`;
+      left.innerHTML = `<div class="g-main plush-main"><img src="${p.img}" alt="${p.name} plush" width="640" height="640"><span class="si-tag">Image made with SI</span></div>`;
     }
     const title = p.kind === 'board' ? 'Aquanauts<br><span>Game Board</span>' : `${p.crew}<br><span>the ${p.animal.replace(/\b\w/g, c => c.toUpperCase())}</span>`;
     $('#pBuy').innerHTML = `<span class="eyebrow rise" style="animation-delay:.1s">${p.badge}</span>
