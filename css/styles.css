@@ -800,3 +800,6 @@ html,body{max-width:100%;overflow-x:clip}
 .g-main video{background:#05070a}
 
 .g-main img,.board-wrap .board-photo img{object-position:50% 50%}
+
+/* Mission entry reuses the existing aqua/orange navigation identity. */
+.nav-mission{display:inline-flex;align-items:center;justify-content:center;padding:11px 18px;border:2px solid var(--aqua);border-radius:14px;color:var(--aqua);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;transition:background .2s,color .2s}.nav-mission:hover,.nav-mission:focus-visible{background:var(--orange);color:#031012;border-color:var(--orange)}@media(max-width:600px){.nav-mission{font-size:10px;padding:9px 11px}.nav-right{gap:9px}}

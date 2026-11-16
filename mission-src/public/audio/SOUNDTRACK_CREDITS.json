@@ -1,0 +1,74 @@
+{
+  "source": "User-provided original music via Google Drive folder 141yf2BymKkl-GGxubdMZEFM-DmnJz_Cq",
+  "license": "User-provided for this project; no unrelated music substituted",
+  "missing": [
+    "central-hub"
+  ],
+  "mappingNote": "The supplied tink.m4a is mapped to Tank, the original octopus role used in this game.",
+  "tracks": [
+    {
+      "room": "bloop",
+      "original": "Bloop.m4a",
+      "originalSha256": "f640dd0e0eb5ee4371c14ac2fc12a26b8c79405598b15b4dd810606d6dd8010b",
+      "playback": "/audio/bloop/theme.m4a",
+      "playbackSha256": "acf467d5ff303314a911eefb65831d63af1d9c54509289b6a8a0e69124b36c2c",
+      "processing": "Opus-in-MP4 decoded to AAC M4A for browser compatibility; original composition retained"
+    },
+    {
+      "room": "moss",
+      "original": "Moss.m4a",
+      "originalSha256": "58ff764549c5b6abd54158ac59de583191a327e0510431470c930d9ba40c9132",
+      "playback": "/audio/moss/theme.m4a",
+      "playbackSha256": "b510ed5b9d43814e8b7ab52a7f24f18af2d987b1e9aa587a76c26817fc32153f",
+      "processing": "Opus-in-MP4 decoded to AAC M4A for browser compatibility; original composition retained"
+    },
+    {
+      "room": "nori",
+      "original": "Nori.m4a",
+      "originalSha256": "f1d7398b063d6c367199e38668db0f80062ff84ef40e7a98da8a12e073f548fd",
+      "playback": "/audio/nori/theme.m4a",
+      "playbackSha256": "4606b277e7eb2d377ce5105ad2fa50cb9676944307753e750591ac7ecea5ced3",
+      "processing": "Opus-in-MP4 decoded to AAC M4A for browser compatibility; original composition retained"
+    },
+    {
+      "room": "luma",
+      "original": "Luma.m4a",
+      "originalSha256": "648c26fa943412a8e8858a254a8ebd3561131c2a07ab121b18bc3268ec780b3a",
+      "playback": "/audio/luma/theme.m4a",
+      "playbackSha256": "3c4ce592f9e7bfec321825154b137109e63b3173d8ff27cec6edaf792d92bf75",
+      "processing": "Opus-in-MP4 decoded to AAC M4A for browser compatibility; original composition retained"
+    },
+    {
+      "room": "pip",
+      "original": "Pip.m4a",
+      "originalSha256": "90cf0459fd600af34fad4808480bc41af89bbd832efead070d6891aa1bbb5e59",
+      "playback": "/audio/pip/theme.m4a",
+      "playbackSha256": "20ddc61c220abe9bf3a1d1de641ad3095972c0ed8757ede184c1b7ae4976e98c",
+      "processing": "Opus-in-MP4 decoded to AAC M4A for browser compatibility; original composition retained"
+    },
+    {
+      "room": "skim",
+      "original": "skim.m4a",
+      "originalSha256": "18f04a36643225981131327ddd8472d449ecc9e8cf5f20e69ea823d840dd7bcc",
+      "playback": "/audio/skim/theme.m4a",
+      "playbackSha256": "bdfe8099a742c89f9b5ce426b92719b7e071efef37e03ec691a27f1cbd7bc555",
+      "processing": "Opus-in-MP4 decoded to AAC M4A for browser compatibility; original composition retained"
+    },
+    {
+      "room": "pebble",
+      "original": "pebble.m4a",
+      "originalSha256": "dce88b02aca697ceb63bf79de8bda496d742c8fcf4a377768efbaa324d8fe013",
+      "playback": "/audio/pebble/theme.m4a",
+      "playbackSha256": "a72e5cdccc88a3da99fb283eec2b18ae8c5331d3c4249200012a3f4bd852ac85",
+      "processing": "Opus-in-MP4 decoded to AAC M4A for browser compatibility; original composition retained"
+    },
+    {
+      "room": "tank",
+      "original": "tink.m4a",
+      "originalSha256": "4d9e453e5ef84904ee24437ea9d8a0d189ddfdf649970224bd166249210337ad",
+      "playback": "/audio/tank/theme.m4a",
+      "playbackSha256": "ab78ae88ca2084cc64652357a6a9d8646fd36db00ea83ba9aaf57bef26ab08af",
+      "processing": "Opus-in-MP4 decoded to AAC M4A for browser compatibility; original composition retained"
+    }
+  ]
+}

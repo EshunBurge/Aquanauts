@@ -1,0 +1,15 @@
+{
+  "tracks": {
+    "central-hub": null,
+    "bloop": "/audio/bloop/theme.m4a",
+    "moss": "/audio/moss/theme.m4a",
+    "nori": "/audio/nori/theme.m4a",
+    "luma": "/audio/luma/theme.m4a",
+    "pip": "/audio/pip/theme.m4a",
+    "skim": "/audio/skim/theme.m4a",
+    "pebble": "/audio/pebble/theme.m4a",
+    "tank": "/audio/tank/theme.m4a"
+  },
+  "voices": {},
+  "fadeSeconds": 1.6
+}

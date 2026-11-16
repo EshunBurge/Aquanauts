@@ -7,7 +7,7 @@ function AQ_DASH() {
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const user = JSON.parse(localStorage.getItem('aq_user') || 'null');
   if (!user) { location.replace('login.html'); return; }
-  const GAME_URL = '#'; // BACKEND: link to the real game (the progressive web app)
+  const GAME_URL = 'mission/'; // Same-origin adventure; existing player profile remains authoritative.
   const KEY = 'aq_state_' + user.email;
   const full = (JSON.parse(localStorage.getItem('aq_users') || '[]').find(u => u.email === user.email) || {});
 
@@ -117,7 +117,7 @@ function AQ_DASH() {
     return `
     <section class="hello">
       <div class="card welcome"><span class="eyebrow">Your mission</span><h2>Welcome back, ${esc(S.name || user.first)}.</h2><p>${hello}</p>
-        <a class="btn sm" href="${GAME_URL}" data-play>${c ? ((S.pct[c.id] || 0) > 0 ? 'Continue course' : 'Start your first course') : 'Play again'}</a></div>
+        <a class="btn sm" href="${GAME_URL}" data-play>Play Mission</a></div>
       <div class="card buddy">${ap ? `<canvas id="buddyCv" aria-label="${ap.name} the ${ap.species}"></canvas><div class="bar"><div><b>${ap.name}</b><br><span>${ap.species}. Drag to turn.</span></div><a class="link" href="#pets">Change</a></div>`
         : `<div class="empty"><h3>No pet yet</h3><p>Pets keep you company on your dashboard. Adopt one with your coins.</p><a class="btn sm" href="#pets">Visit the cantina</a></div>`}</div>
     </section>
@@ -245,7 +245,7 @@ function AQ_DASH() {
       <div class="lv-sci"><small>Real science behind it</small><b>${SCI[c.id][0]}</b><p>${SCI[c.id][1]}</p></div></div>
       <div class="lv-words"><small>Words you will meet</small><div>${words}</div></div>
       <div class="bar-track"><div class="bar-fill" style="width:${p}%"></div></div>
-      <div class="acts">${acts}</div>${study ? `<div class="study">${study}</div>` : ''}</div></div>`, () => { $$('#mCard [data-play]').forEach(a => a.addEventListener('click', e => { if (GAME_URL === '#') { e.preventDefault(); toast('The game opens here once it is connected.'); } })); });
+      <div class="acts">${acts}</div>${study ? `<div class="study">${study}</div>` : ''}</div></div>`);
   }
 
   function quizModal(id) {
@@ -387,7 +387,6 @@ function AQ_DASH() {
     if (view === 'home' && S.active && $('#buddyCv')) buddy = AQPets.viewer($('#buddyCv'), { id: S.active, auto: true });
   }
   function bind(v) {
-    $$('[data-play]', v).forEach(a => a.addEventListener('click', e => { if (GAME_URL === '#') { e.preventDefault(); toast('The game opens here once it is connected.'); } }));
     $$('[data-tab]', v).forEach(b => b.addEventListener('click', () => { petTab = b.dataset.tab; draw(); }));
     $$('[data-view]', v).forEach(b => b.addEventListener('click', () => petModal(b.dataset.view)));
     if (view === 'map') {
