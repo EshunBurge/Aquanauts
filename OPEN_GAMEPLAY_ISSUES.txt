@@ -1,0 +1,7 @@
+OPEN — user-reported gameplay regressions
+
+Bloop: the user reports that many parts of the room broke. Exact objects and reproduction steps are not yet specified. Keep the first room's successful design as the benchmark. Earlier automated and walkthrough passes do not override the user's report.
+
+Other rooms: the user reports additional problems without individual reproduction details yet.
+
+Disposition: explicitly deferred by the user to continue Phase 2 website integration. No activities, systems, room geometry or navigation route rules were changed in Phase 2. The integration browser check reached Bloop and checked the mission entry/return path; it did not repeat or certify the repair activities. Return to these reports in the requested gameplay repair pass.

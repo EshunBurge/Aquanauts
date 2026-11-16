@@ -1,0 +1,10 @@
+Nature Kit
+Creator: Kenney (https://kenney.nl)
+License: Creative Commons Zero 1.0 (CC0-1.0).
+Author's license listing: https://kenney.nl/assets/nature-kit
+Legal code: https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+License checked on the creator's page November 15, 2026.
+GLB delivery mirror: https://github.com/Hidencod/tge-assets/tree/main/packs/nature-kit
+No attribution is required under CC0; courtesy credit to Kenney is included.
+Models retain the creator's designs and are placed/scaled in the game.

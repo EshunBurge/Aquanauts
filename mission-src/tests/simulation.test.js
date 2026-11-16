@@ -1,0 +1,9 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {initialState,step,power,nightReady,healthy} from '../src/simulation.js';
+const run=(s,n)=>{for(let i=0;i<n*10;i++)s=step(s,.1);return s;};
+test('turning labs off reduces demand but costs food growth and research',()=>{let a={...initialState(),backup:true},b={...a,grow:false,research:false};assert.equal(power(a).demand-power(b).demand,7);a=run(a,60);b=run(b,60);assert.ok(a.food>b.food);assert.ok(a.researchPoints>b.researchPoints);assert.ok(b.battery>a.battery);});
+test('connected conserved battery lasts entire two-hour training night',()=>{const s={...initialState(),backup:true,grow:false,research:false,startedNight:true};assert.ok(nightReady(s));const end=run(s,90);assert.ok(end.battery>9);assert.ok(healthy(end));});
+test('night without battery lowers air quality, water and temperature',()=>{const start={...initialState(),startedNight:true};const end=run(start,90);assert.equal(power(start).ratio,0);assert.ok(end.air<start.air);assert.ok(end.water<start.water);assert.ok(end.temperature<start.temperature);});
+test('excess loads exhaust battery and compromise power',()=>{const end=run({...initialState(),startedNight:true,backup:true},90);assert.equal(end.battery,0);assert.equal(power(end).ratio,0);});
+test('shielding lowers exposure to 15 percent of unshielded risk',()=>{const a=run(initialState(true),60),b=run({...initialState(true),shield:true},60);assert.ok(Math.abs(b.exposure/a.exposure-.15)<1e-9);});
+test('completion freezes simulation',()=>{const s={...initialState(),complete:true};assert.deepEqual(step(s,10),s);});
+test('insufficient reserve or unsafe life support prevents night readiness',()=>{assert.equal(nightReady({...initialState(),backup:true}),false);assert.equal(nightReady({...initialState(),backup:true,grow:false,research:false,fan:false,air:70}),false);});

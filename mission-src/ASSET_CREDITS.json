@@ -1,0 +1,850 @@
+{
+  "verified": "2026-11-15",
+  "packs": [
+    {
+      "id": "station",
+      "directory": "kenney",
+      "name": "Space Station Kit 1.0",
+      "creator": "Kenney",
+      "license": "CC0-1.0",
+      "source": "https://kenney.nl/assets/space-station-kit",
+      "download": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+      "attributionRequired": false,
+      "licenseFile": "/assets/kenney/LICENSE.txt",
+      "assets": [
+        {
+          "name": "bed-single-cover.glb",
+          "path": "public/assets/kenney/bed-single-cover.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "1fd3738b10f71de374d8c3ac6fd69edf397866c822ce42bc805b7c929a7acee8"
+        },
+        {
+          "name": "bed-single.glb",
+          "path": "public/assets/kenney/bed-single.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "5eca54cb1f72da773380ded3a326e1c116e9353aebdf202b9353ed7ddc1cc6db"
+        },
+        {
+          "name": "chair-armrest-headrest.glb",
+          "path": "public/assets/kenney/chair-armrest-headrest.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "5f177776c26aac0cad6f90a128332e190f23958159ea6f62f78cdac54e4acd84"
+        },
+        {
+          "name": "chair-cushion.glb",
+          "path": "public/assets/kenney/chair-cushion.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "c46da13f8891d38331142972ec53275490cbad4ed3693af6565f974738af12cc"
+        },
+        {
+          "name": "chair-headrest.glb",
+          "path": "public/assets/kenney/chair-headrest.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "5161572587d11a1e6702885a05d42f4ebe3da951225af8dfd654bfa79218a77c"
+        },
+        {
+          "name": "computer-screen.glb",
+          "path": "public/assets/kenney/computer-screen.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "dd2a95a9c46f430e6fd0d2af6c6a94b4542d0501dda2700504642cecc33369e3"
+        },
+        {
+          "name": "computer-system.glb",
+          "path": "public/assets/kenney/computer-system.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "87666d5211fdce8830d1abf55fab16bc21d67714d78f9525f1399c33c4cb54bb"
+        },
+        {
+          "name": "computer-wide.glb",
+          "path": "public/assets/kenney/computer-wide.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "62420ce928f288f91ce85e2245e80e6c9efbee9b6e91b7ea9b83d0289fa647c4"
+        },
+        {
+          "name": "computer.glb",
+          "path": "public/assets/kenney/computer.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "dede29d81fd122c484af3e0dbf566f34893ed0f3c80182586feb19b23c33c0b7"
+        },
+        {
+          "name": "container-flat-open.glb",
+          "path": "public/assets/kenney/container-flat-open.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "b85823ea93a830fe515732e800e515f66432453369a2f3ff42597bdf3588d832"
+        },
+        {
+          "name": "container-flat.glb",
+          "path": "public/assets/kenney/container-flat.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "f76bdebf96ad858dd8a6be5cb71694616a63488cbac3f61d01485dccde99fd0c"
+        },
+        {
+          "name": "container-tall.glb",
+          "path": "public/assets/kenney/container-tall.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "e790f12cdab2e50d266d54e1bbb8a05a1cd77629a065254be3734a67b6053358"
+        },
+        {
+          "name": "container-wide.glb",
+          "path": "public/assets/kenney/container-wide.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "3bed318d187ce26b816b7f84b706ecb57cffef94ab1bb8266ca91aa35073e6f0"
+        },
+        {
+          "name": "container.glb",
+          "path": "public/assets/kenney/container.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "719b77f62979e9e02047489fcc1e86432be300ac35ed02fe496a2dfc6a3fcdd6"
+        },
+        {
+          "name": "display-wall-wide.glb",
+          "path": "public/assets/kenney/display-wall-wide.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "27b9b2cddd27ac6c5590d98af6ff71e5bb23fb621f171974cbdb661b4b54f1d0"
+        },
+        {
+          "name": "display-wall.glb",
+          "path": "public/assets/kenney/display-wall.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "64eb414b4ae9c665b8ef95711d8bade6285b0a7f6dfb8f1f8bd51a67ab4dec89"
+        },
+        {
+          "name": "door-double-closed.glb",
+          "path": "public/assets/kenney/door-double-closed.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "131dcf41b0a37c25974261a510b1d20950e27ecf17ce25232a4e37573fd988ca"
+        },
+        {
+          "name": "door-single-closed.glb",
+          "path": "public/assets/kenney/door-single-closed.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "ef12008071c51503a0ba79d029430baacbd6466c9ce7ec20979f477b315cf45e"
+        },
+        {
+          "name": "floor-detail.glb",
+          "path": "public/assets/kenney/floor-detail.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "68e95e80989494e7a28407ddecfa4a45cd22cb269772a29e72c07676d00ce92c"
+        },
+        {
+          "name": "pipe-bend-diagonal.glb",
+          "path": "public/assets/kenney/pipe-bend-diagonal.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "43cf3783d91df2d6d7353fef9cf5d972edeb925602d37587737759eccc5a351d"
+        },
+        {
+          "name": "pipe-bend.glb",
+          "path": "public/assets/kenney/pipe-bend.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "dcbb380dde0687af80f74a84c8fbd22efbb5dc007b822a6522577fba0fd0e676"
+        },
+        {
+          "name": "pipe-end-colored.glb",
+          "path": "public/assets/kenney/pipe-end-colored.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "dc114061b60a441df6b32696481ba32e135a6c3d58f4ebfc3a7f9945d9ae23aa"
+        },
+        {
+          "name": "pipe-ring-colored.glb",
+          "path": "public/assets/kenney/pipe-ring-colored.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "037a65be81225b9a59d4bc51fb53e047b336d710ef2d5c950b9e3768f072eb45"
+        },
+        {
+          "name": "pipe-ring.glb",
+          "path": "public/assets/kenney/pipe-ring.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "5e5821b9e9579c60c1200414eece3d8ad3c5ffaa3488e9c3a172eb49700f64f8"
+        },
+        {
+          "name": "pipe.glb",
+          "path": "public/assets/kenney/pipe.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "b33fe37fee9d1dfe92dc75d5af7e54877199b9d865cb988afa25f40b7bed49ef"
+        },
+        {
+          "name": "rail.glb",
+          "path": "public/assets/kenney/rail.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "fda7cd2ab910db8e251345a9b488a41bd55da2f55627ad4344653c9d6d5c088f"
+        },
+        {
+          "name": "rocks.glb",
+          "path": "public/assets/kenney/rocks.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "cdad530e15972f1f3cdf4dec1d1ca2d3b9406b46c2bbd67bb67abf3bbf173aa3"
+        },
+        {
+          "name": "skip-rocks.glb",
+          "path": "public/assets/kenney/skip-rocks.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "2cdb4a670d18dc9ddf8fd8edfbd24e2541bf12cd89d4a3c758a312036cd95167"
+        },
+        {
+          "name": "skip.glb",
+          "path": "public/assets/kenney/skip.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "1187ffe3baa86b27733760bd4fb4a022dbe565cee8b681039ad485da46716b18"
+        },
+        {
+          "name": "structure-barrier-high.glb",
+          "path": "public/assets/kenney/structure-barrier-high.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "7c2c9a3ec930baa18200ebf72ae2995f63bbc30d457c199e49ede20c6743871e"
+        },
+        {
+          "name": "structure-panel.glb",
+          "path": "public/assets/kenney/structure-panel.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "4544540913ac40e9a4363b8866a926e8a57d48cbadf92020491f20aa7817f641"
+        },
+        {
+          "name": "structure.glb",
+          "path": "public/assets/kenney/structure.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "ef12f1eaec019116ece1aebb0c512ce19a5cbc385f7a393c62d9f32f129cf088"
+        },
+        {
+          "name": "table-display-planet.glb",
+          "path": "public/assets/kenney/table-display-planet.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "55f4055020546163a7bc4b025d150b128917a046f903def087a9cc52767fa68a"
+        },
+        {
+          "name": "table-display-small.glb",
+          "path": "public/assets/kenney/table-display-small.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "cb896c1f0ef4535b5209d40cb0a74fc1dd78874a00c10b99b25621ebadc7b197"
+        },
+        {
+          "name": "table-display.glb",
+          "path": "public/assets/kenney/table-display.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "6a078d92a273a95f82c2017038c15cf1fb534c0d5dbf4800ea014e63fed3edd3"
+        },
+        {
+          "name": "table-inset-small.glb",
+          "path": "public/assets/kenney/table-inset-small.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "2853d905c00b2a84fb7afad89ec697b37c4d739dc5dd38f6a233c332475013ec"
+        },
+        {
+          "name": "table-inset.glb",
+          "path": "public/assets/kenney/table-inset.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "37d7aa8d45994313f7bb417dddf6b651201f42445a143ff1333ccca4de2dec6b"
+        },
+        {
+          "name": "table-large.glb",
+          "path": "public/assets/kenney/table-large.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "ea32e4fa45beb7841995e9c2ae5f1208566247ce06ffb3ca8d06a55055e3337e"
+        },
+        {
+          "name": "table.glb",
+          "path": "public/assets/kenney/table.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "c0670a41634afe2ad3fc8236371afbcd26f97ae9d5cb8971bd773fbad30f4f0c"
+        },
+        {
+          "name": "wall-detail.glb",
+          "path": "public/assets/kenney/wall-detail.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "7cee7abe1ea412acdf182da770bd3920bf023ecd165d5c9b3db3a60a0d7ae7d8"
+        },
+        {
+          "name": "wall-door-wide.glb",
+          "path": "public/assets/kenney/wall-door-wide.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "7a4d64e24032ce0419b751b47c9677222798d22a6efc32973a2c05d2c1b18a56"
+        },
+        {
+          "name": "wall-pillar.glb",
+          "path": "public/assets/kenney/wall-pillar.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "aa87480d88da5feffff04a654d78059e59882cf7fcfbb9c0cd37ce4183728014"
+        },
+        {
+          "name": "wall-switch.glb",
+          "path": "public/assets/kenney/wall-switch.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "2b297783053aa9b091972f31f5fc3892b7cb7572d017dd37fc22af9ac2640c20"
+        },
+        {
+          "name": "wall-window-shutters.glb",
+          "path": "public/assets/kenney/wall-window-shutters.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-station-kit",
+          "delivery": "https://opengameart.org/sites/default/files/kenney_space-station-kit.zip",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "ba607af511db91c8ec6768550962cfb05fb7fcf3d6b834bf953ac25945abbb49"
+        }
+      ]
+    },
+    {
+      "id": "space",
+      "directory": "space-kit",
+      "name": "Space Kit",
+      "creator": "Kenney",
+      "license": "CC0-1.0",
+      "source": "https://kenney.nl/assets/space-kit",
+      "download": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+      "attributionRequired": false,
+      "licenseFile": "/assets/space-kit/LICENSE.txt",
+      "assets": [
+        {
+          "name": "craft-cargoa.glb",
+          "path": "public/assets/space-kit/craft-cargoa.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "b9676e838c605699e164c4c1779262bf47db1562a1504ceb29764828cbaa80c2"
+        },
+        {
+          "name": "desk-computer.glb",
+          "path": "public/assets/space-kit/desk-computer.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "a2a6c536db930352553d56833870956ec2790e8c6a71d4a2f93358cce36d12e3"
+        },
+        {
+          "name": "desk-computercorner.glb",
+          "path": "public/assets/space-kit/desk-computercorner.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "e98f3547cebacede85a72b429f6326a8326d815adaabe6c4271ca02226bee4e1"
+        },
+        {
+          "name": "desk-computerscreen.glb",
+          "path": "public/assets/space-kit/desk-computerscreen.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "3a7526fff69a29bd1c793cea34c2bf9d6a96dcc7ef0c7b3c1286f691b8835074"
+        },
+        {
+          "name": "machine-barrel.glb",
+          "path": "public/assets/space-kit/machine-barrel.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "ecd46823928292bbb01718966bd4602a71e37a09320f3ba232d9044e909ce4ed"
+        },
+        {
+          "name": "machine-barrellarge.glb",
+          "path": "public/assets/space-kit/machine-barrellarge.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "3c156127373395cd45bfb7772936c56b06e4bcf33101da7a5030f17e5d8acae5"
+        },
+        {
+          "name": "machine-generator.glb",
+          "path": "public/assets/space-kit/machine-generator.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "98e8ac6aceada3b2483ed1eceb59bff7190ee774edac799350ccc11ad140f7f3"
+        },
+        {
+          "name": "machine-generatorlarge.glb",
+          "path": "public/assets/space-kit/machine-generatorlarge.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "bbfa33a2e7c7eff7d9ee12f64255249b7e2f5d4b2ada2d681aa35cf38ba599bc"
+        },
+        {
+          "name": "machine-wireless.glb",
+          "path": "public/assets/space-kit/machine-wireless.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "9d49e70d51515bc38628fb0d6e43f4eda7f9cd5326882fd02e8815e61f2259d7"
+        },
+        {
+          "name": "machine-wirelesscable.glb",
+          "path": "public/assets/space-kit/machine-wirelesscable.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "b38770b6d1a40e2afd8a5f535e6a962f07cf18a8345e9b940bf3843bcf938a6b"
+        },
+        {
+          "name": "pipe-cornerround.glb",
+          "path": "public/assets/space-kit/pipe-cornerround.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "27a93f4c6069c21c577eac57415455b6ad04316267fb7bdcb8ae8cf7cf29cd40"
+        },
+        {
+          "name": "pipe-ringsupport.glb",
+          "path": "public/assets/space-kit/pipe-ringsupport.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "a13f28528920158a5dfa8182a6d3bdb97c947bc0a15d979e6c415ae243aeead2"
+        },
+        {
+          "name": "pipe-split.glb",
+          "path": "public/assets/space-kit/pipe-split.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "e8a8f5ee14f61407eb874276f077818f706f8eaaafd71f205fb83b1763b73cb3"
+        },
+        {
+          "name": "pipe-straight.glb",
+          "path": "public/assets/space-kit/pipe-straight.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "3386146dbfa9a9f2c7bcc5a6599a3c9d43a9e029c26f61b345ff6b16df80e6a1"
+        },
+        {
+          "name": "platform-small.glb",
+          "path": "public/assets/space-kit/platform-small.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "c4aebdfe660289a0e004f5ec20eaba3ade043ed5bd889f11465680926f8c5368"
+        },
+        {
+          "name": "rock-largea.glb",
+          "path": "public/assets/space-kit/rock-largea.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "13b2bf393fcd7ca8c73d8a2a731da0be6c2c2b4e67ef0ae826e816c0d8733f2f"
+        },
+        {
+          "name": "rock-largeb.glb",
+          "path": "public/assets/space-kit/rock-largeb.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "9ad6aafcbdf3a813d3ab5ca59d6d6eb41d8cb38d07897b2c4d24c3206f33c759"
+        },
+        {
+          "name": "rocks-smalla.glb",
+          "path": "public/assets/space-kit/rocks-smalla.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "4c56d53f1da96654ed02041c0cb493c30de266f0d273d528e5ac92b92e6edb8b"
+        },
+        {
+          "name": "rover.glb",
+          "path": "public/assets/space-kit/rover.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "9784549775017e540ab84e6fc0eb8a1902dbeff9ba4285cecb97c086d2937fa5"
+        },
+        {
+          "name": "satellitedish-detailed.glb",
+          "path": "public/assets/space-kit/satellitedish-detailed.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "143dd36b2c427e3201110967a18fd836bc7aa8002dbf3e44efa42c75fbb44ae5"
+        },
+        {
+          "name": "satellitedish-large.glb",
+          "path": "public/assets/space-kit/satellitedish-large.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "8fe696a37081a0a6f1c56ab867f447f33a498ef9f1daabb5aabc62b1ce09277e"
+        },
+        {
+          "name": "satellitedish.glb",
+          "path": "public/assets/space-kit/satellitedish.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "db27a561b66fabda45a6ce2bcf41d650852e89e15bb9f63b68133ad1293aed8b"
+        },
+        {
+          "name": "supports-low.glb",
+          "path": "public/assets/space-kit/supports-low.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/space-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/space-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "e1c9df6a3c85df038673699114665736030614e31fedb04b3c71b380f5adc432"
+        }
+      ]
+    },
+    {
+      "id": "nature",
+      "directory": "nature-kit",
+      "name": "Nature Kit",
+      "creator": "Kenney",
+      "license": "CC0-1.0",
+      "source": "https://kenney.nl/assets/nature-kit",
+      "download": "https://github.com/Hidencod/tge-assets/tree/main/packs/nature-kit",
+      "attributionRequired": false,
+      "licenseFile": "/assets/nature-kit/LICENSE.txt",
+      "assets": [
+        {
+          "name": "crop-carrot.glb",
+          "path": "public/assets/nature-kit/crop-carrot.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/nature-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/nature-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "2a3641c609dd837a4feebb4f5c95d4cd43c3046e800acd416f4f6a3b923ba9d8"
+        },
+        {
+          "name": "crop-turnip.glb",
+          "path": "public/assets/nature-kit/crop-turnip.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/nature-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/nature-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "5e121c6042742497ed02081a7c62fc80aec2191f04e22a57d81d02130689f71d"
+        },
+        {
+          "name": "crops-cornstagea.glb",
+          "path": "public/assets/nature-kit/crops-cornstagea.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/nature-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/nature-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "085e2f0501f0f39acc10762cf46449fd962d9ac0630e7fd128cf9aa4a1edcfb5"
+        },
+        {
+          "name": "crops-cornstageb.glb",
+          "path": "public/assets/nature-kit/crops-cornstageb.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/nature-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/nature-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "509cec80fa70356fd65cac01eaf227bc775261ed6f3af426c64eea9b20e7d05c"
+        },
+        {
+          "name": "crops-cornstagec.glb",
+          "path": "public/assets/nature-kit/crops-cornstagec.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/nature-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/nature-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "deb8b4b74247fd8dc8834cf0a954c818c76c5da9564b244a6354ec4ab65da059"
+        },
+        {
+          "name": "crops-cornstaged.glb",
+          "path": "public/assets/nature-kit/crops-cornstaged.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/nature-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/nature-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "d90d9cbba85e99526b254adee638495f914480831ab41d00807378c004c112c3"
+        },
+        {
+          "name": "crops-leafsstagea.glb",
+          "path": "public/assets/nature-kit/crops-leafsstagea.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/nature-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/nature-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "f30d55780aa6668316a272eac8ea908e981d16fea7dc4fd1de4e68aa8170cee2"
+        },
+        {
+          "name": "crops-leafsstageb.glb",
+          "path": "public/assets/nature-kit/crops-leafsstageb.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/nature-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/nature-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "aea4fe9a7943e7b2b7df99dc4fa00b85e34d00ea9b8e1b144504cef25d77b98c"
+        },
+        {
+          "name": "crops-wheatstagea.glb",
+          "path": "public/assets/nature-kit/crops-wheatstagea.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/nature-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/nature-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "d8c690d473a230741cf4d03fa6a69a405f0ae6a246847a2a72e7f50dd5bebc08"
+        },
+        {
+          "name": "crops-wheatstageb.glb",
+          "path": "public/assets/nature-kit/crops-wheatstageb.glb",
+          "creator": "Kenney",
+          "source": "https://kenney.nl/assets/nature-kit",
+          "delivery": "https://github.com/Hidencod/tge-assets/tree/main/packs/nature-kit",
+          "license": "CC0-1.0",
+          "attributionRequired": false,
+          "sha256": "589db4d6fe0bd7616c1f1c2f10a335704b2dad5d24638dc08a5b2e5334c68852"
+        }
+      ]
+    }
+  ],
+  "otherAssets": [
+    {
+      "name": "Eight original Aquanauts portraits and unchanged source sheet",
+      "creator": "Aquanauts / user-provided",
+      "source": "User-supplied illustration sheet",
+      "license": "Provided for this project; no independent redistribution license inferred",
+      "path": "public/assets/characters/original-sheet.png",
+      "sha256": "f9b1527ce6c9530ff4b71861a969347a36ffc9979d8dfbd50f2990a5ea56f7ba",
+      "processing": "Runtime rectangular crop, clockwise orientation and white-background alpha mask; original hand-drawn pixels determine appearance",
+      "reference": "CHARACTER_REFERENCE.md"
+    },
+    {
+      "name": "Aquanauts brand mark",
+      "source": "https://aquanauts.app/",
+      "license": "Used for this user-requested Aquanauts project"
+    },
+    {
+      "name": "Metal floor panel texture",
+      "creator": "Project-authored procedural canvas texture",
+      "source": "src/world/materials.js",
+      "license": "Project source"
+    },
+    {
+      "name": "Physical filter machines, cartridges, personal studio fixtures and synthesized action tones",
+      "creator": "Project-authored Three.js geometry and Web Audio",
+      "source": "src/world/bloop-workshop.js; src/world/personal-studios.js; src/world/hands-on.js",
+      "license": "Project source"
+    },
+    {
+      "name": "Adventure design tokens, Moss energy workshop, botanical trellis and decorations, centralized Web Audio effects",
+      "creator": "Project-authored code; Aquanauts screenshot palette and supplied original character references",
+      "source": "DESIGN_SYSTEM.md; src/world/moss-workshop.js; src/world/personal-studios.js; src/audio/manager.js",
+      "license": "Project source; supplied art remains user-owned",
+      "music": "No replacement tracks; original room files pending"
+    }
+  ]
+}
